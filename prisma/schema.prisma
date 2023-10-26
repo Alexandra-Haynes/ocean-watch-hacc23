@@ -12,11 +12,11 @@ datasource db {
 
 model EventDetection {
   id            Int      @id @default(autoincrement())
-  detectionDate DateTime
-  detectionLocation String
-  environmentalDamage String
-  debrisType String
-  debrisApproxSize String
+  detectionDate String?
+  detectionLocation String?
+  environmentalDamage String?
+  debrisType String?
+  debrisApproxSize String?
 }
 
 model EventRemovalTempStorage {
