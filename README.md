@@ -38,6 +38,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Prisma Instructions
 
+Add a .env file with the following for sqlite
+DATABASE_URL="file:./dev.db"
+
 Because Prisma Client is tailored to your own schema, you need to update it every time your Prisma schema file is changing by running the following command:
 
 ```console
