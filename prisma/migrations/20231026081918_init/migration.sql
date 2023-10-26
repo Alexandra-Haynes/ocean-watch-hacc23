@@ -1,11 +1,11 @@
 -- CreateTable
 CREATE TABLE "EventDetection" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "detectionDate" DATETIME NOT NULL,
-    "detectionLocation" TEXT NOT NULL,
-    "environmentalDamage" TEXT NOT NULL,
-    "debrisType" TEXT NOT NULL,
-    "debrisApproxSize" TEXT NOT NULL
+    "detectionDate" TEXT,
+    "detectionLocation" TEXT,
+    "environmentalDamage" TEXT,
+    "debrisType" TEXT,
+    "debrisApproxSize" TEXT
 );
 
 -- CreateTable
