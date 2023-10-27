@@ -52,3 +52,16 @@ body {
   border: 1px solid #1c8904;
 
 }
+
+
+.custom-background {
+  background: rgb(174, 238, 233);
+  background: linear-gradient(220deg,
+      rgba(174, 238, 233, 1) 0%,
+      rgba(46, 103, 152, 1) 48%,
+      rgba(2, 10, 20, 1) 100%);
+}
+
+.custom-clip-path {
+  clip-path: polygon(60% 0, 100% 0%, 100% 100%, 35% 100%);
+}
