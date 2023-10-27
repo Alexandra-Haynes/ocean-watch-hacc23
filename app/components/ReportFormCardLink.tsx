@@ -2,7 +2,6 @@ import Link from "next/link";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { LuBadgeAlert } from "react-icons/lu";
 
-
 export default function ReportFormCardLink() {
   return (
     <>
@@ -16,7 +15,7 @@ export default function ReportFormCardLink() {
         <div className="flex flex-col items-center justify-start mt-[5rem]">
           <h2
             className="text-center font-bold text-3xl mb-6 
-          font-mono uppercase"
+           uppercase"
           >
             Found Marine Debris?
           </h2>
@@ -34,7 +33,7 @@ export default function ReportFormCardLink() {
           custom-background hover:translate-y-1 hover:shadow-2xl transition duration-500 ease-in-out
           "
         >
-          Report debris title
+          Report debris
         </div>
 
         <div
