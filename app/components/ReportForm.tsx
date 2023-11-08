@@ -1,6 +1,7 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
+import { RiMailSendLine } from "react-icons/ri";
 
 interface FormData {
   location: string;
@@ -9,8 +10,15 @@ interface FormData {
   fullAddress: string;
   date: string;
   debrisType: string;
+  containerStatus: "Full";
+  biofouling: number;
+  debrisLocation: string;
   description: string;
-  image: File | null;
+  images: File[];
+  island: string;
+  email: string;
+  phone: string;
+  captcha: string;
 }
 
 function ReportForm() {
@@ -21,9 +29,18 @@ function ReportForm() {
     fullAddress: "",
     date: "",
     debrisType: "",
+    containerStatus: "Full",
+    biofouling: 1,
+    debrisLocation: "",
     description: "",
-    image: null, // store the  image
+    images: [],
+    island: "",
+    email: "",
+    phone: "",
+    captcha: "",
   });
+  const [showCoordinates, setShowCoordinates] = useState(false);
+  const [containerStatus, setContainerStatus] = useState<string | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -36,22 +53,23 @@ function ReportForm() {
 
   // Image upload
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setFormData({ ...formData, image: file ?? null });
+    const files = e.target.files;
 
-    // Preview of image
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const imagePreview = document.getElementById(
-                "image-preview"
-            ) as HTMLImageElement;
-            if (imagePreview && e.target) {
-                imagePreview.src = e.target.result as string;
-            }
-        };
-        reader.readAsDataURL(file);
+    if (files) {
+      const imageFiles = Array.from(files);
+
+      setFormData({
+        ...formData,
+        images: imageFiles,
+      });
     }
+  };
+  const handleContainerStatusChange = (status: string) => {
+    setContainerStatus(status);
+  };
+
+  const handleBiofoulingChange = (value: number) => {
+    setFormData({ ...formData, biofouling: value });
   };
 
   // Set the default date to be today's date
@@ -78,7 +96,7 @@ function ReportForm() {
           latitude: latitude.toString(),
           longitude: longitude.toString(),
         });
-
+        setShowCoordinates(true);
         // Get the full address based on the coordinates using Positionstack API
         const apiKey = "";
         const query = `96706`;
@@ -110,42 +128,342 @@ function ReportForm() {
     form.append("location", formData.location);
     form.append("date", formData.date);
     form.append("debrisType", formData.debrisType);
+    form.append("containerStatus", formData.containerStatus);
+    form.append("biofouling", String(formData.biofouling));
     form.append("description", formData.description);
-    if (formData.image) {
-      form.append("image", formData.image);
-    }
+    // Append each image file separately
+    formData.images.forEach((image, index) => {
+      form.append(`image${index}`, image);
+    });
 
-    // Example: send formData to the server
-    // try {
-    //   const response = await fetch("/api/report", {
-    //     method: "POST",
-    //     body: form,
-    //   });
-    //   if (response.ok) {
-    //     // Success - display success message, next steps, etc.
-    //   } else {
-    //     // Handle errors, display an error message
-    //   }
-    // } catch (error) {
-    //   // Handle network/server errors
-    // }
+    form.append("island", formData.island);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("captcha", formData.captcha);
   };
+
+  const debrisOptions = [
+    "A mass of netting and/or fishing gear",
+    "An abandoned or derelict boat",
+    "A container/drum/cylinder",
+    "A large concentration of plastics",
+    "Potential Japan tsunami marine debris",
+    "A large concentration of miscellaneous trash",
+    "Other - describe below",
+  ];
+   const locationOptions = [
+     "Caught on the reef or partially buried in sand",
+     "Loose in the shore break or on the shoreline and could go back out to sea",
+     "Trapped in a tide pool and cannot escape",
+     "Loose on the shore but caught in the vegetation line",
+     "Tied to a fixed object so it cannot be swept away",
+     "Pushed inland above the high wash of the waves so it cannot be swept away",
+     "Other - please explain in the description below",
+   ];
   return (
     <section
-      className="flex flex-col items-center justify-center gap-8 py-12
+      className="flex flex-col items-center justify-center gap-8 md:py-8 mt-4
     "
     >
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-start justify-center gap-2
-        border-slate-500/30 border-2 rounded-md shadow-2xl p-12 bg-white/90"
+        border-slate-500/30 border-2 rounded-md shadow-2xl p-6  md:p-8 bg-white/90"
       >
-        <h2 className=" font-medium text-xl self-center">
+        <h2 className=" font-medium text-2xl self-center">
           Report Marine Debris
         </h2>
-        <div className="h-[1px] w-full bg-slate-200 my-4"></div>
-        {/* _______________DATE______________________ */}
-        <div className="form-group flex flex-row gap-4">
+        <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
+
+        <div className="flex flex-row items-start justify-between md:gap-12 ">
+          <div className="mr-8">
+            {/*________________________ Island Selection_______________ */}
+            <div className="form-group flex flex-row items-center gap-4">
+              <label htmlFor="island">Select Island</label>
+              <select
+                id="island"
+                name="island"
+                value={formData.island}
+                onChange={handleChange}
+                className="w-[200px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+              >
+                <option value="" className="font-semibold">
+                  Select an Island
+                </option>
+                <option value="Big Island" className="font-semibold">
+                  Big Island
+                </option>
+                <option value="Oahu" className="font-semibold">
+                  Oahu
+                </option>
+                <option value="Maui" className="font-semibold">
+                  Maui
+                </option>
+                <option value="Kauai" className="font-semibold">
+                  Kauai
+                </option>
+                <option value="Lanai" className="font-semibold">
+                  Lanai
+                </option>
+                <option value="Molokai" className="font-semibold">
+                  Molokai
+                </option>
+              </select>
+            </div>
+            {/* ____________________Location & address_________________ */}
+            <div className="form-group">
+              <label htmlFor="location">Location Coordinates:</label>
+
+              {!showCoordinates && (
+                <button
+                  onClick={getUserLocation}
+                  className="bg-green-400/50 rounded-md shadow-md p-2 px-4
+            flex flex-row items-center justify-center gap-2 mb-2"
+                  
+                >
+                  <MdGpsFixed /> Get My Current Location
+                </button>
+              )}
+              {showCoordinates && formData.latitude && formData.longitude && (
+                <div className="form-group mb-2">
+                  <p className="text-gray-600 ">
+                    Latitude:{" "}
+                    <span className="text-green-600 font-semibold">
+                      {" "}
+                      {formData.latitude}
+                    </span>{" "}
+                    | Longitude:{" "}
+                    <span className="text-green-600 font-semibold">
+                      {" "}
+                      {formData.longitude}{" "}
+                    </span>
+                  </p>
+                </div>
+              )}
+
+              <label htmlFor="location">Address:</label>
+              <p className="text-gray-600 text-sm">
+                Please provide specific details that help us pinpoint the debris
+                location.
+              </p>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                className="w-full"
+              />
+            </div>
+
+            {/* ______________________DEBRIS TYPE_______________________ */}
+            <div className="form-group">
+              <label htmlFor="debrisType">Debris Type:</label>
+              <select
+                id="debrisType"
+                name="debrisType"
+                value={formData.debrisType}
+                onChange={handleChange}
+                className="w-full h-12 border-slate-300 border-2 rounded-md p-2
+                "
+              >
+                <option value="">Select Debris Type</option>
+                {debrisOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {/* ______________________Container_______________________ */}
+            <div>
+              <label>
+                <span className="font-semibold">
+                  Did you find a container, a drum, or cylinder?
+                </span>{" "}
+                If yes, how full is it?
+              </label>
+              <div className="flex flex-row items-center start-center gap-4 pt-2">
+                <label className="flex flex-row items-center gap-1 justify-center">
+                  <input
+                    type="radio"
+                    name="containerStatus"
+                    value="Full"
+                    checked={containerStatus === "Full"}
+                    onChange={() => handleContainerStatusChange("Full")}
+                    className="h-6"
+                  />
+                  Full
+                </label>
+                <label className="flex flex-row items-center gap-1 justify-center">
+                  <input
+                    type="radio"
+                    name="containerStatus"
+                    value="Partially Filled"
+                    checked={containerStatus === "Partially Filled"}
+                    onChange={() =>
+                      handleContainerStatusChange("Partially Filled")
+                    }
+                    className="h-6"
+                  />
+                  Partially Filled
+                </label>
+                <label className="flex flex-row items-center gap-1 justify-center">
+                  <input
+                    type="radio"
+                    name="containerStatus"
+                    value="Empty"
+                    checked={containerStatus === "Empty"}
+                    onChange={() => handleContainerStatusChange("Empty")}
+                    className="h-6"
+                  />
+                  Empty
+                </label>
+              </div>
+            </div>
+
+            {/* ______________________Debris Location Details_______________________ */}
+            <div className="form-group pt-4">
+              <label htmlFor="debrisLocation">
+                The debris is best described as:
+              </label>
+              <select
+                id="debrisLocation"
+                name="debrisLocation"
+                value={formData.debrisLocation}
+                onChange={handleChange}
+                className="w-full h-12 border-slate-300 border-2 p-2 rounded-md"
+              >
+                <option value="" className="h-2 pt-2 ">
+                  Select Debris Location Details
+                </option>
+                {locationOptions.map((option, index) => (
+                  <option key={index} value={option} className="h-2 pt-2">
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {/* ______________________Biofouling_______________________ */}
+            <div className="pt-2">
+              <div className="flex flex-row items-center justify-start gap-4">
+                <label className="font-semibold pt-2">
+                  Algae and marine life:
+                </label>
+                <input
+                  type="range"
+                  name="biofouling"
+                  min={1}
+                  max={10}
+                  value={formData.biofouling}
+                  onChange={(e) =>
+                    handleBiofoulingChange(Number(e.target.value))
+                  }
+                  className="w-1/3"
+                />
+                <p className="text-gray-600 text-sm">{formData.biofouling}</p>
+              </div>
+              <p className="text-gray-600 text-sm py-2 w-full">
+                On a scale of one to ten, how much biofouling is on the item you
+                found? <br />
+                1 - no marine growth <br />
+                10 - significant marine life covering all submerged surfaces
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-row items-start justify-center">
+            <div className="h-[420px] w-[1px] bg-orange-400/20 mr-6 md:mr-12 self-center "></div>
+            <div>
+              {/*__________________ Email_____________________________ */}
+              <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                />
+              </div>
+
+              {/*___________________ Phone Number_____________________ */}
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number:</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                />
+                <p className="text-gray-600 text-sm py-2 w-full">
+                  Please include area code
+                </p>
+              </div>
+              {/* __________________________IMAGE_____________________ */}
+              <div className="form-group max-w-[340px]">
+                <label htmlFor="image">Upload Images (up to 6):</label>
+                <input
+                  type="file"
+                  id="image"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  multiple // Allow multiple file selection
+                  className="w-[300px]"
+                />
+                <p className="text-gray-600 text-sm py-2 w-full">
+                  A photo can provide crucial information about the debris,
+                  helping us better understand its nature and assisting in the
+                  removal process.
+                  <br />
+                  Maximum 30 MB per image.
+                </p>
+                {formData.images.length > 0 && (
+                  <div className="flex flex-row  items-center justify-start gap-2 ">
+                    {formData.images.map((image, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-row items-end gap-4"
+                      >
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt="Image Preview"
+                          style={{ maxHeight: "50px" }}
+                          className="h-auto"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* _______________________________DESCRIPTION__________________ */}
+        <div className="form-group w-full ">
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full lg:max-w-[700px] h-[100px] p-2 bg-white rounded-sm "
+          />
+          <div className="text-gray-600 text-sm max-w-[1000px]">
+            Providing a detailed description is essential in assessing and
+            addressing marine debris effectively. <br />
+            Please include information such as: The more details you provide,
+            the better we can respond to the report.
+          </div>
+        </div>
+        {/* ________________________________DATE______________________ */}
+
+        <div className="form-group flex flex-row items-center gap-4">
           <label htmlFor="date">Date:</label>
           <input
             type="date"
@@ -155,155 +473,34 @@ function ReportForm() {
             onChange={handleChange}
           />
         </div>
-        {/* ________________DEBRIS TYPE____________________ */}
-        <div className="form-group flex flex-row gap-4 whitespace-nowrap">
-          <label htmlFor="debrisType">Debris Type:</label>
-          <select
-            id="debrisType"
-            name="debrisType"
-            value={formData.debrisType}
-            onChange={handleChange}
-            className="w-full p-2 bg-white rounded-sm"
-          >
-            <option value="">Select Debris Type</option>
-            <option value="Plastic Bottles">Plastic Bottles</option>
-            <option value="Plastic Bags">Plastic Bags</option>
-            <option value="Fishing Nets">Fishing Nets</option>
-            <option value="Fishing Lines">Fishing Lines</option>
-            <option value="Plastic Containers">Plastic Containers</option>
-            <option value="Styrofoam">Styrofoam</option>
-            <option value="Plastic Straws">Plastic Straws</option>
-            <option value="Cigarette Butts">Cigarette Butts</option>
-            <option value="Glass Bottles">Glass Bottles</option>
-            <option value="Aluminum Cans">Aluminum Cans</option>
-            <option value="Food Packaging">Food Packaging</option>
-            <option value="Plastic Utensils">Plastic Utensils</option>
-            <option value="Beverage Cans">Beverage Cans</option>
-            <option value="Paper Bags">Paper Bags</option>
-            <option value="Tires">Tires</option>
-            <option value="Clothing and Fabric">Clothing and Fabric</option>
-            <option value="Shoes">Shoes</option>
-            <option value="Lumber and Wood">Lumber and Wood</option>
-            <option value="Metal Scraps">Metal Scraps</option>
-            <option value="Appliances">Appliances</option>
-            <option value="Oil Drums">Oil Drums</option>
-            <option value="Electronic Waste (e-waste)">
-              Electronic Waste (e-waste)
-            </option>
-            <option value="Medical Waste">Medical Waste</option>
-            <option value="Household Items">Household Items</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        {/* _____________LOCATION_________________ */}
-        <div className="form-group">
-          <label htmlFor="location">
-            Location Coordinates (Latitude, Longitude):
-          </label>
-          <button
-            onClick={getUserLocation}
-            className="bg-green-300 rounded-sm shadow-md p-2
-            flex flex-row items-center justify-center gap-2 mb-2"
-          >
-            <MdGpsFixed /> Get My Current Location
-          </button>
 
-          {formData.latitude && formData.longitude && (
-            <div className="form-group">
-              <p>Latitude: {formData.latitude}</p>
-              <p>Longitude: {formData.longitude}</p>
-              <p>
-                Full Address: ...get API to display it... {formData.fullAddress}
-              </p>
-            </div>
-          )}
-          <p className="p-2 flex flex-row items-center justify-start gap-1 opacity-60">
-            ________________<span className="pt-2">OR</span>_________________
-          </p>
-
-          <label htmlFor="location">Type exact address:</label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-          />
-        </div>
-        {/* _________________IMAGE_____________________ */}
-        <div className="form-group">
-          <label htmlFor="image">Upload Image:</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="lg:max-w-[700px]"
-          />
-          <p className="text-gray-600 text-sm py-2">
-            A photo can provide crucial information about the debris, helping us
-            better understand its nature and assisting in the removal process.
-          </p>
-          {formData.image && (
-            <div className="flex flex-row items-end gap-4">
-              {" "}
-              <img
-                id="image-preview"
-                src=""
-                alt="Image Preview"
-                style={{ maxWidth: "120px" }}
-                className="rounded-md shadow-lg h-auto"
-              />
-              <p className="text-green-500 text-[.8rem] font-semibold">
-                Thank you!
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* ___________________DESCRIPTION__________________ */}
-        <div className="form-group w-full">
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full lg:max-w-[700px] h-[200px] p-2 bg-white rounded-sm "
-          />
-          <div className="text-gray-600 text-sm">
-            Providing a detailed description is essential in assessing and
-            addressing marine debris effectively. Please include information
-            such as:
-            <ul className="list-disc ml-6">
-              <li>
-                Additional location details that would assist us in locating the
-                debris more accurately
-              </li>
-              <li>
-                Indicate the accessibility of the location. Is it easily
-                reachable by land or only accessible by boat or on foot?
-              </li>
-              <li>Is it tangled or embedded in any way?</li>
-              <li>Any visible markings or labels?</li>
-              <li>
-                If there are any marine animals or birds interacting with the
-                debris, describe their condition and behavior.
-              </li>
-            </ul>
-            The more details you provide, the better we can respond to the
-            report.
-          </div>
-        </div>
-
+        {/*____________________ Captcha Verification ___________________*/}
+        {/* <div className="form-group">
+          <label htmlFor="captcha">Captcha Verification:</label>
+          {/* here we add the reCAPTCHA api stuff from https://www.google.com/recaptcha
+          and we use  npm install react-google-recaptcha library */}
+        {/* </div> */}
         <button
-          className="bg-green-600 text-white px-4 py-2 rounded-md
-        shadow-lg hover:bg-green-700 transition-all duration-200 ease-in-out"
+          className="bg-green-700 text-white px-5 py-2 rounded-full ml-1
+        shadow-lg hover:bg-green-600 transition-all duration-200 ease-in-out scale-110
+        hover:translate-y-1 flex flex-row items-center justify-center gap-2 w-[140px]"
+          style={{
+            background:
+              "linear-gradient(220deg, rgba(156,252,142,1) 0%, rgba(46,152,70,1) 28%, rgba(2,10,20,1) 100%)",
+          }}
           type="submit"
         >
-          Submit Report
+          Submit
+          <RiMailSendLine className="text-white text-xl" />
         </button>
+        <div className="h-[1px] w-full bg-slate-200 my-4"></div>
+        <p className="text-gray-600 text-sm py-2 w-full max-w-[800px]">
+          Information you submit through this form is shared between divisions
+          within DLNR, researchers at the University of Hawaii, NOAA,
+          Non-Government Organizations and other agencies that manage marine
+          debris and Aquatic Invasive Species. Your contact information is kept
+          confidential.
+        </p>
       </form>
     </section>
   );

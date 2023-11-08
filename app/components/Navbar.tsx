@@ -2,10 +2,10 @@ import React from "react";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-slate-800 p-4">
+    <nav className="bg-transparent p-4">
       <div className="container mx-auto flex justify-between items-center">
         <a href="#" className="text-white font-bold text-2xl">
-          Logo
+          <img src='/assets/logo.png' className="h-12"></img>
         </a>
         <ul className="flex space-x-4">
           <li>
