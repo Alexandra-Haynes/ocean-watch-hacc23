@@ -1,13 +1,13 @@
-'use client'
-import { useState } from "react"
+"use client";
+import { useState } from "react";
 
 // TODO: Change this
 interface RemovalFormData {
-  detectionDate: string
-  detectionLocation: string
-  environmentalDamage: string
-  debrisType: string
-  debrisApproxSize: string
+  detectionDate: string;
+  detectionLocation: string;
+  environmentalDamage: string;
+  debrisType: string;
+  debrisApproxSize: string;
 }
 
 export default function RemovalForm() {
@@ -17,7 +17,7 @@ export default function RemovalForm() {
     environmentalDamage: "",
     debrisType: "",
     debrisApproxSize: "",
-  })
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,10 +47,10 @@ export default function RemovalForm() {
     }
   };
 
-    const handleChange = (
+  const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -58,10 +58,59 @@ export default function RemovalForm() {
 
   return (
     <section>
-      <form onSubmit={handleSubmit}>
-        <h2>Removal Form</h2>
-        <div>
-          <label htmlFor="environmentalDamage">Environmental Damage:</label>
+      <form onSubmit={handleSubmit}
+      className="flex flex-col items-start justify-center gap-2
+      border-slate-500/30 border-2 rounded-md shadow-2xl p-6  md:p-8 bg-white/90 text-black w-fit"
+      >
+        <h2 className=" font-medium text-2xl self-center">Removal Form</h2>
+        <div className="flex flex-row items-start justify-between md:gap-12 ">
+        <div className="mr-8">
+        <div className="form-group flex flex-row items-center gap-4 w-fit">
+          <label htmlFor="date">Detection Date:</label>
+          <input
+            className="text-black"
+            type="date"
+            id="detectionDate"
+            name="detectionDate"
+            value={formData.detectionDate}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group flex flex-row items-center gap-4 w-fit">
+          <label htmlFor="text">Detection Location:</label>
+          <input
+            className="text-black"
+            type="text"
+            id="detectionLocation"
+            name="detectionLocation"
+            value={formData.detectionLocation}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group flex flex-row items-center gap-4 w-fit">
+          <label htmlFor="text">Debris Type:</label>
+          <input
+            className="text-black"
+            type="text"
+            id="debrisType"
+            name="debrisType"
+            value={formData.debrisType}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group flex flex-row items-center gap-4 w-fit">
+          <label htmlFor="text">Debris Approx Size:</label>
+          <input
+            className="text-black"
+            type="text"
+            id="debrisApproxSize"
+            name="debrisApproxSize"
+            value={formData.debrisApproxSize}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group flex flex-row items-center gap-4 w-fit">
+          <label htmlFor="text">Environmental Damage:</label>
             <textarea
               id="environmentalDamage"
               name="environmentalDamage"
@@ -77,7 +126,9 @@ export default function RemovalForm() {
         >
           Submit Report
         </button>
+        </div>
+        </div>
       </form>
     </section>
-  )
+  );
 }

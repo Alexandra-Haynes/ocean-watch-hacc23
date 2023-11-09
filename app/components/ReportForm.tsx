@@ -45,7 +45,7 @@ function ReportForm() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -103,7 +103,7 @@ function ReportForm() {
 
         try {
           const response = await fetch(
-            `/api/forward?access_key=${apiKey}&query=${query}`
+            `/api/forward?access_key=${apiKey}&query=${query}`,
           );
 
           if (response.ok) {
@@ -168,15 +168,15 @@ function ReportForm() {
     "A large concentration of miscellaneous trash",
     "Other - describe below",
   ];
-   const locationOptions = [
-     "Caught on the reef or partially buried in sand",
-     "Loose in the shore break or on the shoreline and could go back out to sea",
-     "Trapped in a tide pool and cannot escape",
-     "Loose on the shore but caught in the vegetation line",
-     "Tied to a fixed object so it cannot be swept away",
-     "Pushed inland above the high wash of the waves so it cannot be swept away",
-     "Other - please explain in the description below",
-   ];
+  const locationOptions = [
+    "Caught on the reef or partially buried in sand",
+    "Loose in the shore break or on the shoreline and could go back out to sea",
+    "Trapped in a tide pool and cannot escape",
+    "Loose on the shore but caught in the vegetation line",
+    "Tied to a fixed object so it cannot be swept away",
+    "Pushed inland above the high wash of the waves so it cannot be swept away",
+    "Other - please explain in the description below",
+  ];
   return (
     <section
       className="flex flex-col items-center justify-center gap-8 md:py-8 mt-4
@@ -236,7 +236,6 @@ function ReportForm() {
                   onClick={getUserLocation}
                   className="bg-green-400/50 rounded-md shadow-md p-2 px-4
             flex flex-row items-center justify-center gap-2 mb-2"
-                  
                 >
                   <MdGpsFixed /> Get My Current Location
                 </button>

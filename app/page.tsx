@@ -34,7 +34,6 @@ const Home: React.FC = () => {
             {/* <CardLink link="results" title="View Debris Reports" /> */}
           </div>
         </div>
-    
       </main>
       {/* <Footer /> */}
     </section>
