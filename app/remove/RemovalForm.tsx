@@ -1,13 +1,13 @@
-'use client'
-import { useState } from "react"
+"use client";
+import { useState } from "react";
 
 // TODO: Change this
 interface RemovalFormData {
-  detectionDate: string
-  detectionLocation: string
-  environmentalDamage: string
-  debrisType: string
-  debrisApproxSize: string
+  detectionDate: string;
+  detectionLocation: string;
+  environmentalDamage: string;
+  debrisType: string;
+  debrisApproxSize: string;
 }
 
 export default function RemovalForm() {
@@ -17,7 +17,7 @@ export default function RemovalForm() {
     environmentalDamage: "",
     debrisType: "",
     debrisApproxSize: "",
-  })
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,10 +47,10 @@ export default function RemovalForm() {
     }
   };
 
-    const handleChange = (
+  const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -62,13 +62,13 @@ export default function RemovalForm() {
         <h2>Removal Form</h2>
         <div>
           <label htmlFor="environmentalDamage">Environmental Damage:</label>
-            <textarea
-              id="environmentalDamage"
-              name="environmentalDamage"
-              value={formData.environmentalDamage}
-              onChange={handleChange}
-              className="w-full lg:max-w-[700px] h-[200px] p-2 bg-white rounded-sm text-black "
-            />
+          <textarea
+            id="environmentalDamage"
+            name="environmentalDamage"
+            value={formData.environmentalDamage}
+            onChange={handleChange}
+            className="w-full lg:max-w-[700px] h-[200px] p-2 bg-white rounded-sm text-black "
+          />
         </div>
         <button
           className="bg-green-600 text-white px-4 py-2 rounded-md
@@ -79,5 +79,5 @@ export default function RemovalForm() {
         </button>
       </form>
     </section>
-  )
+  );
 }
