@@ -10,6 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model ReportDebris {
+  id            Int      @id @default(autoincrement())
+  location String?
+  date String?
+  debrisType String?
+  containerStatus String?
+  biofouling String?
+  description String?
+  island String?
+  email String?
+  phone String?
+  captcha String?
+}
+
 model EventDetection {
   id            Int      @id @default(autoincrement())
   detectionDate String?
