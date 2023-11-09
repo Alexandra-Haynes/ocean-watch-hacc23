@@ -3,8 +3,8 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient();
 
 export async function GET(req:any , res:any) {
-  const events = await prisma.eventDetection.findMany()
-  res.json(events)
+  const events = await prisma.reportDebris.findMany();
+  return Response.json(events)
 }
 
 export async function POST(req: Request) {
