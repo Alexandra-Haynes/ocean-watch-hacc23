@@ -18,9 +18,12 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
+  background: linear-gradient(
+      to bottom,
       transparent,
-      rgb(var(--background-start-rgb))) rgb(var(--background-end-rgb));
+      rgb(var(--background-start-rgb))
+    )
+    rgb(var(--background-end-rgb));
 }
 
 /* custom style for input fields */
@@ -48,18 +51,17 @@ body {
 .form-group input[type="date"]:focus,
 .form-group input[type="file"]:focus,
 .form-group textarea:focus {
-
   border: 1px solid #1c8904;
-
 }
-
 
 .custom-background {
   background: rgb(174, 238, 233);
-  background: linear-gradient(220deg,
-      rgba(174, 238, 233, 1) 0%,
-      rgba(46, 103, 152, 1) 48%,
-      rgba(2, 10, 20, 1) 100%);
+  background: linear-gradient(
+    220deg,
+    rgba(174, 238, 233, 1) 0%,
+    rgba(46, 103, 152, 1) 48%,
+    rgba(2, 10, 20, 1) 100%
+  );
 }
 
 .custom-clip-path {

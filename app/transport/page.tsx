@@ -1,8 +1,7 @@
-
 export default function TransportPage() {
   return (
-  <>
-    <h1>Transport Page</h1>
-  </>
-  )
+    <>
+      <h1>Transport Page</h1>
+    </>
+  );
 }

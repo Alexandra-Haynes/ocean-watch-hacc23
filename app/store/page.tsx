@@ -1,8 +1,7 @@
-
 export default function StoragePage() {
   return (
-  <>
-    <h1>Debris Storage Page</h1>
-  </>
-  )
+    <>
+      <h1>Debris Storage Page</h1>
+    </>
+  );
 }
