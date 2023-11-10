@@ -140,6 +140,23 @@ function ReportForm() {
     form.append("email", formData.email);
     form.append("phone", formData.phone);
     form.append("captcha", formData.captcha);
+
+    // Example: send formData to the server
+    try {
+      const response = await fetch("/api/report", {
+        method: "POST",
+        body: form,
+      });
+      if (response.ok) {
+        // Success - display success message, next steps, etc.
+        console.log("SUCCESS");
+      } else {
+        // Handle errors, display an error message
+      }
+    } catch (error) {
+      // Handle network/server errors
+      console.log("ERROR", error);
+    }
   };
 
   const debrisOptions = [
