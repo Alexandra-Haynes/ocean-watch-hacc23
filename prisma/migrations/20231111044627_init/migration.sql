@@ -1,4 +1,21 @@
 -- CreateTable
+CREATE TABLE "ReportDebris" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "location" TEXT,
+    "date" TEXT,
+    "debrisType" TEXT,
+    "containerStatus" TEXT,
+    "biofouling" TEXT,
+    "description" TEXT,
+    "island" TEXT,
+    "email" TEXT,
+    "phone" TEXT,
+    "captcha" TEXT,
+    "status" TEXT,
+    "removalCompany" TEXT
+);
+
+-- CreateTable
 CREATE TABLE "EventDetection" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "detectionDate" TEXT,
