@@ -4,7 +4,7 @@ import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 
 interface FormData {
-  location: string;
+  address: string;
   latitude: string;
   longitude: string;
   fullAddress: string;
@@ -23,7 +23,7 @@ interface FormData {
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
-    location: "",
+    address: "",
     latitude: "",
     longitude: "",
     fullAddress: "",
@@ -125,7 +125,9 @@ function ReportForm() {
     e.preventDefault();
 
     const form = new FormData();
-    form.append("location", formData.location);
+    form.append("address", formData.address);
+    form.append("latitude", formData.latitude);
+    form.append("longitude", formData.longitude);
     form.append("date", formData.date);
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
@@ -229,7 +231,7 @@ function ReportForm() {
             </div>
             {/* ____________________Location & address_________________ */}
             <div className="form-group">
-              <label htmlFor="location">Location Coordinates:</label>
+              <label htmlFor="address">Location Coordinates:</label>
 
               {!showCoordinates && (
                 <button
@@ -257,16 +259,16 @@ function ReportForm() {
                 </div>
               )}
 
-              <label htmlFor="location">Address:</label>
+              <label htmlFor="address">Address:</label>
               <p className="text-gray-600 text-sm">
                 Please provide specific details that help us pinpoint the debris
                 location.
               </p>
               <input
                 type="text"
-                id="location"
-                name="location"
-                value={formData.location}
+                id="address"
+                name="address"
+                value={formData.address}
                 onChange={handleChange}
                 className="w-full"
               />
