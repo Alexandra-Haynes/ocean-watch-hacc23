@@ -7,6 +7,18 @@ export async function GET(req:any , res:any) {
   return Response.json(events)
 }
 
+export async function PATCH(req: Request) {
+  const formData = await req.formData();
+  const id = formData.get('id')?.toString();
+  const status = formData.get('status')?.toString();
+  const removalCompany = formData.get('removalCompany')?.toString();
+  const result = prisma.reportDebris.update({
+    where: { id: Number(id) },
+    data: { status: status, removalCompany: removalCompany },
+  });
+  return Response.json((await result).id)
+}
+
 export async function POST(req: Request) {
   const formData = await req.formData()
   const location = formData.get('location')?.toString()
