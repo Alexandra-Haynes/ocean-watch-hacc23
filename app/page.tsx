@@ -1,8 +1,5 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Link from "next/link";
-import CardLink from "./components/CardLink";
 import ReportFormCardLink from "./components/ReportFormCardLink";
 import HeroText from "./components/HeroText";
 
@@ -35,7 +32,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       </main>
-      {/* <Footer /> */}
     </section>
   );
 };

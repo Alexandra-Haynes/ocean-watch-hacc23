@@ -1,4 +1,5 @@
 import React from "react";
+import DonateButton from "./DonateButton";
 
 const HeroText = () => {
   return (
@@ -17,11 +18,15 @@ const HeroText = () => {
       </h1>
 
       <p
-        className="text-blue-200 lg:text-xl xl:text-2xl max-w-[300px] lg:max-w-[500px] font-semibold
-      hidden lg:block"
+        className="text-blue-100/80 lg:text-xl 
+        xl:text-2xl max-w-[300px] lg:max-w-[500px] 
+      hidden lg:block font-normal"
       >
         World's premier center for pioneering plastic pollution research
       </p>
+      <div className="hidden lg:block">
+        <DonateButton />
+      </div>
     </div>
   );
 };

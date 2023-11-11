@@ -9,7 +9,7 @@ export default function ReportFormCardLink() {
         className="rounded lg:overflow-hidden  mt-12
          h-[1100px] lg:h-[1200px] w-[700px] bg-white 
          shadow-2xl flex flex-col items-center justify-start
-         relative hover:shadow-2xl transition duration-300 ease-out"
+         relative hover:shadow-2xl transition duration-300 ease-out -z-10"
         href={`/report`}
       >
         <div className="flex flex-col items-center justify-start mt-[5rem]">
