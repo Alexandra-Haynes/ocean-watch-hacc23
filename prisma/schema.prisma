@@ -22,6 +22,8 @@ model ReportDebris {
   email String?
   phone String?
   captcha String?
+  status String?
+  removalCompany String?
 }
 
 model EventDetection {
