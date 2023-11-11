@@ -233,6 +233,7 @@ function ReportForm() {
 
               {!showCoordinates && (
                 <button
+                  type="button"
                   onClick={getUserLocation}
                   className="bg-green-400/50 rounded-md shadow-md p-2 px-4
             flex flex-row items-center justify-center gap-2 mb-2"
