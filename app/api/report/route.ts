@@ -21,7 +21,9 @@ export async function PATCH(req: Request) {
 
 export async function POST(req: Request) {
   const formData = await req.formData()
-  const location = formData.get('location')?.toString()
+  const address = formData.get('address')?.toString()
+  const latitude = formData.get('latitude')?.toString()
+  const longitude = formData.get('longitude')?.toString()
   const date = formData.get('date')?.toString()
   const debrisType = formData.get('debrisType')?.toString()
   const containerStatus = formData.get('containerStatus')?.toString()
@@ -44,7 +46,9 @@ export async function POST(req: Request) {
 
   const result = prisma.reportDebris.create({
     data: {
-      location: location,
+      address: address,
+      latitude: latitude,
+      longitude: longitude,
       date: date,
       debrisType: debrisType,
       containerStatus: containerStatus,

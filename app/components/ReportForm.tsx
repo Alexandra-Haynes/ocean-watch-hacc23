@@ -5,7 +5,7 @@ import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from 'google-map-react';
 
 interface FormData {
-  location: string;
+  address: string;
   latitude: string;
   longitude: string;
   fullAddress: string;
@@ -24,7 +24,7 @@ interface FormData {
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
-    location: "",
+    address: "",
     latitude: "",
     longitude: "",
     fullAddress: "",
@@ -154,7 +154,9 @@ function ReportForm() {
     e.preventDefault();
 
     const form = new FormData();
-    form.append("location", formData.location);
+    form.append("address", formData.address);
+    form.append("latitude", formData.latitude);
+    form.append("longitude", formData.longitude);
     form.append("date", formData.date);
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
@@ -186,6 +188,7 @@ function ReportForm() {
       // Handle network/server errors
       console.log("ERROR", error);
     }
+    window.location.href = "/report-submitted";
   };
 
   const debrisOptions = [
@@ -216,12 +219,12 @@ function ReportForm() {
         className="flex flex-col items-start justify-center gap-2
         border-slate-500/30 border-2 rounded-md shadow-2xl p-6  md:p-8 bg-white/90"
       >
-        <h2 className=" font-medium text-2xl self-center">
+        <h2 className=" font-medium text-2xl text-black self-center">
           Report Marine Debris
         </h2>
         <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
 
-        <div className="flex flex-row items-start justify-between md:gap-12 ">
+        <div className="flex flex-row items-start text-black justify-between md:gap-12 ">
           <div className="mr-8">
             {/*________________________ Island Selection_______________ */}
             {/* <div className="form-group flex flex-row items-center gap-4">
@@ -263,6 +266,7 @@ function ReportForm() {
               {!showCoordinates && (
                 <div>
                 <button
+                  type="button"
                   onClick={getUserLocation}
                   className="bg-green-400/50 rounded-md shadow-md p-2 px-4
             flex flex-row items-center justify-center gap-2 mb-2"
@@ -314,6 +318,20 @@ function ReportForm() {
                   </GoogleMapReact>
                 </div>
               )}
+
+              <label htmlFor="address">Address:</label>
+              <p className="text-gray-600 text-sm">
+                Please provide specific details that help us pinpoint the debris
+                location.
+              </p>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full"
+              />
             </div>
 
             {/* ______________________DEBRIS TYPE_______________________ */}
@@ -547,7 +565,7 @@ function ReportForm() {
         </div>
 
         {/* _______________________________DESCRIPTION__________________ */}
-        <div className="form-group w-full ">
+        <div className="form-group w-full text-black">
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"
@@ -565,7 +583,7 @@ function ReportForm() {
         </div>
         {/* ________________________________DATE______________________ */}
 
-        <div className="form-group flex flex-row items-center gap-4">
+        <div className="form-group flex flex-row items-center gap-4 text-black">
           <label htmlFor="date">Date:</label>
           <input
             type="date"

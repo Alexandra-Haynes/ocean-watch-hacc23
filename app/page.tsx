@@ -1,14 +1,12 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import ReportFormCardLink from "./components/ReportFormCardLink";
 import HeroText from "./components/HeroText";
 
 const Home: React.FC = () => {
   return (
-    <section className="max-h-screen overflow-y-hidden">
-      <Navbar />
+    <section className="h-fit max-h-screen">
       <main
-        className="bg-cover bg-no-repeat flex min-h-screen 
+        className="bg-cover bg-no-repeat flex h-screen 
       flex-col items-center justify-between px-4"
       >
         {/* ___________BACKGROUND___________ */}
@@ -19,10 +17,10 @@ const Home: React.FC = () => {
           <div className="custom-clip-path h-screen w-screen bg-white/10"></div>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center justify-center xl:gap-[12rem] ">
+        <div className="flex flex-col lg:flex-row items-center justify-center xl:gap-[12rem]">
           <HeroText />
           {/* __________REPORT CARD LINK________ */}
-          <div className="flex flex-row flex-wrap w-2/3 justify-around">
+          <div className="flex flex-row flex-wrap w-2/3 justify-around h-fit">
             <ReportFormCardLink />
             {/* <CardLink link="report" title="Report Debris" /> */}
             {/* <CardLink link="remove" title="Remove Debris" /> */}
