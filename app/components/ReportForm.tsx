@@ -67,6 +67,25 @@ function ReportForm() {
         }),
       );
 
+      const message = [
+        "The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
+        "We will review your submission and get back to you shortly.",
+        "Mahalo!",
+      ];
+
+      const showText = function(target: string, message: string, index: number, interval: number) {
+        if (index < message.length) {
+          const e = document.querySelector(target) as any;
+          console.log(e);
+          (e).textContent += message[index++];
+          setTimeout(function() {
+            showText(target, message, index, interval);
+          }, interval);
+        }
+      }
+
+      showText("#sealy", message[0], 0, 50);
+
       setFormData({
         ...formData,
         images: imageBase64s,
@@ -559,6 +578,18 @@ function ReportForm() {
                     ))}
                   </div>
                 )}
+              </div>
+
+              {/* __________________________DESCRIPTION_____________________ */}
+              <div className="form-group">
+                <img src="./assets/seal.png" alt="seal" className="w-1/4" />
+                <label htmlFor="email">Sealy's Recommendation:</label>
+                <textarea
+                  id="sealy"
+                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                  rows={30}
+                  >
+                </textarea>
               </div>
             </div>
           </div>
