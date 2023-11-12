@@ -23,7 +23,7 @@ export default function ReportFormCardLink() {
             className="max-w-[300px] text-xl text-center mb-6 font-semibold
            text-slate-700"
           >
-            Report It Here, and We'll Take Care of the Removal
+            Report It Here, and We&apos;ll Take Care of the Removal
           </h3>
         </div>
         <div
