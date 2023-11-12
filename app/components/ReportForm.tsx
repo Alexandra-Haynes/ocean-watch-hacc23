@@ -159,6 +159,7 @@ function ReportForm() {
       // Handle network/server errors
       console.log("ERROR", error);
     }
+    window.location.href = "/report-submitted";
   };
 
   const debrisOptions = [
