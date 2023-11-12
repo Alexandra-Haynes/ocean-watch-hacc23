@@ -49,7 +49,7 @@ function ReportForm() {
 const SENDER_NUMBER = 5550229789;
 
 // Your test sender phone number
-const wa = new WhatsApp(Number(SENDER_NUMBER));
+// const wa = new WhatsApp(Number(SENDER_NUMBER));
 
 // Enter the recipient phone number
 const recipient_number = process.env.RECIPIENT_WAID;
