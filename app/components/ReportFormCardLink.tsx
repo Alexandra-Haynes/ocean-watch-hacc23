@@ -11,7 +11,6 @@ export default function ReportFormCardLink() {
          shadow-2xl flex flex-col items-center justify-start
          relative hover:shadow-2xl transition duration-300 ease-out 
          "
-        
       >
         <div className="flex flex-col items-center justify-start mt-8 xl:mt-[5rem]">
           <h2
@@ -29,7 +28,7 @@ export default function ReportFormCardLink() {
           </h3>
         </div>
         <Link
-          href='/report'
+          href="/report"
           className="text-sm xl:text-md text-white
            px-4 xl:w-1/2 h-8 xl:h-[3rem] uppercase rounded-full
           flex flex-col items-center justify-center shadow-lg
@@ -41,7 +40,7 @@ export default function ReportFormCardLink() {
         </Link>
 
         <div
-          className="h-[240px] xl:w-[300px] md:w-[80%]  w-[90%] bg-cyan-300/10 md:bg-cyan-100/90 rounded-md shadow-lg
+          className="h-[240px] xl:w-[300px] md:w-[80%]  w-[90%] bg-cyan-300/10 md:bg-cyan-50/90 rounded-md shadow-lg
 flex flex-col items-center justify-center mt-8 gap-2 py-4 mx-12 z-20 mb-[200px] border"
         >
           <LuBadgeAlert className="text-2xl  xl:text-3xl text-orange-400" />
@@ -49,14 +48,19 @@ flex flex-col items-center justify-center mt-8 gap-2 py-4 mx-12 z-20 mb-[200px] 
             Are there marine animals entangled in the debris?
           </p>
           <div className="h-[1px] w-1/2 bg-orange-400 my-1  "></div>
-          <p className=" text-[.6rem] text-black">Call NOAA immediately at </p>
-          <p className="xl:text-md text-sm font-bold flex flex-row items-center 
-          justify-center gap-2 text-black">
+          <p className=" text-[.6rem] lg:text-[.8rem] text-black">
+            Call NOAA immediately at{" "}
+          </p>
+          <p
+            className="xl:text-md text-sm font-bold flex flex-row items-center 
+          justify-center gap-2 text-black"
+          >
             <BiSolidPhoneCall />
             1-888-256-9840
           </p>
-          <p className="text-[.6rem] lg:text-[.8rem] text-black">24/7 Emergency Hotline</p>
-
+          <p className="text-[.6rem] lg:text-[.8rem] text-black">
+            24/7 Emergency Hotline
+          </p>
         </div>
         <div
           className="h-[200px] md:h-[260px] xl:h-[300px] w-full absolute bottom-0 bg-slate-900
