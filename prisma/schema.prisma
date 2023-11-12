@@ -24,6 +24,7 @@ model ReportDebris {
   captcha String?
   status String?
   removalCompany String?
+  images String?
 }
 
 model EventDetection {
