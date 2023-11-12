@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import ReportFormCardLink from "./components/ReportFormCardLink";
 import HeroText from "./components/HeroText";
 
 const Home: React.FC = () => {
   return (
     <section className="h-fit max-h-screen">
-      {/* <Navbar /> */}
       <main
         className="bg-cover bg-no-repeat flex h-screen 
       flex-col items-center justify-between px-4"
