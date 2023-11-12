@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 import LoginButton from "./LoginButton";
 import DonateButton from "./DonateButton";
 
@@ -8,13 +9,15 @@ const Navbar: React.FC = () => {
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
+  const gradient = {
+    background: "linear-gradient(black 0%, rgba(0, 0, 0, 0) 100%)",
+  };
   return (
-    <nav className="w-full  mt-4 uppercase">
-      <div className="flex justify-between items-center mx-6">
-        <a href="#" className="text-white font-bold text-2xl">
+    <nav className="w-full  p-5 uppercase" style={gradient}>
+      <div className="flex justify-between items-center mx-12">
+        <a href="/" className="text-white font-bold text-xl">
           {" "}
-          LOGO
-          {/* <img src="/assets/logo.png" className="h-12" alt="Logo" />  */}
+          <img src="/assets/logo.png" className="h-12" alt="Logo" />
         </a>
 
         {/* Burger menu icon for small screens */}
@@ -62,7 +65,7 @@ const Navbar: React.FC = () => {
         {/* Overlay to capture clicks and close the menu */}
         {isMenuOpen && (
           <div
-            className="fixed inset-0 bg-black opacity-50 "
+            className="fixed inset-0 opacity-50 z-10"
             onClick={toggleMenu}
           ></div>
         )}
@@ -70,16 +73,16 @@ const Navbar: React.FC = () => {
         <ul
           className={`lg:flex lg:space-x-8 lg:items-center lg:justify-center font-semibold text-xl ${
             isMenuOpen
-              ? "flex flex-col items-start justify-between gap-2 fixed pl-12 bg-slate-900 right-0 top-0 w-1/2 h-[400px] rounded-bl-md shadow-xl p-8"
+              ? "flex flex-col items-start justify-between gap-2 fixed z-50 bg-slate-900 right-0 top-0 w-1/2 h-[400px] rounded-bl-md shadow-xl p-8"
               : "hidden"
           }`}
         >
           {" "}
           <li>
             <a
-              href="#"
+              href="/"
               className="text-white hover:shadow-lg pb-2
-            hover:font-bold transition-all ease-in
+            hover:font-bold transition-all ease-in text-sm
          "
             >
               Home
@@ -87,9 +90,10 @@ const Navbar: React.FC = () => {
           </li>
           <li className="relative group">
             <a
-              href="#"
+              href="https://www.hpu.edu/about-us/index.html"
+              target="_blank"
               className="text-white hover:shadow-lg pb-2
-            hover:font-bold transition-all ease-in
+            hover:font-bold transition-all ease-in text-sm
          "
             >
               About
@@ -97,9 +101,10 @@ const Navbar: React.FC = () => {
           </li>
           <li className="relative group">
             <a
-              href="#"
+              href="https://www.hpu.edu/cncs/cmdr/research/overview.html"
+              target="_blank"
               className="text-white hover:shadow-lg pb-2
-            hover:font-bold transition-all ease-in
+            hover:font-bold transition-all ease-in text-sm
          "
             >
               Research
@@ -107,9 +112,10 @@ const Navbar: React.FC = () => {
           </li>
           <li>
             <a
-              href="#"
+              href="https://www.hpu.edu/cncs/cmdr/products-and-services.html"
+              target="_blank"
               className="text-white hover:shadow-lg pb-2 
-            hover:font-bold transition-all ease-in
+            hover:font-bold transition-all ease-in text-sm
          "
             >
               Products & Services
@@ -119,9 +125,10 @@ const Navbar: React.FC = () => {
             <div>
               <li>
                 <a
-                  href="#"
+                  href="https://www.hpu.edu/giving/index.html"
+                  target="_blank"
                   className="text-yellow-400 hover:shadow-lg pb-2 
-            hover:font-bold transition-all ease-in
+            hover:font-bold transition-all ease-in text-sm
          "
                 >
                   Donate
@@ -130,7 +137,7 @@ const Navbar: React.FC = () => {
             </div>
           )}
           <li>
-            <a href="#">
+            <a href="login">
               <LoginButton />
             </a>
           </li>

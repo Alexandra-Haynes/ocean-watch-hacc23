@@ -4,6 +4,7 @@ import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import WhatsApp from 'whatsapp';
 
+import GoogleMapReact from "google-map-react";
 
 interface FormData {
   address: string;
@@ -16,7 +17,7 @@ interface FormData {
   biofouling: number;
   debrisLocation: string;
   description: string;
-  images: File[];
+  images: string[];
   island: string;
   email: string;
   phone: string;
@@ -32,7 +33,7 @@ function ReportForm() {
     date: "",
     debrisType: "",
     containerStatus: "Full",
-    biofouling: 1,
+    biofouling: 0,
     debrisLocation: "",
     description: "",
     images: [],
@@ -49,7 +50,7 @@ function ReportForm() {
 const SENDER_NUMBER = 5550229789;
 
 // Your test sender phone number
-// const wa = new WhatsApp(Number(SENDER_NUMBER));
+const wa = new WhatsApp(Number(SENDER_NUMBER));
 
 // Enter the recipient phone number
 const recipient_number = process.env.RECIPIENT_WAID;
@@ -64,15 +65,23 @@ const recipient_number = process.env.RECIPIENT_WAID;
   };
 
   // Image upload
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (files) {
       const imageFiles = Array.from(files);
 
+      const imageBase64s = await Promise.all(
+        imageFiles.map(async (image) => {
+          const url = URL.createObjectURL(image);
+          const b64 = await toDataURL(url);
+          return b64;
+        }),
+      );
+
       setFormData({
         ...formData,
-        images: imageFiles,
+        images: imageBase64s,
       });
     }
   };
@@ -109,6 +118,7 @@ const recipient_number = process.env.RECIPIENT_WAID;
           longitude: longitude.toString(),
         });
         setShowCoordinates(true);
+
         // Get the full address based on the coordinates using Positionstack API
         const apiKey = "";
         const query = `96706`;
@@ -136,7 +146,7 @@ const recipient_number = process.env.RECIPIENT_WAID;
   async function sendMessage()
   {
       try{
-          const sent_text_message = wa.messages.text( { "body" : "Hello world" }, recipient_number );
+          const sent_text_message = wa.messages.text( { "body" : "Hello world" }, Number(recipient_number) );
 
           await sent_text_message.then( ( res: any ) =>
           {
@@ -147,6 +157,24 @@ const recipient_number = process.env.RECIPIENT_WAID;
       {
           console.log( JSON.stringify( e ) );
       }
+    }
+  function toDataURL(url: any) {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+          resolve(reader.result);
+        };
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new Error("Failed to fetch data"));
+      };
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.send();
+    });
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -161,10 +189,10 @@ const recipient_number = process.env.RECIPIENT_WAID;
     form.append("containerStatus", formData.containerStatus);
     form.append("biofouling", String(formData.biofouling));
     form.append("description", formData.description);
-    // Append each image file separately
-    formData.images.forEach((image, index) => {
-      form.append(`image${index}`, image);
-    });
+    for (let i = 0; i < formData.images.length; i++) {
+      const imageKey = `image${i}`;
+      form.append(imageKey, formData.images[i]);
+    }
 
     form.append("island", formData.island);
     form.append("email", formData.email);
@@ -180,6 +208,7 @@ const recipient_number = process.env.RECIPIENT_WAID;
       if (response.ok) {
         // Success - display success message, next steps, etc.
         console.log("SUCCESS");
+        window.location.href = "/report-submitted";
       } else {
         // Handle errors, display an error message
       }
@@ -232,7 +261,7 @@ const recipient_number = process.env.RECIPIENT_WAID;
         <div className="flex flex-row items-start text-black justify-between md:gap-12 ">
           <div className="mr-8">
             {/*________________________ Island Selection_______________ */}
-            <div className="form-group flex flex-row items-center gap-4">
+            {/* <div className="form-group flex flex-row items-center gap-4">
               <label htmlFor="island">Select Island</label>
               <select
                 id="island"
@@ -263,35 +292,64 @@ const recipient_number = process.env.RECIPIENT_WAID;
                   Molokai
                 </option>
               </select>
-            </div>
+            </div> */}
             {/* ____________________Location & address_________________ */}
             <div className="form-group">
-              <label htmlFor="address">Location Coordinates:</label>
+              <label htmlFor="location">Location:</label>
 
               {!showCoordinates && (
-                <button
-                  type="button"
-                  onClick={getUserLocation}
-                  className="bg-green-400/50 rounded-md shadow-md p-2 px-4
+                <div>
+                  <button
+                    type="button"
+                    onClick={getUserLocation}
+                    className="bg-green-400/50 rounded-md shadow-md p-2 px-4
             flex flex-row items-center justify-center gap-2 mb-2"
-                >
-                  <MdGpsFixed /> Get My Current Location
-                </button>
+                  >
+                    <MdGpsFixed /> Get My Current Location
+                  </button>
+
+                  <p>or describe the location manually</p>
+
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="w-full h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+                  />
+                </div>
               )}
               {showCoordinates && formData.latitude && formData.longitude && (
-                <div className="form-group mb-2">
-                  <p className="text-gray-600 ">
-                    Latitude:{" "}
-                    <span className="text-green-600 font-semibold">
-                      {" "}
-                      {formData.latitude}
-                    </span>{" "}
-                    | Longitude:{" "}
-                    <span className="text-green-600 font-semibold">
-                      {" "}
-                      {formData.longitude}{" "}
-                    </span>
-                  </p>
+                // <div className="form-group mb-2">
+                //   <p className="text-gray-600 ">
+                //     Latitude:{" "}
+                //     <span className="text-green-600 font-semibold">
+                //       {" "}
+                //       {formData.latitude}
+                //     </span>{" "}
+                //     | Longitude:{" "}
+                //     <span className="text-green-600 font-semibold">
+                //       {" "}
+                //       {formData.longitude}{" "}
+                //     </span>
+                //   </p>
+                // </div>
+                <div style={{ height: "1000px", width: "1000px" }}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: "" }}
+                    defaultCenter={{
+                      lat: Number(formData.latitude),
+                      lng: Number(formData.longitude),
+                    }}
+                    defaultZoom={15}
+                  >
+                    {/* <div>
+                    lat={formData.latitude}
+                    lng={formData.longitude}
+                    text="My Marker"
+                  </div> */}
+                  </GoogleMapReact>
                 </div>
               )}
 
@@ -330,52 +388,53 @@ const recipient_number = process.env.RECIPIENT_WAID;
               </select>
             </div>
             {/* ______________________Container_______________________ */}
-            <div>
-              <label>
-                <span className="font-semibold">
-                  Did you find a container, a drum, or cylinder?
-                </span>{" "}
-                If yes, how full is it?
-              </label>
-              <div className="flex flex-row items-center start-center gap-4 pt-2">
-                <label className="flex flex-row items-center gap-1 justify-center">
-                  <input
-                    type="radio"
-                    name="containerStatus"
-                    value="Full"
-                    checked={containerStatus === "Full"}
-                    onChange={() => handleContainerStatusChange("Full")}
-                    className="h-6"
-                  />
-                  Full
+            {formData.debrisType === "A container/drum/cylinder" && (
+              <div>
+                <label>
+                  <span className="font-semibold">
+                    Did you find a container, a drum, or cylinder?
+                  </span>{" "}
+                  If yes, how full is it?
                 </label>
-                <label className="flex flex-row items-center gap-1 justify-center">
-                  <input
-                    type="radio"
-                    name="containerStatus"
-                    value="Partially Filled"
-                    checked={containerStatus === "Partially Filled"}
-                    onChange={() =>
-                      handleContainerStatusChange("Partially Filled")
-                    }
-                    className="h-6"
-                  />
-                  Partially Filled
-                </label>
-                <label className="flex flex-row items-center gap-1 justify-center">
-                  <input
-                    type="radio"
-                    name="containerStatus"
-                    value="Empty"
-                    checked={containerStatus === "Empty"}
-                    onChange={() => handleContainerStatusChange("Empty")}
-                    className="h-6"
-                  />
-                  Empty
-                </label>
+                <div className="flex flex-row items-center start-center gap-4 pt-2">
+                  <label className="flex flex-row items-center gap-1 justify-center">
+                    <input
+                      type="radio"
+                      name="containerStatus"
+                      value="Full"
+                      checked={containerStatus === "Full"}
+                      onChange={() => handleContainerStatusChange("Full")}
+                      className="h-6"
+                    />
+                    Full
+                  </label>
+                  <label className="flex flex-row items-center gap-1 justify-center">
+                    <input
+                      type="radio"
+                      name="containerStatus"
+                      value="Partially Filled"
+                      checked={containerStatus === "Partially Filled"}
+                      onChange={() =>
+                        handleContainerStatusChange("Partially Filled")
+                      }
+                      className="h-6"
+                    />
+                    Partially Filled
+                  </label>
+                  <label className="flex flex-row items-center gap-1 justify-center">
+                    <input
+                      type="radio"
+                      name="containerStatus"
+                      value="Empty"
+                      checked={containerStatus === "Empty"}
+                      onChange={() => handleContainerStatusChange("Empty")}
+                      className="h-6"
+                    />
+                    Empty
+                  </label>
+                </div>
               </div>
-            </div>
-
+            )}
             {/* ______________________Debris Location Details_______________________ */}
             <div className="form-group pt-4">
               <label htmlFor="debrisLocation">
@@ -400,15 +459,18 @@ const recipient_number = process.env.RECIPIENT_WAID;
             </div>
             {/* ______________________Biofouling_______________________ */}
             <div className="pt-2">
-              <div className="flex flex-row items-center justify-start gap-4">
+              <div
+                className="flex flex-row items-center justify-start gap-4"
+                title="The Level of Fouling LoF scale is a ranking system with six categories characterizing the amount of biofouling."
+              >
                 <label className="font-semibold pt-2">
-                  Algae and marine life:
+                  Level of Fouling (LoF) [﹖]:
                 </label>
                 <input
                   type="range"
                   name="biofouling"
-                  min={1}
-                  max={10}
+                  min={0}
+                  max={5}
                   value={formData.biofouling}
                   onChange={(e) =>
                     handleBiofoulingChange(Number(e.target.value))
@@ -418,11 +480,51 @@ const recipient_number = process.env.RECIPIENT_WAID;
                 <p className="text-gray-600 text-sm">{formData.biofouling}</p>
               </div>
               <p className="text-gray-600 text-sm py-2 w-full">
-                On a scale of one to ten, how much biofouling is on the item you
-                found? <br />
-                1 - no marine growth <br />
-                10 - significant marine life covering all submerged surfaces
+                The Level of Fouling (LoF) scale is a ranking system with six
+                categories characterizing the amount of biofouling.
               </p>
+              <div>
+                <p id="biofoulingDescription">
+                  {formData.biofouling === 0 && (
+                    <span className="font-semibold">
+                      0: Zero slime/biofilm, zero macrofouling
+                    </span>
+                  )}
+                  {formData.biofouling === 1 && (
+                    <span className="font-semibold">
+                      1: Light slime/biofilm, zero macrofouling
+                    </span>
+                  )}
+                  {formData.biofouling === 2 && (
+                    <span className="font-semibold">
+                      2: Macrofouling present covering up to 5% of the surface
+                    </span>
+                  )}
+                  {formData.biofouling === 3 && (
+                    <span className="font-semibold">
+                      3: Macrofouling covering from 6% to 15% of the surface
+                    </span>
+                  )}
+                  {formData.biofouling === 4 && (
+                    <span className="font-semibold">
+                      4: Macrofouling covering from 16% to 40% of the surface
+                    </span>
+                  )}
+                  {formData.biofouling === 5 && (
+                    <span className="font-semibold">
+                      5: Macrofouling covering more than 40% of the surface up
+                      to 100%
+                    </span>
+                  )}
+                </p>
+              </div>
+              <div>
+                <img
+                  src={`./assets/levels-of-fouling/${formData.biofouling}.png`}
+                  alt="biofouling"
+                  className="w-1/2"
+                />
+              </div>
             </div>
           </div>
 
@@ -454,7 +556,7 @@ const recipient_number = process.env.RECIPIENT_WAID;
                   className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
                 />
                 <p className="text-gray-600 text-sm py-2 w-full">
-                  Please include area code
+                  Please include area code (e.g. 808-555-5555)
                 </p>
               </div>
               {/* __________________________IMAGE_____________________ */}
@@ -484,7 +586,7 @@ const recipient_number = process.env.RECIPIENT_WAID;
                         className="flex flex-row items-end gap-4"
                       >
                         <img
-                          src={URL.createObjectURL(image)}
+                          src={image}
                           alt="Image Preview"
                           style={{ maxHeight: "50px" }}
                           className="h-auto"

@@ -18,14 +18,15 @@ model ReportDebris {
   date            String?
   debrisType      String?
   containerStatus String?
-  biofouling      String?
-  description     String?
-  island          String?
-  email           String?
-  phone           String?
-  captcha         String?
-  status          String?
-  removalCompany  String?
+  biofouling String?
+  description String?
+  island String?
+  email String?
+  phone String?
+  captcha String?
+  status String?
+  removalCompany String?
+  images String?
 }
 
 model EventDetection {
