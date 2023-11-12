@@ -15,7 +15,7 @@ export default function ReportFormCardLink() {
       >
         <div className="flex flex-col items-center justify-start mt-8 xl:mt-[5rem]">
           <h2
-            className="text-center font-bold xl:text-2xl mb-2 
+            className="text-center text-black font-bold xl:text-2xl mb-2 
            uppercase"
           >
             Found Marine Debris?
@@ -25,7 +25,7 @@ export default function ReportFormCardLink() {
             text-center mb-6 font-semibold
            text-slate-700"
           >
-            Report It Here, and We'll Take Care of the Removal
+            Report It Here, and We&apos;ll Take Care of the Removal
           </h3>
         </div>
         <Link
@@ -45,17 +45,18 @@ export default function ReportFormCardLink() {
 flex flex-col items-center justify-center mt-8 gap-2 py-4 mx-12 z-20 mb-[200px] border"
         >
           <LuBadgeAlert className="text-2xl  xl:text-3xl text-orange-400" />
-          <p className="font-semibold px-12 text-center text-sm  xl:text-md">
+          <p className="font-semibold px-12 text-center text-black text-sm  xl:text-md">
             Are there marine animals entangled in the debris?
           </p>
           <div className="h-[1px] w-1/2 bg-orange-400 my-1  "></div>
-          <p className=" text-[.6rem]">Call NOAA immediately at </p>
+          <p className=" text-[.6rem] text-black">Call NOAA immediately at </p>
           <p className="xl:text-md text-sm font-bold flex flex-row items-center 
-          justify-center gap-2">
+          justify-center gap-2 text-black">
             <BiSolidPhoneCall />
             1-888-256-9840
           </p>
-          <p className="text-[.6rem] lg:text-[.8rem]">24/7 Emergency Hotline</p>
+          <p className="text-[.6rem] lg:text-[.8rem] text-black">24/7 Emergency Hotline</p>
+
         </div>
         <div
           className="h-[200px] md:h-[260px] xl:h-[300px] w-full absolute bottom-0 bg-slate-900
