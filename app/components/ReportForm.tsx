@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact from "google-map-react";
 
 interface FormData {
   address: string;
@@ -134,18 +134,18 @@ function ReportForm() {
   function toDataURL(url: any) {
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
-      xhr.onload = function() {
+      xhr.onload = function () {
         var reader = new FileReader();
-        reader.onloadend = function() {
+        reader.onloadend = function () {
           resolve(reader.result);
         };
         reader.readAsDataURL(xhr.response);
       };
-      xhr.onerror = function() {
-        reject(new Error('Failed to fetch data'));
+      xhr.onerror = function () {
+        reject(new Error("Failed to fetch data"));
       };
-      xhr.open('GET', url);
-      xhr.responseType = 'blob';
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
       xhr.send();
     });
   }
@@ -181,6 +181,7 @@ function ReportForm() {
       if (response.ok) {
         // Success - display success message, next steps, etc.
         console.log("SUCCESS");
+        window.location.href = "/report-submitted";
       } else {
         // Handle errors, display an error message
       }
@@ -188,7 +189,6 @@ function ReportForm() {
       // Handle network/server errors
       console.log("ERROR", error);
     }
-    window.location.href = "/report-submitted";
   };
 
   const debrisOptions = [
@@ -265,25 +265,25 @@ function ReportForm() {
 
               {!showCoordinates && (
                 <div>
-                <button
-                  type="button"
-                  onClick={getUserLocation}
-                  className="bg-green-400/50 rounded-md shadow-md p-2 px-4
+                  <button
+                    type="button"
+                    onClick={getUserLocation}
+                    className="bg-green-400/50 rounded-md shadow-md p-2 px-4
             flex flex-row items-center justify-center gap-2 mb-2"
-                >
-                  <MdGpsFixed /> Get My Current Location
-                </button>
+                  >
+                    <MdGpsFixed /> Get My Current Location
+                  </button>
 
                   <p>or describe the location manually</p>
 
-                  <input type="text"
-                    id="location"
-                    name="location"
-                    value={formData.location}
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={formData.address}
                     onChange={handleChange}
                     className="w-full h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
                   />
-
                 </div>
               )}
               {showCoordinates && formData.latitude && formData.longitude && (
@@ -301,7 +301,7 @@ function ReportForm() {
                 //     </span>
                 //   </p>
                 // </div>
-                <div style={{ height: '1000px', width: '1000px' }}>
+                <div style={{ height: "1000px", width: "1000px" }}>
                   <GoogleMapReact
                     bootstrapURLKeys={{ key: "" }}
                     defaultCenter={{
@@ -425,7 +425,10 @@ function ReportForm() {
             </div>
             {/* ______________________Biofouling_______________________ */}
             <div className="pt-2">
-              <div className="flex flex-row items-center justify-start gap-4" title="The Level of Fouling LoF scale is a ranking system with six categories characterizing the amount of biofouling.">
+              <div
+                className="flex flex-row items-center justify-start gap-4"
+                title="The Level of Fouling LoF scale is a ranking system with six categories characterizing the amount of biofouling."
+              >
                 <label className="font-semibold pt-2">
                   Level of Fouling (LoF) [﹖]:
                 </label>
@@ -452,42 +455,41 @@ function ReportForm() {
                     <span className="font-semibold">
                       0: Zero slime/biofilm, zero macrofouling
                     </span>
-                  )
-                  }
+                  )}
                   {formData.biofouling === 1 && (
                     <span className="font-semibold">
                       1: Light slime/biofilm, zero macrofouling
                     </span>
-                  )
-                  }
+                  )}
                   {formData.biofouling === 2 && (
                     <span className="font-semibold">
                       2: Macrofouling present covering up to 5% of the surface
                     </span>
-                  )
-                  }
+                  )}
                   {formData.biofouling === 3 && (
                     <span className="font-semibold">
                       3: Macrofouling covering from 6% to 15% of the surface
                     </span>
-                  )
-                  }
+                  )}
                   {formData.biofouling === 4 && (
                     <span className="font-semibold">
                       4: Macrofouling covering from 16% to 40% of the surface
                     </span>
-                  )
-                  }
+                  )}
                   {formData.biofouling === 5 && (
                     <span className="font-semibold">
-                      5: Macrofouling covering more than 40% of the surface up to 100%
+                      5: Macrofouling covering more than 40% of the surface up
+                      to 100%
                     </span>
-                  )
-                  }
+                  )}
                 </p>
               </div>
               <div>
-                <img src={`./assets/levels-of-fouling/${formData.biofouling}.png`} alt="biofouling" className="w-1/2" />
+                <img
+                  src={`./assets/levels-of-fouling/${formData.biofouling}.png`}
+                  alt="biofouling"
+                  className="w-1/2"
+                />
               </div>
             </div>
           </div>
