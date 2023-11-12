@@ -2,9 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
-import WhatsApp from 'whatsapp';
+// import WhatsApp from 'whatsapp';
 
 import GoogleMapReact from "google-map-react";
+
+// const SENDER_NUMBER = process.env.WA_PHONE_NUMBER
+// const SENDER_NUMBER = 5550229789;
+
+// Your test sender phone number
+// const wa = new WhatsApp(Number(SENDER_NUMBER));
+
+// Enter the recipient phone number
+const recipient_number = process.env.RECIPIENT_WAID;
 
 interface FormData {
   address: string;
@@ -46,14 +55,6 @@ function ReportForm() {
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
 
 
-// const SENDER_NUMBER = process.env.WA_PHONE_NUMBER
-const SENDER_NUMBER = 5550229789;
-
-// Your test sender phone number
-const wa = new WhatsApp(Number(SENDER_NUMBER));
-
-// Enter the recipient phone number
-const recipient_number = process.env.RECIPIENT_WAID;
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -146,18 +147,27 @@ const recipient_number = process.env.RECIPIENT_WAID;
   async function sendMessage()
   {
       try{
-          const sent_text_message = wa.messages.text( { "body" : "Hello world" }, Number(recipient_number) );
+        const response = await fetch("https://graph.facebook.com/v17.0/133147923224351/messages", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer EAAQhvKpP3NoBOZCbHKL9mfGGnZCaYHo2xAYcfGzXJCy80USCqtD538QZCEeL62GFcPSylwRMHVb4PKzRMFZCZBDUs3ZCj5d476tZCZAmJY4xrHuxfq8JsaeM80jFs8EJ1pdxw9BosIp8Jcuxw6FnzzhSoerrTVZATTZBdWqYCOK7G9FFogZBNHxiQxeaqG2MXVcf816ZCJLALnWA37kIGnFQznQZD",
+            "Content-Type": "application/json",
+          },
+          body: `{ \"messaging_product\": \"whatsapp\", \"to\": \"${recipient_number}\", \"type\": \"template\", \"template\": { \"name\": \"report_debris\", \"language\": { \"code\": \"en_US\" } } }`
+      })
 
-          await sent_text_message.then( ( res: any ) =>
-          {
-              console.log( res.rawResponse() );
-          } );
+          // await sent_text_message.then( ( res: any ) =>
+          // {
+          //     console.log( res.rawResponse() );
+          // } );
       }
       catch( e )
       {
           console.log( JSON.stringify( e ) );
       }
-    }
+  }
+
+
   function toDataURL(url: any) {
     return new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
