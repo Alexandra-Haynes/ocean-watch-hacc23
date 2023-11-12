@@ -14,7 +14,7 @@ export default function ReportFormCardLink() {
       >
         <div className="flex flex-col items-center justify-start mt-[5rem]">
           <h2
-            className="text-center font-bold text-3xl mb-6 
+            className="text-black text-center font-bold text-3xl mb-6 
            uppercase"
           >
             Found Marine Debris?
@@ -41,16 +41,15 @@ export default function ReportFormCardLink() {
 flex flex-col items-center justify-center mt-8 gap-2 py-4"
         >
           <LuBadgeAlert className="text-6xl text-orange-400" />
-          <p className="font-semibold px-6 text-center text-lg">
+          <p className="font-semibold px-6 text-black text-center text-lg">
             Are there marine animals entangled in the debris?
           </p>
-          <div className="h-[1px] w-1/2 bg-orange-400 my-1"></div>
-          <p>Call NOAA immediately at </p>
-          <p className="text-xl font-bold flex flex-row items-center justify-center gap-2">
+          <p className="text-black">Call NOAA immediately at </p>
+          <p className="text-xl text-black font-bold flex flex-row items-center justify-center gap-2">
             <BiSolidPhoneCall />
             1-888-256-9840
           </p>
-          <p className="text-[.8rem]">24/7 Emergency Hotline</p>
+          <p className="text-black text-[.8rem]">24/7 Emergency Hotline</p>
         </div>
         <div
           className="h-[400px] lg:h-[600px] w-full absolute bottom-0 bg-slate-900
