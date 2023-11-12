@@ -5,58 +5,63 @@ import { LuBadgeAlert } from "react-icons/lu";
 export default function ReportFormCardLink() {
   return (
     <>
-      <Link
-        className="rounded lg:overflow-hidden  mt-12
-         h-[1100px] lg:h-[1200px] w-[700px] bg-white 
+      <div
+        className="rounded md:overflow-hidden mt-8 xl:mt-12 h-fit
+       xl:h-2/3 lg:w-[400px]  md:w-[600px] bg-white 
          shadow-2xl flex flex-col items-center justify-start
-         relative hover:shadow-2xl transition duration-300 ease-out -z-10"
-        href={`/report`}
+         relative hover:shadow-2xl transition duration-300 ease-out 
+         "
+        
       >
-        <div className="flex flex-col items-center justify-start mt-[5rem]">
+        <div className="flex flex-col items-center justify-start mt-8 xl:mt-[5rem]">
           <h2
-            className="text-center font-bold text-3xl mb-6 
+            className="text-center font-bold xl:text-2xl mb-2 
            uppercase"
           >
             Found Marine Debris?
           </h2>
           <h3
-            className="max-w-[300px] text-xl text-center mb-6 font-semibold
+            className="max-w-[300px] text-[.8rem] px-8 xl:text-md 
+            text-center mb-6 font-semibold
            text-slate-700"
           >
             Report It Here, and We'll Take Care of the Removal
           </h3>
         </div>
-        <div
-          className=" text-xl text-white mt-4
-           w-1/2 h-[4rem] uppercase rounded-full
+        <Link
+          href='/report'
+          className="text-sm xl:text-md text-white
+           px-4 xl:w-1/2 h-8 xl:h-[3rem] uppercase rounded-full
           flex flex-col items-center justify-center shadow-lg
-          custom-background hover:translate-y-1 hover:shadow-2xl transition duration-500 ease-in-out
-          "
+          custom-background hover:translate-y-1 hover:shadow-2xl transition 
+          duration-500 ease-in-out
+          cursor-pointer"
         >
           Report debris
-        </div>
+        </Link>
 
         <div
-          className="h-[240px] w-2/3 bg-cyan-300/10 rounded-md shadow-lg
-flex flex-col items-center justify-center mt-8 gap-2 py-4"
+          className="h-[240px] xl:w-[300px] md:w-[80%]  w-[90%] bg-cyan-300/10 md:bg-cyan-100/90 rounded-md shadow-lg
+flex flex-col items-center justify-center mt-8 gap-2 py-4 mx-12 z-20 mb-[200px] border"
         >
-          <LuBadgeAlert className="text-6xl text-orange-400" />
-          <p className="font-semibold px-6 text-center text-lg">
+          <LuBadgeAlert className="text-2xl  xl:text-3xl text-orange-400" />
+          <p className="font-semibold px-12 text-center text-sm  xl:text-md">
             Are there marine animals entangled in the debris?
           </p>
-          <div className="h-[1px] w-1/2 bg-orange-400 my-1"></div>
-          <p>Call NOAA immediately at </p>
-          <p className="text-xl font-bold flex flex-row items-center justify-center gap-2">
+          <div className="h-[1px] w-1/2 bg-orange-400 my-1  "></div>
+          <p className=" text-[.6rem]">Call NOAA immediately at </p>
+          <p className="xl:text-md text-sm font-bold flex flex-row items-center 
+          justify-center gap-2">
             <BiSolidPhoneCall />
             1-888-256-9840
           </p>
-          <p className="text-[.8rem]">24/7 Emergency Hotline</p>
+          <p className="text-[.6rem] lg:text-[.8rem]">24/7 Emergency Hotline</p>
         </div>
         <div
-          className="h-[400px] lg:h-[600px] w-full absolute bottom-0 bg-slate-900
-        bg-[url('/assets/sealion.png')] bg-cover bg-no-repeat bg-bottom"
+          className="h-[200px] md:h-[260px] xl:h-[300px] w-full absolute bottom-0 bg-slate-900
+        bg-[url('/assets/sealion.png')] bg-cover bg-no-repeat bg-bottom z-[8] rounded-b "
         ></div>
-      </Link>
+      </div>
     </>
   );
 }

@@ -7,10 +7,10 @@ const LoginButton: React.FC = () => {
     gap-2 border border-green-400/60 p-2 px-6 rounded-full shadow-lg cursor-pointer 
     transition-all ease-in-out"
     >
-      <img src="/assets/login.png" alt="Login" className="h-12 " />
+      <img src="/assets/login.png" alt="Login" className="h-6 xl:h-8 " />
 
       <p
-        className="text-green-700 text-xl font-semibold uppercase
+        className="text-green-700 text-sm md:text-md font-semibold uppercase
         transition-all ease-in-out"
       >
         LOGIN
