@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
+import WhatsApp from 'whatsapp';
+
 
 interface FormData {
   address: string;
@@ -41,6 +43,16 @@ function ReportForm() {
   });
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
+
+
+// const SENDER_NUMBER = process.env.WA_PHONE_NUMBER
+const SENDER_NUMBER = 5550229789;
+
+// Your test sender phone number
+const wa = new WhatsApp(Number(SENDER_NUMBER));
+
+// Enter the recipient phone number
+const recipient_number = process.env.RECIPIENT_WAID;
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -121,6 +133,22 @@ function ReportForm() {
     }
   };
 
+  async function sendMessage()
+  {
+      try{
+          const sent_text_message = wa.messages.text( { "body" : "Hello world" }, recipient_number );
+
+          await sent_text_message.then( ( res: any ) =>
+          {
+              console.log( res.rawResponse() );
+          } );
+      }
+      catch( e )
+      {
+          console.log( JSON.stringify( e ) );
+      }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -158,6 +186,12 @@ function ReportForm() {
     } catch (error) {
       // Handle network/server errors
       console.log("ERROR", error);
+    }
+    try {
+
+      sendMessage()
+    } catch(error) {
+
     }
     window.location.href = "/report-submitted";
   };
