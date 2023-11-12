@@ -149,12 +149,25 @@ function ReportForm() {
       try{
         const response = await fetch("https://graph.facebook.com/v17.0/133147923224351/messages", {
           method: "POST",
+          mode: "cors",
           headers: {
-            "Authorization": "Bearer EAAQhvKpP3NoBOZCbHKL9mfGGnZCaYHo2xAYcfGzXJCy80USCqtD538QZCEeL62GFcPSylwRMHVb4PKzRMFZCZBDUs3ZCj5d476tZCZAmJY4xrHuxfq8JsaeM80jFs8EJ1pdxw9BosIp8Jcuxw6FnzzhSoerrTVZATTZBdWqYCOK7G9FFogZBNHxiQxeaqG2MXVcf816ZCJLALnWA37kIGnFQznQZD",
+            "Authorization": "Bearer EAAQhvKpP3NoBO0GprklNmbYAwNAypRatoIGfH79fsHxiw9QenpTZAvUI7ZCcYKOuIGpfKnaZCOuubJuravJUrARMQxxBs4XcOdU9we1zDt273QlxLx6WbKQ8Hy8OZCXcc0yFFFbHKn3HkZAINKrsE9LhZAdx3zy97h1kPBQSP3xVu6aDVtlew1sNyl05m9uQf1ukvY3RkerfD8V87ZC",
             "Content-Type": "application/json",
           },
-          body: `{ \"messaging_product\": \"whatsapp\", \"to\": \"${recipient_number}\", \"type\": \"template\", \"template\": { \"name\": \"report_debris\", \"language\": { \"code\": \"en_US\" } } }`
+          body: {
+            "messaging_product": "whatsapp",
+            "to": "13092589247",
+            "type": "template",
+            "template": {
+                "name": "hello_world",
+                "language": {
+                    "code": "en_US"
+                }
+            }
+           }
       })
+      console.log(response.json())
+      return response.json()
 
           // await sent_text_message.then( ( res: any ) =>
           // {
@@ -190,6 +203,7 @@ function ReportForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    
     const form = new FormData();
     form.append("address", formData.address);
     form.append("latitude", formData.latitude);
@@ -208,7 +222,7 @@ function ReportForm() {
     form.append("email", formData.email);
     form.append("phone", formData.phone);
     form.append("captcha", formData.captcha);
-
+    
     // Example: send formData to the server
     try {
       const response = await fetch("/api/report", {
@@ -218,7 +232,9 @@ function ReportForm() {
       if (response.ok) {
         // Success - display success message, next steps, etc.
         console.log("SUCCESS");
-        window.location.href = "/report-submitted";
+
+        
+        // window.location.href = "/report-submitted";
       } else {
         // Handle errors, display an error message
       }
@@ -226,12 +242,13 @@ function ReportForm() {
       // Handle network/server errors
       console.log("ERROR", error);
     }
+    
     try {
-
       sendMessage()
     } catch(error) {
-
+      console.log("ERROR", error);
     }
+    
     window.location.href = "/report-submitted";
   };
 
