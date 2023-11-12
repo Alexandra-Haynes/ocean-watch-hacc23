@@ -1,4 +1,6 @@
 import Link from "next/link";
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ReportSubmitted() {
   return (
@@ -15,6 +17,19 @@ export default function ReportSubmitted() {
           <p className="text-lg text-gray-600 mb-6">
             Your report has been submitted successfully.
           </p>
+
+          <center>
+            <img src="/assets/seal.jpg" alt="Report submitted" width={200} height={200} />
+          </center>
+
+          <br />
+          <b>Monthly Progress</b>
+          <p>Every month, our goal is to have 500 reports submitted.
+            Please help us reach our goal by submitting a new report whenever you encounter
+            any marine debris.
+          </p>
+          <ProgressBar now={5} label={`${5}%`} />
+
           <Link
             href="/"
             className=" text-xl text-white mt-4
