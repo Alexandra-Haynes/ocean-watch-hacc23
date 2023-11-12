@@ -34,7 +34,15 @@ export async function POST(req: Request) {
   const phone = formData.get('phone')?.toString()
   const captcha = formData.get('captcha')?.toString()
 
-  //TODO: Add images
+  const images = []; // Array of images delimited by commas
+
+  for (let i = 0; i < 6; i++) {
+    const imageKey = 'image' + i;
+    const image = formData.get(imageKey);
+    if (image) {
+      images.push(image);
+    }
+  }
 
   const result = prisma.reportDebris.create({
     data: {
@@ -50,6 +58,7 @@ export async function POST(req: Request) {
       email: email,
       phone: phone,
       captcha: captcha,
+      images: images.join('-----'),
   }});
   return Response.json((await result).id)
 }
