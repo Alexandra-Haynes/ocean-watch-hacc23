@@ -5,6 +5,7 @@ import HeroText from "./components/HeroText";
 const Home: React.FC = () => {
   return (
     <section className="h-fit max-h-screen">
+
       <main
         className="bg-cover bg-no-repeat flex h-screen 
       flex-col items-center justify-between px-4"

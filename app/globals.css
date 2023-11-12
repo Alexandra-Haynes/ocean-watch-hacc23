@@ -63,7 +63,20 @@ body {
     rgba(2, 10, 20, 1) 100%
   );
 }
+.custom-background2 {
+  background: rgb(174, 238, 233);
+  background: linear-gradient(220deg,
+      rgb(238, 233, 174) 0%,
+      rgb(46, 152, 125) 28%,
+      rgba(2, 10, 20, 1) 100%);
+}
 
 .custom-clip-path {
   clip-path: polygon(60% 0, 100% 0%, 100% 100%, 35% 100%);
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
