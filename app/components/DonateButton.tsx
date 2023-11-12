@@ -12,12 +12,12 @@ const DonateButton: React.FC = () => {
 
       <div className="flex flex-col items-start gap-1">
         <p
-          className="text-yellow-300 text-xl font-semibold uppercase
+          className="text-yellow-300 text-md font-semibold uppercase
         hover:text-yellow-500 transition-all ease-in-out"
         >
           Donate
         </p>
-        <p className="text-white text-[.9rem]">Support our research</p>
+        <p className="text-white text-[.8rem]">Support our research</p>
       </div>
     </div>
   );
