@@ -67,6 +67,27 @@ function ReportForm() {
         }),
       );
 
+      const message = [
+        [
+          " 4",
+          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it."
+        ],
+      ];
+
+      const showText = function(target: string, message: string, index: number, interval: number) {
+        if (index < message.length) {
+          const e = document.querySelector(target) as any;
+          console.log(e);
+          (e).textContent += message[index++];
+          setTimeout(function() {
+            showText(target, message, index, interval);
+          }, interval);
+        }
+      }
+
+      showText("#sealy-text", message[0][1], 0, 2);
+      showText("#sealy-level", message[0][0], 0, 2);
+
       setFormData({
         ...formData,
         images: imageBase64s,
@@ -561,6 +582,32 @@ function ReportForm() {
                     ))}
                   </div>
                 )}
+              </div>
+
+              {/* __________________________DESCRIPTION_____________________ */}
+              <div className="form-group">
+                <img src="./assets/seal.png" alt="seal" className="w-1/4" />
+                <label htmlFor="email">Sealy's Recommendation:</label>
+                <p className="text-gray-600 text-sm py-2 w-full">
+                  Sealy's Recommendation is a tool that provides a
+                  recommendation for classifying a provided image using Artificial Intelligence. Just upload a photo of the
+                  debris to get a recommendation! </p>
+                <p>Recommended Biofouling Level:
+                  <span className="font-semibold" id="sealy-level"></span>
+                </p>
+                <textarea
+                  id="sealy-text"
+                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
+                  style={{
+                    "resize": "none",
+                    "overflow": "hidden",
+                    "minHeight": "200px",
+                    "maxHeight": "300px",
+                  }}
+                  rows={50}
+                  
+                  >
+                </textarea>
               </div>
             </div>
           </div>
