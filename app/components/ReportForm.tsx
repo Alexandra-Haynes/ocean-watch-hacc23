@@ -123,7 +123,6 @@ function ReportForm() {
     setFormData({ ...formData, biofouling: value });
   };
 
-  // Set the default date to be today's date
   useEffect(() => {
     const getCurrentDate = () => {
       const now = new Date();
