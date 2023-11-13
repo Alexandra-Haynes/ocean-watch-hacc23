@@ -5,6 +5,7 @@ import ModalOverlay from "../components/ModalOverlay";
 import ClaimJobModal from "../components/ClaimJobModal";
 import ClaimedJobCard from "../components/ClaimedJobCard";
 import { dummyJobData, dummyClaimedJobData } from "../components/Data";
+import Navbar from "../components/Navbar";
 
 interface RemovalJobs {
   id: string;
@@ -153,9 +154,10 @@ export default function RemovalJobsPage() {
   return (
     <>
       <section
-        className="flex h-fit min-h-screen flex-col items-center 
-      justify-center  px-4 pt-12 gap-4 custom-background pb-24"
+        className="flex flex-col items-center 
+      justify-center "
       >
+        <Navbar />
         <h1
           className="text-md md:text-2xl xl:text-4xl font-extrabold text-white text-center 
         lg:text-left pb-8"
@@ -223,8 +225,6 @@ export default function RemovalJobsPage() {
                   claimingCompany={claimingCompany}
                   status={"Pending"}
                   lastUpdateDate={claimDate}
-          
-                
                 />
               ))}
             </div>
