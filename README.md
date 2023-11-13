@@ -56,12 +56,13 @@ npm install
 
 ### 3.Configure Environment Variables
 Create a `.env` file in the root directory of your project. This file will contain the environment variables necessary for the project to run.
-`
+
+```
 DATABASE_URL="file:./dev.db"
 NEXT_PUBLIC_CAPTCHA_SITE_KEY=<your-captcha-site-key>
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
 TWILIO_AUTH_TOKEN=<your-twilio-auth-token>
-`
+```
 
 ### 4. Configure Database
    Update the `schema.prisma` file to use SQLite as the database provider. This will allow you to run the project locally without having to set up a separate database server.
