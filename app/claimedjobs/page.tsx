@@ -4,6 +4,7 @@ import JobCard from "../components/JobCard";
 import ModalOverlay from "../components/ModalOverlay";
 import ClaimedJobCard from "../components/ClaimedJobCard";
 import RemovalJobModal from "../components/RemovalJobModal";
+import Navbar from "../components/Navbar";
 
 interface ClaimedJobs {
   id: string;
@@ -30,7 +31,6 @@ export default function ClaimedJobsPage() {
   const [claimingCompany, setClaimingCompany] = useState<string>("");
   const [removalDate, setRemovalDate] = useState<string>("");
 
-
   const getClaimedJobs = async () => {
     try {
       const response = await fetch("/api/report", {
@@ -55,7 +55,8 @@ export default function ClaimedJobsPage() {
 
   const handleOnClick = (e: any) => {
     const removalButtonClicked =
-      e.target.tagName === "BUTTON" && e.target.innerText === "Removal Complete";
+      e.target.tagName === "BUTTON" &&
+      e.target.innerText === "Removal Complete";
 
     if (removalButtonClicked) {
       setJobSelected(e.target.parentElement.id);
@@ -71,15 +72,15 @@ export default function ClaimedJobsPage() {
     getClaimedJobs();
   }, [isModalOpen]);
 
-  const removalCompleteJobs = jobs.filter(j => j.status === "removed")
-
+  const removalCompleteJobs = jobs.filter((j) => j.status === "removed");
 
   return (
     <>
       <section
-        className="flex h-fit min-h-screen flex-col items-center 
-      justify-center  px-4 pt-12 gap-4 custom-background pb-24"
+        className="flex flex-col items-center 
+      justify-center"
       >
+        <Navbar />
         <h1
           className="text-md md:text-2xl xl:text-4xl font-extrabold text-white text-center 
         lg:text-left pb-8"
@@ -96,7 +97,7 @@ export default function ClaimedJobsPage() {
           <select
             value={selectedIsland}
             onChange={(e) => setSelectedIsland(e.target.value)}
-            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2 text-black"
           >
             <option value="">All Islands</option>
             <option value="Oahu">Oahu</option>
@@ -123,9 +124,8 @@ export default function ClaimedJobsPage() {
             ))}
         </div>
 
-        {jobs.filter(
-          (j) => j.status === "claimed" && filterByIsland(j),
-        ).length === 0 && (
+        {jobs.filter((j) => j.status === "claimed" && filterByIsland(j))
+          .length === 0 && (
           <div className="h-[400px] text-sm text-center text-white flex flex-col-reverse gap-8 items-center justify-center">
             No claimed jobs available for the selected island.
             <img src="/assets/map.png" alt="Hawaii map" className="h-24" />
@@ -136,7 +136,7 @@ export default function ClaimedJobsPage() {
           <>
             <div className="h-[1px] w-1/2 bg-white/20 my-4 mt-8"></div>
             <h2 className="text-md md:text-xl xl:text-2xl font-extrabold text-white text-center lg:text-left pb-8">
-              Removal Complete and Pending Processing 
+              Removal Complete and Pending Processing
             </h2>
 
             <div className="grid grid-cols-2 gap-8">
