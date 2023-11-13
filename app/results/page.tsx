@@ -191,10 +191,10 @@ export default function ResultsPage() {
   }, [map, maps, jobs]);
 
   return (
-    <div>
+    <div className="">
       <Navbar />
       <div className="flex justify-center items-center text-center w-full">
-        <h1 className="text-2xl xl:text-4xl font-extrabold text-white">
+        <h1 className="text-2xl xl:text-4xl font-extrabold text-white p-4">
           Results Page
         </h1>
       </div>

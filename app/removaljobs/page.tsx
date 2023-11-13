@@ -22,7 +22,6 @@ interface RemovalJobs {
   status: string;
 }
 
-
 export default function RemovalJobsPage() {
   const [jobs, setJobs] = useState<RemovalJobs[]>([]);
   const [jobSelected, setJobSelected] = useState<string>("");
@@ -102,7 +101,7 @@ export default function RemovalJobsPage() {
           <select
             value={selectedIsland}
             onChange={(e) => setSelectedIsland(e.target.value)}
-            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2 text-black"
           >
             <option value="">All Islands</option>
             <option value="Oahu">Oahu</option>
