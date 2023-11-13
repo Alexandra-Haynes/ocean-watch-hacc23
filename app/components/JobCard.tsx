@@ -25,6 +25,7 @@ interface RemovalJobs {
   phone: string;
   captcha: string;
   status: string;
+  images: string;
 }
 
 interface JobCardProps {
@@ -120,6 +121,29 @@ function JobCard({
         <BsBookmark className="text-sm text-slate-500 mr-1" />
         Details
       </p>
+
+      <div className="flex flex-row items-center justify-start gap-2 ">
+        {data.images.split('-----').map((image, index) => (
+              <div
+                key={index}
+                className="flex flex-row items-end gap-4"
+              >
+                <span
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  <img
+                    src={image}
+                    alt="Image Preview"
+                    style={{ maxHeight: "100px" }}
+                    className="h-auto"
+                  />
+                </span>
+              </div>
+        ))}
+      </div>
+      <br />
 
       <p
         className={`border bg-white shadow-sm h-fit 

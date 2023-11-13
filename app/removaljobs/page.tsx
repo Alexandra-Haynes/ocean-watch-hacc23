@@ -20,6 +20,7 @@ interface RemovalJobs {
   phone: string;
   captcha: string;
   status: string;
+  images: string;
 }
 
 export default function RemovalJobsPage() {

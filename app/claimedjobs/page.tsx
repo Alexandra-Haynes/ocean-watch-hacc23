@@ -21,6 +21,7 @@ interface ClaimedJobs {
   phone: string;
   captcha: string;
   status: string;
+  images: string;
 }
 
 export default function ClaimedJobsPage() {
