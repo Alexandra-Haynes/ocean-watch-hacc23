@@ -91,13 +91,17 @@ export default function RemovalJobsPage() {
   };
 
   const handleRemovalJobClaimSubmit = async () => {
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
-    getRemovalJobs();
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "admin" && userRole !== "removal") {
+      window.location.href = "/login";
+    } else {
+      getRemovalJobs();
+    }
   }, [isModalOpen]);
-
   const unclaimedJobs = jobs.filter((j) => j.status !== "claimed");
   const claimedJobs = jobs.filter((j) => j.status === "claimed");
 
@@ -163,8 +167,10 @@ export default function RemovalJobsPage() {
         {claimedJobs.length > 0 && (
           <>
             <div className="h-[1px] w-1/2 bg-white/20 my-4 mt-8"></div>
-            <h2 className="text-md md:text-xl xl:text-2xl font-extrabold 
-            text-white text-center lg:text-left pb-8">
+            <h2
+              className="text-md md:text-xl xl:text-2xl font-extrabold 
+            text-white text-center lg:text-left pb-8"
+            >
               Claimed tasks
             </h2>
 

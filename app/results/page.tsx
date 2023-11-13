@@ -10,7 +10,9 @@ import {
   Text,
   Tooltip,
 } from "recharts";
+import useRoleCheck from "../api/rolecheck";
 import Navbar from "../components/Navbar";
+import router, { useRouter } from "next/router";
 
 interface RemovalJobs {
   id: string;
@@ -125,7 +127,12 @@ export default function ResultsPage() {
   };
 
   useEffect(() => {
-    getRemovalJobs();
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "admin" && userRole !== "removal") {
+      window.location.href = "/login";
+    } else {
+      getRemovalJobs();
+    }
   }, []);
 
   const debrisPercentageData = transformRemovalJobsData(jobs);
