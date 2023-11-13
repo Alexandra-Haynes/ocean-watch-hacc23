@@ -15,7 +15,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import useRoleCheck from "../api/rolecheck";
 import Navbar from "../components/Navbar";
+import router, { useRouter } from "next/router";
 import GoogleMapReact from "google-map-react";
 
 interface RemovalJobs {
@@ -149,7 +151,12 @@ export default function ResultsPage() {
   };
 
   useEffect(() => {
-    getRemovalJobs();
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "admin" && userRole !== "removal") {
+      window.location.href = "/login";
+    } else {
+      getRemovalJobs();
+    }
   }, []);
 
   const debrisPercentageData = transformRemovalJobsData(jobs);
