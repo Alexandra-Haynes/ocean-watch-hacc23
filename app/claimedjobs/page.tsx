@@ -79,7 +79,7 @@ export default function ClaimedJobsPage() {
     <>
       <section
         className="flex flex-col items-center 
-      justify-center"
+      justify-center custom-background"
       >
         <Navbar />
         <h1
@@ -109,7 +109,7 @@ export default function ClaimedJobsPage() {
             <option value="Molokai">Molokai</option>
           </select>
         </div>
-        <div className="grid xl:grid-cols-2 gap-8">
+        <div className="grid xl:grid-cols-2 gap-8 text-black">
           {jobs
             .filter((j) => j.status === "claimed" && filterByIsland(j))
             .map((job, index) => (
@@ -140,7 +140,7 @@ export default function ClaimedJobsPage() {
               Removal Complete and Pending Processing
             </h2>
 
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-8 mb-16 text-black">
               {removalCompleteJobs.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}
