@@ -289,9 +289,9 @@ export default function ResultsPage() {
               <Tooltip
                 contentStyle={{ backgroundColor: "white", color: "black" }}
               />
-              <XAxis dataKey="name" style={{ color: "red" }} />
+                <XAxis dataKey="name" width={20} tick={{fontSize: 10}} interval={0}/>
               <YAxis />
-              <Bar fill="#006D77" dataKey="value" />
+                <Bar fill="#006D77" dataKey="value" barSize={80} />
             </BarChart>
           </ResponsiveContainer>
         </div>
