@@ -22,21 +22,13 @@ interface ClaimedJobs {
   status: string;
 }
 
-interface FormData {
-  id: string;
-  status: string;
-  removalCompany: string;
-}
-
 export default function ClaimedJobsPage() {
   const [jobs, setJobs] = useState<ClaimedJobs[]>([]);
   const [jobSelected, setJobSelected] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [removedJob, setRemovedJob] = useState<string>("");
   const [selectedIsland, setSelectedIsland] = useState<string>("");
-  const [claimedTasks, setClaimedTasks] = useState<ClaimedJobs[]>([]); // Separate state for claimed tasks
   const [claimingCompany, setClaimingCompany] = useState<string>("");
-  const [claimDate, setClaimDate] = useState<string>("");
+  const [removalDate, setRemovalDate] = useState<string>("");
 
 
   const getClaimedJobs = async () => {
@@ -48,7 +40,7 @@ export default function ClaimedJobsPage() {
       setJobs(data);
 
       if (response.ok) {
-        console.log("SUCCESS");
+        console.log("Claimed jobs retrieved");
       } else {
         // Handle errors, display an error message
       }
@@ -71,64 +63,16 @@ export default function ClaimedJobsPage() {
     }
   };
 
-  const handleRemovalJobClaimSubmit = async (formData: FormData) => {
-    const form = new FormData();
-    form.append("id", jobSelected.split("-")[1]);
-    form.append("status", "removalcomplete");
-    form.append("removalCompany", formData.removalCompany);
-
+  const handleRemovalJobClaimSubmit = async () => {
     setIsModalOpen(false);
-    setRemovedJob("");
-
-    try {
-      const response = await fetch("/api/report", {
-        method: "PATCH",
-        body: form,
-      });
-
-      if (response.ok) {
-        const claimedJobData = await response.json();
-        const claimedCompany = formData.removalCompany;
-        const claimDateTime = new Date().toLocaleString();
-
-        const claimedJob: ClaimedJobs = {
-          id: claimedJobData.id,
-          address: claimedJobData.address,
-          latitude: claimedJobData.latitude,
-          longitude: claimedJobData.longitude,
-          date: claimedJobData.date,
-          debrisType: claimedJobData.debrisType,
-          containerStatus: claimedJobData.containerStatus,
-          biofouling: claimedJobData.biofouling,
-          description: claimedJobData.description,
-          island: claimedJobData.island,
-          email: claimedJobData.email,
-          phone: claimedJobData.phone,
-          captcha: claimedJobData.captcha,
-          status: claimedJobData.status,
-        };
-
-        setClaimedTasks((prevClaimedTasks) => [
-          ...prevClaimedTasks,
-          claimedJob,
-        ]);
-        setClaimingCompany(claimedCompany);
-        setClaimDate(claimDateTime);
-
-        console.log("JOB CLAIMED SUCCESS");
-      } else {
-        // Handle errors, display an error message
-      }
-    } catch (error) {
-      console.log("ERROR", error);
-    }
   };
 
   useEffect(() => {
     getClaimedJobs();
   }, [isModalOpen]);
 
-  const removalCompleteJobs = jobs.filter(j => j.status === "removalcomplete")
+  const removalCompleteJobs = jobs.filter(j => j.status === "removed")
+
 
   return (
     <>
@@ -196,16 +140,14 @@ export default function ClaimedJobsPage() {
             </h2>
 
             <div className="grid grid-cols-2 gap-8">
-              {claimedTasks.map((claimedJob, index) => (
+              {removalCompleteJobs.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}
                   claimedJob={claimedJob}
                   onClick={handleOnClick}
                   claimingCompany={claimingCompany}
-                  status={"Pending"}
-                  lastUpdateDate={claimDate}
-          
-                
+                  status={"Removed"}
+                  lastUpdateDate={removalDate}
                 />
               ))}
             </div>
@@ -220,6 +162,7 @@ export default function ClaimedJobsPage() {
         <RemovalJobModal
           onSubmit={handleRemovalJobClaimSubmit}
           onClose={() => setIsModalOpen(false)}
+          job={jobSelected}
         />
       )}
     </>

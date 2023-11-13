@@ -4,7 +4,6 @@ import JobCard from "../components/JobCard";
 import ModalOverlay from "../components/ModalOverlay";
 import ClaimJobModal from "../components/ClaimJobModal";
 import ClaimedJobCard from "../components/ClaimedJobCard";
-import { dummyJobData, dummyClaimedJobData } from "../components/Data";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 interface RemovalJobs {
@@ -91,57 +90,8 @@ export default function RemovalJobsPage() {
     }
   };
 
-  const handleRemovalJobClaimSubmit = async (formData: FormData) => {
-    const form = new FormData();
-    form.append("id", jobSelected.split("-")[1]);
-    form.append("status", "claimed");
-    form.append("removalCompany", formData.removalCompany);
-
-    setIsModalOpen(false);
-    setRemovalCompany("");
-
-    try {
-      const response = await fetch("/api/report", {
-        method: "PATCH",
-        body: form,
-      });
-
-      if (response.ok) {
-        const claimedJobData = await response.json();
-        const claimedCompany = formData.removalCompany;
-        const claimDateTime = new Date().toLocaleString();
-
-        const claimedJob: RemovalJobs = {
-          id: claimedJobData.id,
-          address: claimedJobData.address,
-          latitude: claimedJobData.latitude,
-          longitude: claimedJobData.longitude,
-          date: claimedJobData.date,
-          debrisType: claimedJobData.debrisType,
-          containerStatus: claimedJobData.containerStatus,
-          biofouling: claimedJobData.biofouling,
-          description: claimedJobData.description,
-          island: claimedJobData.island,
-          email: claimedJobData.email,
-          phone: claimedJobData.phone,
-          captcha: claimedJobData.captcha,
-          status: claimedJobData.status,
-        };
-
-        setClaimedTasks((prevClaimedTasks) => [
-          ...prevClaimedTasks,
-          claimedJob,
-        ]);
-        setClaimingCompany(claimedCompany);
-        setClaimDate(claimDateTime);
-
-        console.log("JOB CLAIMED SUCCESS");
-      } else {
-        // Handle errors, display an error message
-      }
-    } catch (error) {
-      console.log("ERROR", error);
-    }
+  const handleRemovalJobClaimSubmit = async () => {
+    setIsModalOpen(false)
   };
 
   useEffect(() => {
@@ -150,10 +100,6 @@ export default function RemovalJobsPage() {
 
   const unclaimedJobs = jobs.filter((j) => j.status !== "claimed");
   const claimedJobs = jobs.filter((j) => j.status === "claimed");
-
-  const allReportsCombined = [...unclaimedJobs, ...dummyJobData];
-  const allClaimedTasksCombined = [...claimedJobs, ...dummyClaimedJobData];
-  console.log("All claimed combined:", claimedJobs);
 
   return (
     <>
@@ -183,14 +129,14 @@ export default function RemovalJobsPage() {
             <option value="">All Islands</option>
             <option value="Oahu">Oahu</option>
             <option value="Big Island">Big Island</option>
-            <option value="Mauai">Mauai</option>
+            <option value="Maui">Maui</option>
             <option value="Kauai">Kauai</option>
             <option value="Lanai">Lanai</option>
             <option value="Molokai">Molokai</option>
           </select>
         </div>
         <div className="grid xl:grid-cols-2 gap-8">
-          {allReportsCombined
+          {unclaimedJobs
             .filter((j) => j.status !== "claimed" && filterByIsland(j))
             .map((job, index) => (
               <JobCard
@@ -205,7 +151,7 @@ export default function RemovalJobsPage() {
             ))}
         </div>
 
-        {allReportsCombined.filter(
+        {unclaimedJobs.filter(
           (j) => j.status !== "claimed" && filterByIsland(j),
         ).length === 0 && (
           <div className="h-[400px] text-sm text-center text-white flex flex-col-reverse gap-8 items-center justify-center">
@@ -223,7 +169,7 @@ export default function RemovalJobsPage() {
             </h2>
 
             <div className="grid grid-cols-2 gap-8">
-              {allClaimedTasksCombined.map((claimedJob, index) => (
+              {claimedJobs.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}
                   claimedJob={claimedJob}
@@ -245,6 +191,7 @@ export default function RemovalJobsPage() {
         <ClaimJobModal
           onSubmit={handleRemovalJobClaimSubmit}
           onClose={() => setIsModalOpen(false)}
+          job={jobSelected}
         />
       )}
     </>

@@ -5,46 +5,42 @@ import { FaTimes } from "react-icons/fa";
 
 interface FormData {
   id: string;
-  status: string;
-  removalCompany: string;
-}
-interface ModalProps {
-  onSubmit: (formData: FormData) => void;
+  debrisApproxSize: string;
+  environmentalDamage: string;
 }
 
 interface RemovalJobModalProps {
-  onSubmit: (formData: FormData) => void;
+  onSubmit: () => void;
   onClose: () => void;
+  job: string;
 }
 
 interface RemovalFormData {
-  detectionDate: string;
-  detectionLocation: string;
+  id: string;
   environmentalDamage: string;
-  debrisType: string;
   debrisApproxSize: string;
 }
 
-function RemovalJobModal({ onSubmit, onClose }: RemovalJobModalProps) {
+function RemovalJobModal({ onSubmit, onClose, job }: RemovalJobModalProps) {
   const [formData, setFormData] = useState<RemovalFormData>({
-    detectionDate: "",
-    detectionLocation: "",
+    id: "",
     environmentalDamage: "",
-    debrisType: "",
     debrisApproxSize: "",
   });
-
   const handleSubmit = async (e: React.FormEvent) => {
+    onSubmit();
     e.preventDefault();
 
     const form = new FormData();
+    form.append("id", job.split("-")[1]);
     form.append("environmentalDamage", formData.environmentalDamage);
     form.append("debrisApproxSize", formData.debrisApproxSize);
+    form.append("status", "removed");
 
     // Example: send formData to the server
     try {
-      const response = await fetch("/api/remove", {
-        method: "POST",
+      const response = await fetch("/api/report", {
+        method: "PATCH",
         body: form,
       });
       if (response.ok) {

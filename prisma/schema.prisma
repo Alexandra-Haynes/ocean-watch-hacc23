@@ -27,6 +27,8 @@ model ReportDebris {
   status String?
   removalCompany String?
   images String?
+  debrisApproxSize String?
+  environmentalDamage String?
 }
 
 model EventDetection {
