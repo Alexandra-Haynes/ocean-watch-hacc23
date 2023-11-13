@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import {
+  Bar,
+  BarChart,
+  CartesianGrid,
   Cell,
   Label,
   Legend,
@@ -9,6 +12,8 @@ import {
   ResponsiveContainer,
   Text,
   Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
 import Navbar from "../components/Navbar";
 
@@ -25,6 +30,7 @@ interface RemovalJobs {
   phone: string;
   captcha: string;
   status: string;
+  debrisApproxSize: string;
 }
 
 interface DebrisTypeSummary {
@@ -104,6 +110,23 @@ export default function ResultsPage() {
     ];
   };
 
+  function sumDebrisAmountByType(jobs: RemovalJobs[]): DebrisTypeSummary[] {
+    // First, sum up the amounts by debris type
+    const debrisAmountSum = jobs.reduce((acc: Record<string, number>, job) => {
+      console.log("JOB IS:", job)
+      const amount = parseFloat(job.debrisApproxSize) || 0;
+      acc[job.debrisType] = (acc[job.debrisType] || 0) + amount;
+      return acc;
+    }, {});
+  
+    // Then, transform the record into an array of DebrisTypeSummary
+    return Object.entries(debrisAmountSum).map(([name, value]) => ({
+      name,
+      value
+    }));
+  }
+  
+
   const getRemovalJobs = async () => {
     try {
       const response = await fetch("/api/report", {
@@ -130,6 +153,8 @@ export default function ResultsPage() {
 
   const debrisPercentageData = transformRemovalJobsData(jobs);
   const fishingGearPercentageData = calculateFishingGearPercentage(jobs);
+  const debrisByTypeData = sumDebrisAmountByType(jobs).filter(debris => debris.value > 0);
+  console.log("DEBRIS BY TYPE", debrisByTypeData)
 
   return (
     <div>
@@ -192,6 +217,23 @@ export default function ResultsPage() {
                 ))}
               </Pie>
             </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="flex flex-col w-1/3 mr-2">
+          <h2 className="text-white justify-center m-auto">
+            Marine Debris by Type
+          </h2>
+          <ResponsiveContainer width="100%" height={400} style={{backgroundColor: "#edf6f9", marginRight: "1em"}}>
+            <BarChart data={debrisByTypeData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip contentStyle={{backgroundColor: "white", color: "black"}}/>
+              <XAxis dataKey="name" style={{color: "red"}} />
+              <YAxis />
+              <Bar
+                fill="#006D77"
+                dataKey="value"
+              />
+            </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
