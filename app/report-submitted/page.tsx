@@ -2,6 +2,7 @@ import Link from "next/link";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../components/Navbar";
+import Image from "next/image";
 
 export default function ReportSubmitted() {
   return (

@@ -6,7 +6,7 @@ import ClaimJobModal from "../components/ClaimJobModal";
 import ClaimedJobCard from "../components/ClaimedJobCard";
 import { dummyJobData, dummyClaimedJobData } from "../components/Data";
 import Navbar from "../components/Navbar";
-
+import Image from "next/image";
 interface RemovalJobs {
   id: string;
   address: string;

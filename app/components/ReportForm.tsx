@@ -4,6 +4,7 @@ import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
+import Image from "next/image";
 
 interface FormData {
   address: string;
@@ -74,7 +75,7 @@ function ReportForm() {
     if (files) {
       const imageFiles = Array.from(files);
 
-      const imageBase64s = await Promise.all(
+      const imageBase64s= await Promise.all(
         imageFiles.map(async (image) => {
           const url = URL.createObjectURL(image);
           const b64 = await toDataURL(url);

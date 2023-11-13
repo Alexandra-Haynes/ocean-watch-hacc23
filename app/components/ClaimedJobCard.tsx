@@ -1,5 +1,5 @@
-// JobCard.tsx
 import React from "react";
+import Image from "next/image";
 
 import { BsBookmark } from "react-icons/bs";
 import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
@@ -118,7 +118,7 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
         >
           {claimedJob.description}
         </p>
-        <p className="font-semibold">Observer's contact info</p>
+        <p className="font-semibold">Observer&apos;s contact info</p>
         <p className="text-slate-600  flex flex-row items-center justify-center gap-1">
           <AiOutlineMail /> {claimedJob.email}
         </p>
