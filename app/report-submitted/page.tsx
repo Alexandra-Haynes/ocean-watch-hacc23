@@ -1,10 +1,36 @@
+'use client';
 import Link from "next/link";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../components/Navbar";
-import Image from "next/image";
+
+import { useEffect } from "react";
+
+const sendSms = async (event: any) => {
+
+  await fetch('/api/sms', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message: 'A new report has been submitted!' }) // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response);
+  })
+    .catch((error) => {
+      console.error('Errors :', error);
+    });
+}
+let alreadySubmitted = false;
+
 
 export default function ReportSubmitted() {
+  useEffect(() => {
+    if (!alreadySubmitted) {
+      alreadySubmitted = true;
+      sendSms(null);
+    }
+  }, []);
   return (
     <section>
       <Navbar />
