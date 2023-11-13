@@ -23,26 +23,14 @@ interface FormData {
   captcha: string;
 }
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  background-color: #FF0000;
-  border: 2px solid #fff;
-  border-radius: 100%;
-  user-select: none;
-  transform: translate(-50%, -50%);
-  cursor: ${(props) => (props.onClick ? 'pointer' : 'default')};
-  &:hover {
-    z-index: 1;
-  }
-`;
-
-const Marker = () => (
-  <Wrapper />
-);
+const renderMarkers = (map: any, maps: any, latitude: Number, longitude: Number) => {
+  let marker = new maps.Marker({
+    position: { lat: latitude, lng: longitude },
+    map,
+    title: 'Hello World!'
+    });
+  return marker;
+ };
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -354,22 +342,14 @@ function ReportForm() {
                     defaultZoom={15}
                     // Disable controls
                     options={{ disableDefaultUI: false, zoomControl: false }}
+                    yesIWantToUseGoogleMapApiInternals={true}
+                    onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps, Number(formData.latitude), Number(formData.longitude))}
                   >
-                    {/* <div>
-                    lat={formData.latitude}
-                    lng={formData.longitude}
-                    text="My Marker"
-                  </div> */}
-                  <Marker 
-                    lat={formData.latitude}
-                    lng={formData.longitude}
-                    text="My Marker"
-                  />
                   </GoogleMapReact>
                 </div>
               )}
 
-              <label htmlFor="address">Address:</label>
+              {/* <label htmlFor="address">Address:</label>
               <p className="text-gray-600 text-sm">
                 Please provide specific details that help us pinpoint the debris
                 location.
@@ -381,7 +361,7 @@ function ReportForm() {
                 value={formData.address}
                 onChange={handleChange}
                 className="w-full"
-              />
+              /> */}
             </div>
 
             {/* ______________________DEBRIS TYPE_______________________ */}
