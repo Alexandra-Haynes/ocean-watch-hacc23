@@ -342,7 +342,7 @@ function ReportForm() {
                 //     </span>
                 //   </p>
                 // </div>
-                <div style={{ height: "1000px", width: "1000px" }}>
+                <div style={{ height: "300px", width: "300px" }}>
                   <GoogleMapReact
                     bootstrapURLKeys={{
                       key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
