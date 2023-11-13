@@ -131,13 +131,23 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           {/* Conditional Login Links */}
-          {userRole === "removal" && (
+          {(userRole === "admin" || userRole === "removal") && (
             <li>
               <a
                 href="/removaljobs"
                 className="text-white hover:shadow-lg pb-2 hover:font-bold transition-all ease-in text-sm"
               >
                 Removal
+              </a>
+            </li>
+          )}
+          {(userRole === "admin" || userRole === "removal") && (
+            <li>
+              <a
+                href="/claimedjobs"
+                className="text-white hover:shadow-lg pb-2 hover:font-bold transition-all ease-in text-sm"
+              >
+                Claim
               </a>
             </li>
           )}

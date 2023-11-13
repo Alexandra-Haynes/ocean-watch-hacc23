@@ -23,7 +23,12 @@ export default function LoginPage() {
         return;
       } else {
         localStorage.setItem("userRole", username);
-        window.location.href = "/results";
+        // Autopage render depending on role login
+        if (username === "admin") {
+          window.location.href = "/results";
+        } else if (username === "removal") {
+          window.location.href = "/removaljobs";
+        }
       }
     } catch (error) {
       setLoginError("An error occurred while logging in.");
