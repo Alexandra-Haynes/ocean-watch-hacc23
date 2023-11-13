@@ -21,12 +21,33 @@
 
 Ocean Watch is a comprehensive solution to the marine debris problem in Hawaii. Motivated by the urgent need for cleaner oceans, we have developed a platform that empowers everyone to contribute to environmental conservation.
 
-## What Sets Ocean Watch Apart:
+## What Sets Ocean Watch Apart
 
 A user-friendly platform that allows easy reporting of marine debris.
 Streamlined processes for disposal companies to manage removal tasks efficiently.
 Advanced technology integration for precise location tracking and data analysis.
 A commitment to making a tangible impact in marine conservation.
+
+### Built for Everyone
+
+Ocean Watch is designed to be accessible to everyone, from regular users to disposal companies to government agencies. We believe that everyone has a role to play in marine conservation, and we want to make it as easy as possible for people to contribute to this cause.
+
+One big change that we made here was to simplify the classification of biofouling. Instead of the initial subjective point scale, we have simplified it to a 6-point scale, each with built-in examples and descriptions. This makes it easier for regular users to report debris without having to worry about the technicalities of biofouling.
+
+Learn more about the [Level of Fouling Scale here](https://knowledgeauckland.org.nz/media/1820/fouling-rank-scale-updated-guideline-i-davidson-cawthron-auckland-council-2019.pdf).
+
+### Built for Efficiency
+
+Ocean Watch is built to be efficient and effective. We have streamlined the process of reporting marine debris and managing removal tasks to ensure that the right people are notified at the right time.
+
+For example, when a regular user submits a report, the report is automatically sent to disposal companies in the area via. WhatsApp.
+This eliminates the need for manual processing and ensures that the report is sent to the right people as soon as possible.
+
+### Built for Impact
+
+Ocean Watch is built to make a tangible impact in marine conservation. We have integrated advanced technologies like AI and data analysis to ensure that our solution is effective and efficient.
+
+For example, we have integrated the OpenAI Vision Preview API to analyze images of marine debris and classify them according to the Level of Fouling Scale. This allows us to automate the process of classifying debris, and it also provides us with valuable data that can be used to inform future conservation efforts.
 
 ## Built With
 
