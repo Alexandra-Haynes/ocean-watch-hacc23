@@ -211,6 +211,7 @@ function ReportForm() {
     form.append("email", formData.email);
     form.append("phone", formData.phone);
     form.append("captcha", formData.captcha);
+    form.append("status", "pending");
 
     // Example: send formData to the server
     try {
@@ -334,7 +335,8 @@ function ReportForm() {
               </div>
             )}
 
-            {/* <label htmlFor="address">Address:</label>
+            {/* <div>
+            <label htmlFor="address">Address:</label>
               <p className="text-gray-600 text-sm">
                 Please provide specific details that help us pinpoint the debris
                 location.
@@ -347,8 +349,7 @@ function ReportForm() {
                 onChange={handleChange}
                 className="w-full max-w-[600px]"
               />
-
-            </div>
+            </div> */}
 
             {/* ______________________DEBRIS TYPE_______________________ */}
             <div className="form-group">

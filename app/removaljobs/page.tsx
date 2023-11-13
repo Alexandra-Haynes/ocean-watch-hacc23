@@ -71,7 +71,7 @@ export default function RemovalJobsPage() {
     getRemovalJobs();
   }, [isModalOpen]);
 
-  const unclaimedJobs = jobs.filter((j) => j.status !== "claimed");
+  const unclaimedJobs = jobs.filter((j) => j.status === "pending");
   const claimedJobs = jobs.filter((j) => j.status === "claimed");
 
   return (
@@ -110,7 +110,7 @@ export default function RemovalJobsPage() {
         </div>
         <div className="grid xl:grid-cols-2 gap-8">
           {unclaimedJobs
-            .filter((j) => j.status !== "claimed" && filterByIsland(j))
+            .filter((j) => j.status === "pending" && filterByIsland(j))
             .map((job, index) => (
               <JobCard
                 key={index}
@@ -125,7 +125,7 @@ export default function RemovalJobsPage() {
         </div>
 
         {unclaimedJobs.filter(
-          (j) => j.status !== "claimed" && filterByIsland(j),
+          (j) => j.status === "pending" && filterByIsland(j),
         ).length === 0 && (
           <div className="h-[400px] text-sm text-center text-white flex flex-col-reverse gap-8 items-center justify-center">
             No reports available for the selected island.

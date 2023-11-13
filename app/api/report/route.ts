@@ -12,9 +12,26 @@ export async function PATCH(req: Request) {
   const id = formData.get('id')?.toString();
   const status = formData.get('status')?.toString();
   const removalCompany = formData.get('removalCompany')?.toString();
+  const debrisApproxSize = formData.get('debrisApproxSize')?.toString();
+  const environmentalDamage = formData.get('environmentalDamage')?.toString();
+
+  const dataToAdd: any = {}
+  if(status){
+    dataToAdd.status = status;
+  }
+  if(removalCompany){
+    dataToAdd.removalCompany = removalCompany
+  }
+  if(debrisApproxSize) {
+    dataToAdd.debrisApproxSize = debrisApproxSize
+  }
+  if(environmentalDamage) {
+    dataToAdd.environmentalDamage = environmentalDamage
+  }
+
   const result = prisma.reportDebris.update({
     where: { id: Number(id) },
-    data: { status: status, removalCompany: removalCompany },
+    data: dataToAdd,
   });
   return Response.json((await result).id)
 }
@@ -33,6 +50,7 @@ export async function POST(req: Request) {
   const email = formData.get('email')?.toString()
   const phone = formData.get('phone')?.toString()
   const captcha = formData.get('captcha')?.toString()
+  const status = formData.get('status')?.toString()
 
   const images = []; // Array of images delimited by commas
 
@@ -58,6 +76,7 @@ export async function POST(req: Request) {
       email: email,
       phone: phone,
       captcha: captcha,
+      status: status,
       images: images.join('-----'),
   }});
   return Response.json((await result).id)
