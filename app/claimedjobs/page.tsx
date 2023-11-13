@@ -2,12 +2,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import JobCard from "../components/JobCard";
 import ModalOverlay from "../components/ModalOverlay";
-import ClaimJobModal from "../components/ClaimJobModal";
 import ClaimedJobCard from "../components/ClaimedJobCard";
-import { dummyJobData, dummyClaimedJobData } from "../components/Data";
-import Navbar from "../components/Navbar";
-import Image from "next/image";
-interface RemovalJobs {
+import RemovalJobModal from "../components/RemovalJobModal";
+
+interface ClaimedJobs {
   id: string;
   address: string;
   latitude: string;
@@ -30,36 +28,18 @@ interface FormData {
   removalCompany: string;
 }
 
-function useOutsideClick(ref: any, handleClickOutside: (event: any) => void) {
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-}
-
-export default function RemovalJobsPage() {
-  const [allReports, setAllReports] = useState<RemovalJobs[]>([]);
-  const [jobs, setJobs] = useState<RemovalJobs[]>([]);
-  const [allClaimedTasks, setAllClaimedTasks] = useState<RemovalJobs[]>([]);
+export default function ClaimedJobsPage() {
+  const [jobs, setJobs] = useState<ClaimedJobs[]>([]);
   const [jobSelected, setJobSelected] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [removalCompany, setRemovalCompany] = useState<string>("");
+  const [removedJob, setRemovedJob] = useState<string>("");
   const [selectedIsland, setSelectedIsland] = useState<string>("");
-  const [claimedTasks, setClaimedTasks] = useState<RemovalJobs[]>([]); // Separate state for claimed tasks
+  const [claimedTasks, setClaimedTasks] = useState<ClaimedJobs[]>([]); // Separate state for claimed tasks
   const [claimingCompany, setClaimingCompany] = useState<string>("");
   const [claimDate, setClaimDate] = useState<string>("");
 
-  const modalRef = useRef<HTMLFormElement>(null);
 
-  function handleClickOutside(event: any) {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setIsModalOpen(false);
-    }
-  }
-
-  const getRemovalJobs = async () => {
+  const getClaimedJobs = async () => {
     try {
       const response = await fetch("/api/report", {
         method: "GET",
@@ -77,15 +57,15 @@ export default function RemovalJobsPage() {
     }
   };
 
-  const filterByIsland = (job: RemovalJobs) => {
+  const filterByIsland = (job: ClaimedJobs) => {
     return selectedIsland === "" || job.island === selectedIsland;
   };
 
   const handleOnClick = (e: any) => {
-    const claimButtonClicked =
-      e.target.tagName === "BUTTON" && e.target.innerText === "Claim task";
+    const removalButtonClicked =
+      e.target.tagName === "BUTTON" && e.target.innerText === "Removal Complete";
 
-    if (claimButtonClicked) {
+    if (removalButtonClicked) {
       setJobSelected(e.target.parentElement.id);
       setIsModalOpen(true);
     }
@@ -94,11 +74,11 @@ export default function RemovalJobsPage() {
   const handleRemovalJobClaimSubmit = async (formData: FormData) => {
     const form = new FormData();
     form.append("id", jobSelected.split("-")[1]);
-    form.append("status", "claimed");
+    form.append("status", "removalcomplete");
     form.append("removalCompany", formData.removalCompany);
 
     setIsModalOpen(false);
-    setRemovalCompany("");
+    setRemovedJob("");
 
     try {
       const response = await fetch("/api/report", {
@@ -111,7 +91,7 @@ export default function RemovalJobsPage() {
         const claimedCompany = formData.removalCompany;
         const claimDateTime = new Date().toLocaleString();
 
-        const claimedJob: RemovalJobs = {
+        const claimedJob: ClaimedJobs = {
           id: claimedJobData.id,
           address: claimedJobData.address,
           latitude: claimedJobData.latitude,
@@ -145,28 +125,22 @@ export default function RemovalJobsPage() {
   };
 
   useEffect(() => {
-    getRemovalJobs();
+    getClaimedJobs();
   }, [isModalOpen]);
 
-  const unclaimedJobs = jobs.filter((j) => j.status !== "claimed");
-  const claimedJobs = jobs.filter((j) => j.status === "claimed");
-
-  const allReportsCombined = [...unclaimedJobs, ...dummyJobData];
-  const allClaimedTasksCombined = [...claimedJobs, ...dummyClaimedJobData];
-  console.log("All claimed combined:", claimedJobs);
+  const removalCompleteJobs = jobs.filter(j => j.status === "removalcomplete")
 
   return (
     <>
       <section
-        className="flex flex-col items-center 
-      justify-center "
+        className="flex h-fit min-h-screen flex-col items-center 
+      justify-center  px-4 pt-12 gap-4 custom-background pb-24"
       >
-        <Navbar />
         <h1
           className="text-md md:text-2xl xl:text-4xl font-extrabold text-white text-center 
         lg:text-left pb-8"
         >
-          Removal Jobs Available
+          Claimed Jobs Available
         </h1>
         <div className=" md:mr-12 mb-4 flex flex-row items-center justify-center gap-1">
           <label
@@ -190,8 +164,8 @@ export default function RemovalJobsPage() {
           </select>
         </div>
         <div className="grid xl:grid-cols-2 gap-8">
-          {allReportsCombined
-            .filter((j) => j.status !== "claimed" && filterByIsland(j))
+          {jobs
+            .filter((j) => j.status === "claimed" && filterByIsland(j))
             .map((job, index) => (
               <JobCard
                 key={index}
@@ -200,30 +174,29 @@ export default function RemovalJobsPage() {
                 claimed={false}
                 setJobSelected={setJobSelected}
                 setIsModalOpen={setIsModalOpen}
-                btnMessage="Claim Task"
+                btnMessage="Removal Complete"
               />
             ))}
         </div>
 
-        {allReportsCombined.filter(
-          (j) => j.status !== "claimed" && filterByIsland(j),
+        {jobs.filter(
+          (j) => j.status === "claimed" && filterByIsland(j),
         ).length === 0 && (
           <div className="h-[400px] text-sm text-center text-white flex flex-col-reverse gap-8 items-center justify-center">
-            No reports available for the selected island.
+            No claimed jobs available for the selected island.
             <img src="/assets/map.png" alt="Hawaii map" className="h-24" />
           </div>
         )}
         {/* ______________claimed tasks________________ */}
-        {claimedJobs.length > 0 && (
+        {removalCompleteJobs.length > 0 && (
           <>
             <div className="h-[1px] w-1/2 bg-white/20 my-4 mt-8"></div>
-            <h2 className="text-md md:text-xl xl:text-2xl font-extrabold 
-            text-white text-center lg:text-left pb-8">
-              Claimed tasks
+            <h2 className="text-md md:text-xl xl:text-2xl font-extrabold text-white text-center lg:text-left pb-8">
+              Removal Complete and Pending Processing 
             </h2>
 
             <div className="grid grid-cols-2 gap-8">
-              {allClaimedTasksCombined.map((claimedJob, index) => (
+              {claimedTasks.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}
                   claimedJob={claimedJob}
@@ -231,6 +204,8 @@ export default function RemovalJobsPage() {
                   claimingCompany={claimingCompany}
                   status={"Pending"}
                   lastUpdateDate={claimDate}
+          
+                
                 />
               ))}
             </div>
@@ -242,7 +217,7 @@ export default function RemovalJobsPage() {
         onClose={() => setIsModalOpen(false)}
       />{" "}
       {isModalOpen && (
-        <ClaimJobModal
+        <RemovalJobModal
           onSubmit={handleRemovalJobClaimSubmit}
           onClose={() => setIsModalOpen(false)}
         />

@@ -132,9 +132,13 @@ export default function ResultsPage() {
   const fishingGearPercentageData = calculateFishingGearPercentage(jobs);
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full -z-10">
+    <div>
       <Navbar />
-      <h1 className="text-white self-center">Results Page</h1>
+      <div className="flex justify-center items-center text-center w-full">
+        <h1 className="text-2xl xl:text-4xl font-extrabold text-whitetext-white">
+          Results Page
+        </h1>
+      </div>
       <div className="flex justify-around">
         <div className="flex flex-col w-1/3">
           <h2 className="text-white justify-center m-auto">% Debris Type</h2>

@@ -56,7 +56,9 @@ flex flex-col items-center justify-center mt-8 gap-2 py-4 mx-12 z-20 mb-[200px] 
           justify-center gap-2 text-black"
           >
             <BiSolidPhoneCall />
+            <a href="tel:1-888-256-9840">
             1-888-256-9840
+            </a>
           </p>
           <p className="text-[.6rem] lg:text-[.8rem] text-black">
             24/7 Emergency Hotline

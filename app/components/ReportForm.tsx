@@ -586,9 +586,11 @@ function ReportForm() {
               {/* __________________________DESCRIPTION_____________________ */}
               <div className="form-group">
                 <img src="./assets/seal.png" alt="seal" className="w-1/4" />
-                <label htmlFor="email">Sealy's Recommendation:</label>
+
+                <label htmlFor="email">Sealy&apos;s Recommendation:</label>
                 <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
-                  Sealy's Recommendation is a tool that provides a
+                  Sealy&apos;s Recommendation is a tool that provides a
+
                   recommendation for classifying a provided image using
                   Artificial Intelligence. Just upload a photo of the debris to
                   get a recommendation!{" "}
