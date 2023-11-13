@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
+import styled from "styled-components";
 
 interface FormData {
   address: string;
@@ -21,6 +22,20 @@ interface FormData {
   phone: string;
   captcha: string;
 }
+
+const renderMarkers = (
+  map: any,
+  maps: any,
+  latitude: Number,
+  longitude: Number,
+) => {
+  let marker = new maps.Marker({
+    position: { lat: latitude, lng: longitude },
+    map,
+    title: "Hello World!",
+  });
+  return marker;
+};
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -70,20 +85,25 @@ function ReportForm() {
       const message = [
         [
           " 4",
-          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it."
+          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
         ],
       ];
 
-      const showText = function(target: string, message: string, index: number, interval: number) {
+      const showText = function (
+        target: string,
+        message: string,
+        index: number,
+        interval: number,
+      ) {
         if (index < message.length) {
           const e = document.querySelector(target) as any;
           console.log(e);
-          (e).textContent += message[index++];
-          setTimeout(function() {
+          e.textContent += message[index++];
+          setTimeout(function () {
             showText(target, message, index, interval);
           }, interval);
         }
-      }
+      };
 
       showText("#sealy-text", message[0][1], 0, 2);
       showText("#sealy-level", message[0][0], 0, 2);
@@ -248,40 +268,8 @@ function ReportForm() {
         <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
 
         <div className="flex flex-col items-start text-black justify-between md:gap-12 ">
-          <div className="mr-8">
-            {/*________________________ Island Selection_______________ */}
-            {/* <div className="form-group flex flex-row items-center gap-4">
-              <label htmlFor="island">Select Island</label>
-              <select
-                id="island"
-                name="island"
-                value={formData.island}
-                onChange={handleChange}
-                className="w-[200px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
-              >
-                <option value="" className="font-semibold">
-                  Select an Island
-                </option>
-                <option value="Big Island" className="font-semibold">
-                  Big Island
-                </option>
-                <option value="Oahu" className="font-semibold">
-                  Oahu
-                </option>
-                <option value="Maui" className="font-semibold">
-                  Maui
-                </option>
-                <option value="Kauai" className="font-semibold">
-                  Kauai
-                </option>
-                <option value="Lanai" className="font-semibold">
-                  Lanai
-                </option>
-                <option value="Molokai" className="font-semibold">
-                  Molokai
-                </option>
-              </select>
-            </div> */}
+      
+         
             {/* ____________________Location & address_________________ */}
             <div className="form-group">
               <label htmlFor="location">Location:</label>
@@ -324,25 +312,32 @@ function ReportForm() {
                 //     </span>
                 //   </p>
                 // </div>
-                <div style={{ height: "1000px", width: "1000px" }}>
+                <div style={{ height: "300px", width: "300px" }}>
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: "" }}
+                    bootstrapURLKeys={{
+                      key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+                    }}
                     defaultCenter={{
                       lat: Number(formData.latitude),
                       lng: Number(formData.longitude),
                     }}
                     defaultZoom={15}
-                  >
-                    {/* <div>
-                    lat={formData.latitude}
-                    lng={formData.longitude}
-                    text="My Marker"
-                  </div> */}
-                  </GoogleMapReact>
+                    // Disable controls
+                    options={{ disableDefaultUI: false, zoomControl: false }}
+                    yesIWantToUseGoogleMapApiInternals={true}
+                    onGoogleApiLoaded={({ map, maps }) =>
+                      renderMarkers(
+                        map,
+                        maps,
+                        Number(formData.latitude),
+                        Number(formData.longitude),
+                      )
+                    }
+                  ></GoogleMapReact>
                 </div>
               )}
 
-              <label htmlFor="address">Address:</label>
+              {/* <label htmlFor="address">Address:</label>
               <p className="text-gray-600 text-sm">
                 Please provide specific details that help us pinpoint the debris
                 location.
@@ -355,6 +350,7 @@ function ReportForm() {
                 onChange={handleChange}
                 className="w-full max-w-[600px]"
               />
+
             </div>
 
             {/* ______________________DEBRIS TYPE_______________________ */}

@@ -14,13 +14,15 @@
     "@react-google-maps/api": "^2.19.2",
     "bootstrap": "^5.3.2",
     "google-map-react": "^2.2.1",
+    "google-maps-react-markers": "^2.0.6",
     "next": "13.5.6",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
-    "recharts": "^2.9.3"
+    "recharts": "^2.9.3",
+    "styled-components": "^6.1.1"
   },
   "devDependencies": {
     "@types/google-map-react": "^2.1.10",
