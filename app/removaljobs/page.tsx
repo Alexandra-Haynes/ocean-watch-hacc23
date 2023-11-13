@@ -5,7 +5,6 @@ import ModalOverlay from "../components/ModalOverlay";
 import ClaimJobModal from "../components/ClaimJobModal";
 import ClaimedJobCard from "../components/ClaimedJobCard";
 import Navbar from "../components/Navbar";
-import Image from "next/image";
 interface RemovalJobs {
   id: string;
   address: string;
@@ -23,40 +22,14 @@ interface RemovalJobs {
   status: string;
 }
 
-interface FormData {
-  id: string;
-  status: string;
-  removalCompany: string;
-}
-
-function useOutsideClick(ref: any, handleClickOutside: (event: any) => void) {
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [ref]);
-}
 
 export default function RemovalJobsPage() {
-  const [allReports, setAllReports] = useState<RemovalJobs[]>([]);
   const [jobs, setJobs] = useState<RemovalJobs[]>([]);
-  const [allClaimedTasks, setAllClaimedTasks] = useState<RemovalJobs[]>([]);
   const [jobSelected, setJobSelected] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [removalCompany, setRemovalCompany] = useState<string>("");
   const [selectedIsland, setSelectedIsland] = useState<string>("");
-  const [claimedTasks, setClaimedTasks] = useState<RemovalJobs[]>([]); // Separate state for claimed tasks
   const [claimingCompany, setClaimingCompany] = useState<string>("");
   const [claimDate, setClaimDate] = useState<string>("");
-
-  const modalRef = useRef<HTMLFormElement>(null);
-
-  function handleClickOutside(event: any) {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setIsModalOpen(false);
-    }
-  }
 
   const getRemovalJobs = async () => {
     try {
