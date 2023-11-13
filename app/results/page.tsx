@@ -15,7 +15,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import useRoleCheck from "../api/rolecheck";
 import Navbar from "../components/Navbar";
+import router, { useRouter } from "next/router";
 import GoogleMapReact from "google-map-react";
 
 interface RemovalJobs {
@@ -114,19 +116,18 @@ export default function ResultsPage() {
   function sumDebrisAmountByType(jobs: RemovalJobs[]): DebrisTypeSummary[] {
     // First, sum up the amounts by debris type
     const debrisAmountSum = jobs.reduce((acc: Record<string, number>, job) => {
-      console.log("JOB IS:", job)
+      console.log("JOB IS:", job);
       const amount = parseFloat(job.debrisApproxSize) || 0;
       acc[job.debrisType] = (acc[job.debrisType] || 0) + amount;
       return acc;
     }, {});
-  
+
     // Then, transform the record into an array of DebrisTypeSummary
     return Object.entries(debrisAmountSum).map(([name, value]) => ({
       name,
-      value
+      value,
     }));
   }
-  
 
   const getRemovalJobs = async () => {
     try {
@@ -149,52 +150,59 @@ export default function ResultsPage() {
   };
 
   useEffect(() => {
-    getRemovalJobs();
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "admin" && userRole !== "removal") {
+      window.location.href = "/login";
+    } else {
+      getRemovalJobs();
+    }
   }, []);
 
   const debrisPercentageData = transformRemovalJobsData(jobs);
   const fishingGearPercentageData = calculateFishingGearPercentage(jobs);
-  const debrisByTypeData = sumDebrisAmountByType(jobs).filter(debris => debris.value > 0);
-  console.log("DEBRIS BY TYPE", debrisByTypeData)
+  const debrisByTypeData = sumDebrisAmountByType(jobs).filter(
+    (debris) => debris.value > 0,
+  );
+  console.log("DEBRIS BY TYPE", debrisByTypeData);
 
   const [map, setMap] = useState<any>(null);
   const [maps, setMaps] = useState<any>(null);
 
-  const renderMarkers = (
-    map: any,
-    maps: any,
-    jobs: any,
-  ) => {
-    console.log('Jobs in render:', jobs);
+  const renderMarkers = (map: any, maps: any, jobs: any) => {
+    console.log("Jobs in render:", jobs);
     for (let i = 0; i < jobs.length; i++) {
       const marker = new maps.Marker({
-        position: { lat: Number(jobs[i].latitude), lng: Number(jobs[i].longitude) },
+        position: {
+          lat: Number(jobs[i].latitude),
+          lng: Number(jobs[i].longitude),
+        },
         map,
         title: "Hello World!",
       });
     }
   };
 
-  console.log('Jobs:', jobs);
+  console.log("Jobs:", jobs);
 
   useEffect(() => {
-    renderMarkers(map, maps, jobs);
-  }
-    , [jobs]);
+    if (map && maps && jobs.length > 0) {
+      renderMarkers(map, maps, jobs);
+    }
+  }, [map, maps, jobs]);
 
   return (
-    <div>
+    <div className="h-fit custom-background">
       <Navbar />
       <div className="flex justify-center items-center text-center w-full">
-        <h1 className="text-2xl xl:text-4xl font-extrabold text-whitetext-white">
+        <h1 className="text-2xl xl:text-4xl font-extrabold text-white">
           Results Page
         </h1>
       </div>
       <center>
-        <div style={{ height: "600px", width: "80%" }}>
+        <div className="p-6" style={{ height: "600px", width: "80%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+              key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
             }}
             defaultCenter={{
               lat: Number(21.306944),
@@ -213,8 +221,10 @@ export default function ResultsPage() {
       </center>
 
       <div className="flex justify-around">
-        <div className="flex flex-col w-1/3">
-          <h2 className="text-white justify-center m-auto">% Debris Type</h2>
+        <div className="flex flex-col w-1/3 mb-12 chart-background">
+          <h2 className="text-white text-2xl justify-center m-auto">
+            % Debris Type
+          </h2>
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Tooltip />
@@ -239,8 +249,8 @@ export default function ResultsPage() {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex flex-col w-1/3">
-          <h2 className="text-white justify-center m-auto">
+        <div className="flex flex-col w-1/3 mb-12 chart-background">
+          <h2 className="text-white text-2xl justify-center m-auto">
             % Fishing Gear vs Other
           </h2>
           <ResponsiveContainer width="100%" height={400}>
@@ -267,20 +277,30 @@ export default function ResultsPage() {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex flex-col w-1/3 mr-2">
-          <h2 className="text-white justify-center m-auto">
+      </div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col w-1/3 mr-2 mb-12">
+          <h2 className="text-white text-2xl justify-center m-auto">
             Marine Debris by Type
           </h2>
-          <ResponsiveContainer width="100%" height={400} style={{backgroundColor: "#edf6f9", marginRight: "1em"}}>
+          <ResponsiveContainer
+            width="100%"
+            height={400}
+            style={{ backgroundColor: "#edf6f9", marginRight: "1em" }}
+          >
             <BarChart data={debrisByTypeData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip contentStyle={{backgroundColor: "white", color: "black"}}/>
-              <XAxis dataKey="name" style={{color: "red"}} />
-              <YAxis />
-              <Bar
-                fill="#006D77"
-                dataKey="value"
+              <Tooltip
+                contentStyle={{ backgroundColor: "white", color: "black" }}
               />
+              <XAxis
+                dataKey="name"
+                width={20}
+                tick={{ fontSize: 10 }}
+                interval={0}
+              />
+              <YAxis />
+              <Bar fill="#006D77" dataKey="value" barSize={80} />
             </BarChart>
           </ResponsiveContainer>
         </div>

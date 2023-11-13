@@ -20,8 +20,8 @@ interface RemovalJobs {
   phone: string;
   captcha: string;
   status: string;
+  images: string;
 }
-
 
 export default function RemovalJobsPage() {
   const [jobs, setJobs] = useState<RemovalJobs[]>([]);
@@ -64,11 +64,16 @@ export default function RemovalJobsPage() {
   };
 
   const handleRemovalJobClaimSubmit = async () => {
-    setIsModalOpen(false)
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
-    getRemovalJobs();
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "admin" && userRole !== "removal") {
+      window.location.href = "/login";
+    } else {
+      getRemovalJobs();
+    }
   }, [isModalOpen]);
 
   const unclaimedJobs = jobs.filter((j) => j.status === "pending");
@@ -78,7 +83,9 @@ export default function RemovalJobsPage() {
     <>
       <section
         className="flex flex-col items-center 
+
       justify-center gap-8 custom-background pb-24"
+
       >
         <Navbar />
         <h1
@@ -97,7 +104,7 @@ export default function RemovalJobsPage() {
           <select
             value={selectedIsland}
             onChange={(e) => setSelectedIsland(e.target.value)}
-            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2 text-black"
           >
             <option value="">All Islands</option>
             <option value="Oahu">Oahu</option>
@@ -108,7 +115,7 @@ export default function RemovalJobsPage() {
             <option value="Molokai">Molokai</option>
           </select>
         </div>
-        <div className="grid xl:grid-cols-2 gap-8">
+        <div className="grid xl:grid-cols-2 gap-8 text-black">
           {unclaimedJobs
             .filter((j) => j.status === "pending" && filterByIsland(j))
             .map((job, index) => (
@@ -136,12 +143,14 @@ export default function RemovalJobsPage() {
         {claimedJobs.length > 0 && (
           <>
             <div className="h-[1px] w-1/2 bg-white/20 my-4 mt-8"></div>
-            <h2 className="text-md md:text-xl xl:text-2xl font-extrabold 
-            text-white text-center lg:text-left pb-8">
+            <h2
+              className="text-md md:text-xl xl:text-2xl font-extrabold 
+            text-white text-center lg:text-left pb-8"
+            >
               Claimed tasks
             </h2>
 
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-8 mb-16 text-black">
               {claimedJobs.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}

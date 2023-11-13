@@ -348,7 +348,7 @@ function ReportForm() {
               <div style={{ height: "300px", width: "300px" }}>
                 <GoogleMapReact
                   bootstrapURLKeys={{
-                    key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+                    key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
                   }}
                   defaultCenter={{
                     lat: Number(formData.latitude),
@@ -385,6 +385,35 @@ function ReportForm() {
                 className="w-full max-w-[600px]"
               />
             </div> */}
+            <div className="form-group flex flex-row items-center gap-4 mt-5">
+              <label htmlFor="island">Select Island</label>
+              <select
+                id="island"
+                name="island"
+                value={formData.island}
+                onChange={handleChange}
+                className="w-[200px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+              >
+                <option value="" className="font-semibold">
+                  Select an Island
+                </option>
+                <option value="Big Island" className="font-semibold">
+                  Big Island
+                </option>
+                <option value="Oahu" className="font-semibold">
+                  Oahu
+                </option>
+                <option value="Maui" className="font-semibold">
+                  Maui
+                </option>
+                <option value="Kauai" className="font-semibold">
+                  Kauai
+                </option>
+                <option value="Molokai" className="font-semibold">
+                  Molokai
+                </option>
+              </select>
+            </div>
 
             {/* ______________________DEBRIS TYPE_______________________ */}
             <div className="form-group">

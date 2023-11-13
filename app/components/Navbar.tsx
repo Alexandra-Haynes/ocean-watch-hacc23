@@ -36,9 +36,9 @@ const Navbar: React.FC = () => {
   return (
     <nav className="w-full  p-5 uppercase" style={gradient}>
       <div className="flex justify-between items-center mx-12">
-        <a href="/" className="text-white font-bold text-xl">
-          {" "}
-          <img src="/assets/logo.png" className="h-12" alt="Logo" />
+        <a href="/" className="text-white font-bold text-xl flex items-center">
+          <img src="/assets/seal.png" className="h-12" alt="Logo" />
+          &ensp;OCEAN WATCH
         </a>
 
         {/* Burger menu icon for small screens */}
@@ -131,13 +131,23 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           {/* Conditional Login Links */}
-          {userRole === "removal" && (
+          {(userRole === "admin" || userRole === "removal") && (
             <li>
               <a
                 href="/removaljobs"
                 className="text-white hover:shadow-lg pb-2 hover:font-bold transition-all ease-in text-sm"
               >
                 Removal
+              </a>
+            </li>
+          )}
+          {(userRole === "admin" || userRole === "removal") && (
+            <li>
+              <a
+                href="/claimedjobs"
+                className="text-white hover:shadow-lg pb-2 hover:font-bold transition-all ease-in text-sm"
+              >
+                Claim
               </a>
             </li>
           )}
