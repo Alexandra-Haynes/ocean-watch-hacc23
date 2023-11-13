@@ -232,13 +232,15 @@ function ReportForm() {
   ];
   return (
     <section
-      className="flex flex-col items-center justify-center gap-8 md:py-8 py-12 custom-background
+      className="flex flex-col items-center justify-center 
+      gap-8 md:py-24 py-12 custom-background
     "
     >
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col mx-6 items-start justify-center gap-2
-        border-slate-500/30 border-2 rounded-md shadow-2xl p-6  md:p-8 bg-white/90"
+        className="flex flex-col mx-6 pl-12 items-start justify-center gap-2 
+        border-slate-500/30 border-2 rounded-md shadow-2xl p-6  
+        md:p-8 bg-white/90"
       >
         <h2 className=" font-medium text-2xl text-black self-center">
           Report Marine Debris
@@ -303,7 +305,7 @@ function ReportForm() {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+                    className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
                   />
                 </div>
               )}
@@ -351,7 +353,7 @@ function ReportForm() {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full max-w-[400px]"
+                className="w-full max-w-[600px]"
               />
             </div>
 
@@ -363,12 +365,12 @@ function ReportForm() {
                 name="debrisType"
                 value={formData.debrisType}
                 onChange={handleChange}
-                className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2
+                className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2
                 "
               >
                 <option value="">Select Debris Type</option>
                 {debrisOptions.map((option, index) => (
-                  <option key={index} value={option} className="max-w-[400px]">
+                  <option key={index} value={option} className="max-w-[600px]">
                     {option}
                   </option>
                 ))}
@@ -391,7 +393,7 @@ function ReportForm() {
                       value="Full"
                       checked={containerStatus === "Full"}
                       onChange={() => handleContainerStatusChange("Full")}
-                      className="h-6 max-w-[400px]"
+                      className="h-6 max-w-[600px]"
                     />
                     Full
                   </label>
@@ -404,7 +406,7 @@ function ReportForm() {
                       onChange={() =>
                         handleContainerStatusChange("Partially Filled")
                       }
-                      className="h-6 max-w-[400px]"
+                      className="h-6 max-w-[600px]"
                     />
                     Partially Filled
                   </label>
@@ -415,7 +417,7 @@ function ReportForm() {
                       value="Empty"
                       checked={containerStatus === "Empty"}
                       onChange={() => handleContainerStatusChange("Empty")}
-                      className="h-6 max-w-[400px]"
+                      className="h-6 max-w-[600px]"
                     />
                     Empty
                   </label>
@@ -432,16 +434,16 @@ function ReportForm() {
                 name="debrisLocation"
                 value={formData.debrisLocation}
                 onChange={handleChange}
-                className="w-full max-w-[400px] h-12 border-slate-300 border-2 p-2 rounded-md"
+                className="w-full max-w-[600px] h-12 border-slate-300 border-2 p-2 rounded-md"
               >
-                <option value="" className="h-2 pt-2 max-w-[400px]">
+                <option value="" className="h-2 pt-2 max-w-[600px]">
                   Select Debris Location Details
                 </option>
                 {locationOptions.map((option, index) => (
                   <option
                     key={index}
                     value={option}
-                    className="h-2 max-w-[400px] pt-2"
+                    className="h-2 max-w-[600px] pt-2"
                   >
                     {option}
                   </option>
@@ -451,7 +453,7 @@ function ReportForm() {
             {/* ______________________Biofouling_______________________ */}
             <div className="pt-2">
               <div
-                className="flex flex-row items-center justify-start gap-4"
+                className="flex flex-col items-start justify-start gap-4"
                 title="The Level of Fouling LoF scale is a ranking system with six categories characterizing the amount of biofouling."
               >
                 <label className="font-semibold pt-2">
@@ -466,11 +468,11 @@ function ReportForm() {
                   onChange={(e) =>
                     handleBiofoulingChange(Number(e.target.value))
                   }
-                  className="w-1/3 max-w-[400px]"
+                  className="w-1/3 max-w-[600px]"
                 />
                 <p className="text-gray-600 text-sm">{formData.biofouling}</p>
               </div>
-              <p className="text-gray-600 text-sm py-2 w-full">
+              <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                 The Level of Fouling (LoF) scale is a ranking system with six
                 categories characterizing the amount of biofouling.
               </p>
@@ -513,7 +515,7 @@ function ReportForm() {
                 <img
                   src={`./assets/levels-of-fouling/${formData.biofouling}.png`}
                   alt="biofouling"
-                  className="w-1/2"
+                  className="w-1/2 max-w-[600px]"
                 />
               </div>
             </div>
@@ -530,7 +532,7 @@ function ReportForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
               </div>
 
@@ -543,7 +545,7 @@ function ReportForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
                 <p className="text-gray-600 text-sm py-2 w-full">
                   Please include area code (e.g. 808-555-5555)
@@ -591,7 +593,7 @@ function ReportForm() {
               <div className="form-group">
                 <img src="./assets/seal.png" alt="seal" className="w-1/4" />
                 <label htmlFor="email">Sealy's Recommendation:</label>
-                <p className="text-gray-600 text-sm py-2 w-full max-w-[400px]">
+                <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                   Sealy's Recommendation is a tool that provides a
                   recommendation for classifying a provided image using
                   Artificial Intelligence. Just upload a photo of the debris to
@@ -602,8 +604,9 @@ function ReportForm() {
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
+                disabled
                   id="sealy-text"
-                  className="w-full  max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
+                  className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                   style={{
                     resize: "none",
                     overflow: "hidden",
@@ -618,7 +621,7 @@ function ReportForm() {
         </div>
 
         {/* _______________________________DESCRIPTION__________________ */}
-        <div className="form-group max-w-[400px] w-full text-black">
+        <div className="form-group max-w-[600px] w-full text-black">
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"
