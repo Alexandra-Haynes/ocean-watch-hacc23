@@ -58,6 +58,7 @@ function ReportForm() {
   });
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
+  const [sealyText, setSealyText] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -90,7 +91,7 @@ function ReportForm() {
         ],
       ];
 
-      const showText = function (
+      const showSealyText = function (
         target: string,
         message: string,
         index: number,
@@ -99,14 +100,16 @@ function ReportForm() {
         if (index < message.length) {
           const e = document.querySelector(target) as any;
           e.textContent += message[index++];
+          setSealyText(e.textContent);
           setTimeout(function () {
-            showText(target, message, index, interval);
+            showSealyText(target, message, index, interval);
           }, interval);
         }
       };
 
-      showText("#sealy-text", message[0][1], 0, 2);
-      showText("#sealy-level", message[0][0], 0, 2);
+      showSealyText("#sealy-text", message[0][1], 0, 25);
+      const e = document.querySelector('#sealy-level') as any;
+      e.textContent = message[0][0];
 
       setFormData({
         ...formData,
@@ -599,6 +602,7 @@ function ReportForm() {
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
+                  value={sealyText}
                   disabled
                   id="sealy-text"
                   className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
