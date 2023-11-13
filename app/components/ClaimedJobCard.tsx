@@ -7,9 +7,8 @@ import {
   MdOutlineLocationOn,
   MdGpsFixed,
   MdOutlineDateRange,
-  MdUpdate
 } from "react-icons/md";
-import { FaUserAlt} from 'react-icons/fa'
+
 
 interface RemovalJobs {
   id: string;
@@ -73,7 +72,7 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
         <p className="text-slate-600  flex flex-row items-center justify-center gap-1">
           {" "}
           <MdOutlineDateRange />
-          <span className="text-[.8rem] ">{claimedJob.date}</span>{" "}
+          <span className="font-semibold ">{claimedJob.date}</span>{" "}
         </p>
         <p className="text-black flex flex-row items-center justify-start gap-1">
           <MdOutlineLocationOn className=" text-slate-500" />

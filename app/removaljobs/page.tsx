@@ -41,8 +41,8 @@ function useOutsideClick(ref: any, handleClickOutside: (event: any) => void) {
 
 export default function RemovalJobsPage() {
   const [allReports, setAllReports] = useState<RemovalJobs[]>([]);
-  const [allClaimedTasks, setAllClaimedTasks] = useState<RemovalJobs[]>([]);
   const [jobs, setJobs] = useState<RemovalJobs[]>([]);
+  const [allClaimedTasks, setAllClaimedTasks] = useState<RemovalJobs[]>([]);
   const [jobSelected, setJobSelected] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [removalCompany, setRemovalCompany] = useState<string>("");
@@ -148,8 +148,12 @@ export default function RemovalJobsPage() {
     getRemovalJobs();
   }, [isModalOpen]);
 
-  const allReportsCombined = [...allReports, ...dummyJobData];
-  const allClaimedTasksCombined = [...allClaimedTasks, ...dummyClaimedJobData];
+  const unclaimedJobs = jobs.filter((j) => j.status !== "claimed");
+  const claimedJobs = jobs.filter((j) => j.status === "claimed");
+
+  const allReportsCombined = [...unclaimedJobs, ...dummyJobData];
+  const allClaimedTasksCombined = [...claimedJobs, ...dummyClaimedJobData];
+  console.log("All claimed combined:", claimedJobs);
 
   return (
     <>
@@ -209,15 +213,16 @@ export default function RemovalJobsPage() {
           </div>
         )}
         {/* ______________claimed tasks________________ */}
-        {allClaimedTasksCombined.length > 0 && (
+        {claimedJobs.length > 0 && (
           <>
             <div className="h-[1px] w-1/2 bg-white/20 my-4 mt-8"></div>
-            <h2 className="text-md md:text-xl xl:text-2xl font-extrabold text-white text-center lg:text-left pb-8">
+            <h2 className="text-md md:text-xl xl:text-2xl font-extrabold 
+            text-white text-center lg:text-left pb-8">
               Claimed tasks
             </h2>
 
             <div className="grid grid-cols-2 gap-8">
-              {claimedTasks.map((claimedJob, index) => (
+              {allClaimedTasksCombined.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}
                   claimedJob={claimedJob}
