@@ -13,6 +13,7 @@
     "@prisma/client": "^5.5.2",
     "@react-google-maps/api": "^2.19.2",
     "bootstrap": "^5.3.2",
+    "dotenv": "^16.3.1",
     "google-map-react": "^2.2.1",
     "google-maps-react-markers": "^2.0.6",
     "next": "13.5.6",
