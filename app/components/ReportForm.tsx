@@ -348,7 +348,7 @@ function ReportForm() {
               <div style={{ height: "300px", width: "300px" }}>
                 <GoogleMapReact
                   bootstrapURLKeys={{
-                    key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+                    key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
                   }}
                   defaultCenter={{
                     lat: Number(formData.latitude),

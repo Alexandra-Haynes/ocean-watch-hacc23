@@ -202,7 +202,7 @@ export default function ResultsPage() {
         <div className="p-6" style={{ height: "600px", width: "80%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
-              key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+              key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
             }}
             defaultCenter={{
               lat: Number(21.306944),
