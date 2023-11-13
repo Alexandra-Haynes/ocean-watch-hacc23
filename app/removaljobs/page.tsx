@@ -78,7 +78,7 @@ export default function RemovalJobsPage() {
     <>
       <section
         className="flex flex-col items-center 
-      justify-center "
+      justify-center gap-8 custom-background pb-24"
       >
         <Navbar />
         <h1
