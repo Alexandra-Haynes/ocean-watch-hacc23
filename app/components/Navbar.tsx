@@ -7,12 +7,25 @@ import DonateButton from "./DonateButton";
 const Navbar: React.FC = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check local storage for the user role
     const role = localStorage.getItem("userRole");
     setUserRole(role);
+    setLoading(false);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner-container">
+          <div className="spinner"></div>
+          <img src="/assets/seal.png" alt="Loading" className="spinner-image" />
+        </div>
+      </div>
+    );
+  }
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
