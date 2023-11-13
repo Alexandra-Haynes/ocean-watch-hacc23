@@ -34,6 +34,7 @@ interface JobCardProps {
   claimed?: boolean;
   setJobSelected: (jobId: string) => void;
   setIsModalOpen: (isOpen: boolean) => void;
+  btnMessage: string;
 }
 
 function JobCard({
@@ -43,6 +44,7 @@ function JobCard({
   claimed,
   setJobSelected,
   setIsModalOpen,
+  btnMessage
 }: JobCardProps) {
   const data = claimed ? claimedJob : job;
   if (!data) {
@@ -50,7 +52,7 @@ function JobCard({
   }
   const handleOnClick = (e: any) => {
     const claimButtonClicked =
-      e.target.tagName === "BUTTON" && e.target.innerText === "Claim task";
+      e.target.tagName === "BUTTON" && e.target.innerText === "Removal Complete";
 
     if (claimButtonClicked) {
       setJobSelected(e.target.parentElement.id);
@@ -142,7 +144,7 @@ function JobCard({
           duration-500 ease-in-out
           cursor-pointer flex flex-row items-center justify-center gap-2"
       >
-        <MdOutlineAssignmentTurnedIn className="text-xl" /> Claim task
+        <MdOutlineAssignmentTurnedIn className="text-xl" /> {btnMessage}
       </button>
     </div>
   );
