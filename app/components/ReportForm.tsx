@@ -232,12 +232,12 @@ function ReportForm() {
   ];
   return (
     <section
-      className="flex flex-col items-center justify-center gap-8 md:py-8 mt-4
+      className="flex flex-col items-center justify-center gap-8 md:py-8 py-12 custom-background
     "
     >
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-start justify-center gap-2
+        className="flex flex-col mx-6 items-start justify-center gap-2
         border-slate-500/30 border-2 rounded-md shadow-2xl p-6  md:p-8 bg-white/90"
       >
         <h2 className=" font-medium text-2xl text-black self-center">
@@ -245,7 +245,7 @@ function ReportForm() {
         </h2>
         <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
 
-        <div className="flex flex-row items-start text-black justify-between md:gap-12 ">
+        <div className="flex flex-col items-start text-black justify-between md:gap-12 ">
           <div className="mr-8">
             {/*________________________ Island Selection_______________ */}
             {/* <div className="form-group flex flex-row items-center gap-4">
@@ -303,7 +303,7 @@ function ReportForm() {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+                    className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
                   />
                 </div>
               )}
@@ -351,7 +351,7 @@ function ReportForm() {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full"
+                className="w-full max-w-[400px]"
               />
             </div>
 
@@ -363,12 +363,12 @@ function ReportForm() {
                 name="debrisType"
                 value={formData.debrisType}
                 onChange={handleChange}
-                className="w-full h-12 border-slate-300 border-2 rounded-md p-2
+                className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2
                 "
               >
                 <option value="">Select Debris Type</option>
                 {debrisOptions.map((option, index) => (
-                  <option key={index} value={option}>
+                  <option key={index} value={option} className="max-w-[400px]">
                     {option}
                   </option>
                 ))}
@@ -391,7 +391,7 @@ function ReportForm() {
                       value="Full"
                       checked={containerStatus === "Full"}
                       onChange={() => handleContainerStatusChange("Full")}
-                      className="h-6"
+                      className="h-6 max-w-[400px]"
                     />
                     Full
                   </label>
@@ -404,7 +404,7 @@ function ReportForm() {
                       onChange={() =>
                         handleContainerStatusChange("Partially Filled")
                       }
-                      className="h-6"
+                      className="h-6 max-w-[400px]"
                     />
                     Partially Filled
                   </label>
@@ -415,7 +415,7 @@ function ReportForm() {
                       value="Empty"
                       checked={containerStatus === "Empty"}
                       onChange={() => handleContainerStatusChange("Empty")}
-                      className="h-6"
+                      className="h-6 max-w-[400px]"
                     />
                     Empty
                   </label>
@@ -432,13 +432,17 @@ function ReportForm() {
                 name="debrisLocation"
                 value={formData.debrisLocation}
                 onChange={handleChange}
-                className="w-full h-12 border-slate-300 border-2 p-2 rounded-md"
+                className="w-full max-w-[400px] h-12 border-slate-300 border-2 p-2 rounded-md"
               >
-                <option value="" className="h-2 pt-2 ">
+                <option value="" className="h-2 pt-2 max-w-[400px]">
                   Select Debris Location Details
                 </option>
                 {locationOptions.map((option, index) => (
-                  <option key={index} value={option} className="h-2 pt-2">
+                  <option
+                    key={index}
+                    value={option}
+                    className="h-2 max-w-[400px] pt-2"
+                  >
                     {option}
                   </option>
                 ))}
@@ -462,7 +466,7 @@ function ReportForm() {
                   onChange={(e) =>
                     handleBiofoulingChange(Number(e.target.value))
                   }
-                  className="w-1/3"
+                  className="w-1/3 max-w-[400px]"
                 />
                 <p className="text-gray-600 text-sm">{formData.biofouling}</p>
               </div>
@@ -516,7 +520,6 @@ function ReportForm() {
           </div>
 
           <div className="flex flex-row items-start justify-center">
-            <div className="h-[420px] w-[1px] bg-orange-400/20 mr-6 md:mr-12 self-center "></div>
             <div>
               {/*__________________ Email_____________________________ */}
               <div className="form-group">
@@ -527,7 +530,7 @@ function ReportForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
               </div>
 
@@ -540,7 +543,7 @@ function ReportForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-full max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
                 <p className="text-gray-600 text-sm py-2 w-full">
                   Please include area code (e.g. 808-555-5555)
@@ -588,33 +591,34 @@ function ReportForm() {
               <div className="form-group">
                 <img src="./assets/seal.png" alt="seal" className="w-1/4" />
                 <label htmlFor="email">Sealy's Recommendation:</label>
-                <p className="text-gray-600 text-sm py-2 w-full">
+                <p className="text-gray-600 text-sm py-2 w-full max-w-[400px]">
                   Sealy's Recommendation is a tool that provides a
-                  recommendation for classifying a provided image using Artificial Intelligence. Just upload a photo of the
-                  debris to get a recommendation! </p>
-                <p>Recommended Biofouling Level:
+                  recommendation for classifying a provided image using
+                  Artificial Intelligence. Just upload a photo of the debris to
+                  get a recommendation!{" "}
+                </p>
+                <p>
+                  Recommended Biofouling Level:
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
                   id="sealy-text"
-                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
+                  className="w-full  max-w-[400px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                   style={{
-                    "resize": "none",
-                    "overflow": "hidden",
-                    "minHeight": "200px",
-                    "maxHeight": "300px",
+                    resize: "none",
+                    overflow: "hidden",
+                    minHeight: "200px",
+                    maxHeight: "300px",
                   }}
                   rows={50}
-                  
-                  >
-                </textarea>
+                ></textarea>
               </div>
             </div>
           </div>
         </div>
 
         {/* _______________________________DESCRIPTION__________________ */}
-        <div className="form-group w-full text-black">
+        <div className="form-group max-w-[400px] w-full text-black">
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"
