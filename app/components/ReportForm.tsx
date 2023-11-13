@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
+import styled from 'styled-components';
 
 interface FormData {
   address: string;
@@ -21,6 +22,27 @@ interface FormData {
   phone: string;
   captcha: string;
 }
+
+const Wrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: #FF0000;
+  border: 2px solid #fff;
+  border-radius: 100%;
+  user-select: none;
+  transform: translate(-50%, -50%);
+  cursor: ${(props) => (props.onClick ? 'pointer' : 'default')};
+  &:hover {
+    z-index: 1;
+  }
+`;
+
+const Marker = () => (
+  <Wrapper />
+);
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -324,18 +346,25 @@ function ReportForm() {
                 // </div>
                 <div style={{ height: "1000px", width: "1000px" }}>
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: "" }}
+                    bootstrapURLKeys={{ key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c" }}
                     defaultCenter={{
                       lat: Number(formData.latitude),
                       lng: Number(formData.longitude),
                     }}
                     defaultZoom={15}
+                    // Disable controls
+                    options={{ disableDefaultUI: false, zoomControl: false }}
                   >
                     {/* <div>
                     lat={formData.latitude}
                     lng={formData.longitude}
                     text="My Marker"
                   </div> */}
+                  <Marker 
+                    lat={formData.latitude}
+                    lng={formData.longitude}
+                    text="My Marker"
+                  />
                   </GoogleMapReact>
                 </div>
               )}

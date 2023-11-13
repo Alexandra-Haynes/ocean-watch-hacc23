@@ -28,7 +28,7 @@ export default function ReportSubmitted() {
             Please help us reach our goal by submitting a new report whenever you encounter
             any marine debris.
           </p>
-          <ProgressBar now={5} label={`${5}%`} />
+          <ProgressBar now={3} label={`${3}%`} />
 
           <Link
             href="/"
