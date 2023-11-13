@@ -8,9 +8,7 @@ interface FormData {
   status: string;
   removalCompany: string;
 }
-interface ModalProps {
-  onSubmit: (formData: FormData) => void;
-}
+
 
 interface ClaimFormData {
   id: string;
@@ -19,21 +17,37 @@ interface ClaimFormData {
 }
 
 interface ClaimJobModalProps {
-  onSubmit: (formData: FormData) => void;
+  job: string;
+  onSubmit: () => void;
   onClose: () => void;
 }
 
-function ClaimJobModal({ onSubmit, onClose }: ClaimJobModalProps) {
+function ClaimJobModal({ onSubmit, onClose, job }: ClaimJobModalProps) {
   const [removalCompany, setRemovalCompany] = useState("");
 
- const handleSubmit = (e: React.FormEvent) => {
+ const handleSubmit = async (e: React.FormEvent) => {
    e.preventDefault();
-   const formData: FormData = {
-     id: "", 
-     status: "",
-     removalCompany,
-   };
-   onSubmit(formData);
+   onSubmit()
+   const form = new FormData();
+   form.append("id", job.split("-")[1]);
+   form.append("status", "claimed");
+   form.append("removalCompany", removalCompany);
+
+   try {
+    const response = await fetch("/api/report", {
+      method: "PATCH",
+      body: form,
+    });
+
+    if (response.ok) {
+      console.log("JOB CLAIMED SUCCESS");
+    } else {
+      // Handle errors, display an error message
+    }
+  } catch (error) {
+    console.log("ERROR", error);
+  }
+
    setRemovalCompany("");
  };
 

@@ -52,7 +52,7 @@ function JobCard({
   }
   const handleOnClick = (e: any) => {
     const claimButtonClicked =
-      e.target.tagName === "BUTTON" && e.target.innerText === "Removal Complete";
+      e.target.tagName === "BUTTON" && e.target.innerText === btnMessage;
 
     if (claimButtonClicked) {
       setJobSelected(e.target.parentElement.id);
