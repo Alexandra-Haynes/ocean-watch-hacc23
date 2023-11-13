@@ -16,6 +16,7 @@ import {
   YAxis,
 } from "recharts";
 import Navbar from "../components/Navbar";
+import GoogleMapReact from "google-map-react";
 
 interface RemovalJobs {
   id: string;
@@ -156,6 +157,31 @@ export default function ResultsPage() {
   const debrisByTypeData = sumDebrisAmountByType(jobs).filter(debris => debris.value > 0);
   console.log("DEBRIS BY TYPE", debrisByTypeData)
 
+  const [map, setMap] = useState<any>(null);
+  const [maps, setMaps] = useState<any>(null);
+
+  const renderMarkers = (
+    map: any,
+    maps: any,
+    jobs: any,
+  ) => {
+    console.log('Jobs in render:', jobs);
+    for (let i = 0; i < jobs.length; i++) {
+      const marker = new maps.Marker({
+        position: { lat: Number(jobs[i].latitude), lng: Number(jobs[i].longitude) },
+        map,
+        title: "Hello World!",
+      });
+    }
+  };
+
+  console.log('Jobs:', jobs);
+
+  useEffect(() => {
+    renderMarkers(map, maps, jobs);
+  }
+    , [jobs]);
+
   return (
     <div>
       <Navbar />
@@ -164,6 +190,28 @@ export default function ResultsPage() {
           Results Page
         </h1>
       </div>
+      <center>
+        <div style={{ height: "600px", width: "80%" }}>
+          <GoogleMapReact
+            bootstrapURLKeys={{
+              key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+            }}
+            defaultCenter={{
+              lat: Number(21.306944),
+              lng: Number(-157.858337),
+            }}
+            defaultZoom={14}
+            // Disable controls
+            options={{ disableDefaultUI: false, zoomControl: false }}
+            yesIWantToUseGoogleMapApiInternals={true}
+            onGoogleApiLoaded={({ map, maps }) => {
+              setMap(map);
+              setMaps(maps);
+            }}
+          ></GoogleMapReact>
+        </div>
+      </center>
+
       <div className="flex justify-around">
         <div className="flex flex-col w-1/3">
           <h2 className="text-white justify-center m-auto">% Debris Type</h2>
