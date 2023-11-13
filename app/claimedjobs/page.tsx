@@ -74,9 +74,8 @@ export default function ClaimedJobsPage() {
     if (userRole !== "admin" && userRole !== "removal") {
       window.location.href = "/login";
     } else {
-      getRemovalJobs();
+      getClaimedJobs();
     }
-    getClaimedJobs();
   }, [isModalOpen]);
 
   const removalCompleteJobs = jobs.filter((j) => j.status === "removed");
@@ -174,7 +173,4 @@ export default function ClaimedJobsPage() {
       )}
     </>
   );
-}
-function getRemovalJobs() {
-  throw new Error("Function not implemented.");
 }
