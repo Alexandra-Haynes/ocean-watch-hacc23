@@ -221,7 +221,7 @@ export default function ResultsPage() {
       </center>
 
       <div className="flex justify-around">
-        <div className="flex flex-col w-1/3 mb-12">
+        <div className="flex flex-col w-1/3 mb-12 chart-background">
           <h2 className="text-white text-2xl justify-center m-auto">
             % Debris Type
           </h2>
@@ -249,7 +249,7 @@ export default function ResultsPage() {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex flex-col w-1/3 mb-12">
+        <div className="flex flex-col w-1/3 mb-12 chart-background">
           <h2 className="text-white text-2xl justify-center m-auto">
             % Fishing Gear vs Other
           </h2>
