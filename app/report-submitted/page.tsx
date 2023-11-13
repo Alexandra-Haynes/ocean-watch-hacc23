@@ -1,31 +1,61 @@
+'use client';
 import Link from "next/link";
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import ProgressBar from "react-bootstrap/ProgressBar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navbar from "../components/Navbar";
+import { useEffect } from "react";
+
+const sendSms = async (event: any) => {
+
+  await fetch('/api/sms', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message: 'A new report has been submitted!' }) // body data type must match "Content-Type" header
+  }).then((response) => {
+    console.log(response);
+  })
+    .catch((error) => {
+      console.error('Errors :', error);
+    });
+}
+let alreadySubmitted = false;
 
 export default function ReportSubmitted() {
+  useEffect(() => {
+    if (!alreadySubmitted) {
+      alreadySubmitted = true;
+      sendSms(null);
+    }
+  }, []);
   return (
-    <section className="h-screen">
-      <main
-        className="bg-cover bg-no-repeat flex h-screen 
-      flex-col items-center justify-between px-4"
-      >
-        <div className="absolute top-0 left-0 w-full h-full -z-10 custom-background">
-          <div className="custom-clip-path h-screen w-screen bg-white/10"></div>
+    <section>
+      <Navbar />
+      <main className="bg-cover bg-no-repeat flex flex-col items-center ">
+        <div className="absolute top-0 left-0 w-full -z-10 ">
+          <div className="custom-clip-path w-screen bg-white/10"></div>
         </div>
-        <div className="text-center p-6 mt-20 bg-white bg-opacity-80 rounded-xl shadow-lg">
-          <h1 className="text-4xl font-bold text-gray-800 mb-6">Thank You!</h1>
-          <p className="text-lg text-gray-600 mb-6">
+        <div className="text-center p-5 mt-20 bg-white bg-opacity-80 rounded-xl shadow-lg">
+          <h1 className="text-4xl font-bold text-gray-800">Thank You!</h1>
+          <p className="text-lg text-gray-400 mb-6">
             Your report has been submitted successfully.
           </p>
 
           <center>
-            <img src="/assets/seal.jpg" alt="Report submitted" width={200} height={200} />
+            <img
+              src="/assets/seal.jpg"
+              alt="Report submitted"
+              width={200}
+              height={200}
+            />
           </center>
 
           <br />
           <b>Monthly Progress</b>
-          <p>Every month, our goal is to have 500 reports submitted.
-            Please help us reach our goal by submitting a new report whenever you encounter
+          <p>
+            Every month, our goal is to have 500 reports submitted. Please help
+            us reach our goal by submitting a new report whenever you encounter
             any marine debris.
           </p>
           <ProgressBar now={3} label={`${3}%`} />

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface FormData {
   address: string;
@@ -23,14 +23,19 @@ interface FormData {
   captcha: string;
 }
 
-const renderMarkers = (map: any, maps: any, latitude: Number, longitude: Number) => {
+const renderMarkers = (
+  map: any,
+  maps: any,
+  latitude: Number,
+  longitude: Number,
+) => {
   let marker = new maps.Marker({
     position: { lat: latitude, lng: longitude },
     map,
-    title: 'Hello World!'
-    });
+    title: "Hello World!",
+  });
   return marker;
- };
+};
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -80,20 +85,25 @@ function ReportForm() {
       const message = [
         [
           " 4",
-          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it."
+          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
         ],
       ];
 
-      const showText = function(target: string, message: string, index: number, interval: number) {
+      const showText = function (
+        target: string,
+        message: string,
+        index: number,
+        interval: number,
+      ) {
         if (index < message.length) {
           const e = document.querySelector(target) as any;
           console.log(e);
-          (e).textContent += message[index++];
-          setTimeout(function() {
+          e.textContent += message[index++];
+          setTimeout(function () {
             showText(target, message, index, interval);
           }, interval);
         }
-      }
+      };
 
       showText("#sealy-text", message[0][1], 0, 2);
       showText("#sealy-level", message[0][0], 0, 2);
@@ -242,54 +252,24 @@ function ReportForm() {
   ];
   return (
     <section
-      className="flex flex-col items-center justify-center gap-8 md:py-8 mt-4
+      className="flex flex-col items-center justify-center 
+      gap-8 md:py-24 py-12 custom-background
     "
     >
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-start justify-center gap-2
-        border-slate-500/30 border-2 rounded-md shadow-2xl p-6  md:p-8 bg-white/90"
+        className="flex flex-col mx-6 pl-12 items-start justify-center gap-2 
+        border-slate-500/30 border-2 rounded-md shadow-2xl p-6  
+        md:p-8 bg-white/90"
       >
         <h2 className=" font-medium text-2xl text-black self-center">
           Report Marine Debris
         </h2>
         <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
 
-        <div className="flex flex-row items-start text-black justify-between md:gap-12 ">
-          <div className="mr-8">
-            {/*________________________ Island Selection_______________ */}
-            {/* <div className="form-group flex flex-row items-center gap-4">
-              <label htmlFor="island">Select Island</label>
-              <select
-                id="island"
-                name="island"
-                value={formData.island}
-                onChange={handleChange}
-                className="w-[200px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
-              >
-                <option value="" className="font-semibold">
-                  Select an Island
-                </option>
-                <option value="Big Island" className="font-semibold">
-                  Big Island
-                </option>
-                <option value="Oahu" className="font-semibold">
-                  Oahu
-                </option>
-                <option value="Maui" className="font-semibold">
-                  Maui
-                </option>
-                <option value="Kauai" className="font-semibold">
-                  Kauai
-                </option>
-                <option value="Lanai" className="font-semibold">
-                  Lanai
-                </option>
-                <option value="Molokai" className="font-semibold">
-                  Molokai
-                </option>
-              </select>
-            </div> */}
+        <div className="flex flex-col items-start text-black justify-between md:gap-12 ">
+      
+         
             {/* ____________________Location & address_________________ */}
             <div className="form-group">
               <label htmlFor="location">Location:</label>
@@ -313,7 +293,7 @@ function ReportForm() {
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="w-full h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+                    className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
                   />
                 </div>
               )}
@@ -332,9 +312,11 @@ function ReportForm() {
                 //     </span>
                 //   </p>
                 // </div>
-                <div style={{ height: "1000px", width: "1000px" }}>
+                <div style={{ height: "300px", width: "300px" }}>
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c" }}
+                    bootstrapURLKeys={{
+                      key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+                    }}
                     defaultCenter={{
                       lat: Number(formData.latitude),
                       lng: Number(formData.longitude),
@@ -343,9 +325,15 @@ function ReportForm() {
                     // Disable controls
                     options={{ disableDefaultUI: false, zoomControl: false }}
                     yesIWantToUseGoogleMapApiInternals={true}
-                    onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps, Number(formData.latitude), Number(formData.longitude))}
-                  >
-                  </GoogleMapReact>
+                    onGoogleApiLoaded={({ map, maps }) =>
+                      renderMarkers(
+                        map,
+                        maps,
+                        Number(formData.latitude),
+                        Number(formData.longitude),
+                      )
+                    }
+                  ></GoogleMapReact>
                 </div>
               )}
 
@@ -360,8 +348,9 @@ function ReportForm() {
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                className="w-full"
-              /> */}
+                className="w-full max-w-[600px]"
+              />
+
             </div>
 
             {/* ______________________DEBRIS TYPE_______________________ */}
@@ -372,12 +361,12 @@ function ReportForm() {
                 name="debrisType"
                 value={formData.debrisType}
                 onChange={handleChange}
-                className="w-full h-12 border-slate-300 border-2 rounded-md p-2
+                className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2
                 "
               >
                 <option value="">Select Debris Type</option>
                 {debrisOptions.map((option, index) => (
-                  <option key={index} value={option}>
+                  <option key={index} value={option} className="max-w-[600px]">
                     {option}
                   </option>
                 ))}
@@ -400,7 +389,7 @@ function ReportForm() {
                       value="Full"
                       checked={containerStatus === "Full"}
                       onChange={() => handleContainerStatusChange("Full")}
-                      className="h-6"
+                      className="h-6 max-w-[600px]"
                     />
                     Full
                   </label>
@@ -413,7 +402,7 @@ function ReportForm() {
                       onChange={() =>
                         handleContainerStatusChange("Partially Filled")
                       }
-                      className="h-6"
+                      className="h-6 max-w-[600px]"
                     />
                     Partially Filled
                   </label>
@@ -424,7 +413,7 @@ function ReportForm() {
                       value="Empty"
                       checked={containerStatus === "Empty"}
                       onChange={() => handleContainerStatusChange("Empty")}
-                      className="h-6"
+                      className="h-6 max-w-[600px]"
                     />
                     Empty
                   </label>
@@ -441,13 +430,17 @@ function ReportForm() {
                 name="debrisLocation"
                 value={formData.debrisLocation}
                 onChange={handleChange}
-                className="w-full h-12 border-slate-300 border-2 p-2 rounded-md"
+                className="w-full max-w-[600px] h-12 border-slate-300 border-2 p-2 rounded-md"
               >
-                <option value="" className="h-2 pt-2 ">
+                <option value="" className="h-2 pt-2 max-w-[600px]">
                   Select Debris Location Details
                 </option>
                 {locationOptions.map((option, index) => (
-                  <option key={index} value={option} className="h-2 pt-2">
+                  <option
+                    key={index}
+                    value={option}
+                    className="h-2 max-w-[600px] pt-2"
+                  >
                     {option}
                   </option>
                 ))}
@@ -456,7 +449,7 @@ function ReportForm() {
             {/* ______________________Biofouling_______________________ */}
             <div className="pt-2">
               <div
-                className="flex flex-row items-center justify-start gap-4"
+                className="flex flex-col items-start justify-start gap-4"
                 title="The Level of Fouling LoF scale is a ranking system with six categories characterizing the amount of biofouling."
               >
                 <label className="font-semibold pt-2">
@@ -471,11 +464,11 @@ function ReportForm() {
                   onChange={(e) =>
                     handleBiofoulingChange(Number(e.target.value))
                   }
-                  className="w-1/3"
+                  className="w-1/3 max-w-[600px]"
                 />
                 <p className="text-gray-600 text-sm">{formData.biofouling}</p>
               </div>
-              <p className="text-gray-600 text-sm py-2 w-full">
+              <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                 The Level of Fouling (LoF) scale is a ranking system with six
                 categories characterizing the amount of biofouling.
               </p>
@@ -518,14 +511,13 @@ function ReportForm() {
                 <img
                   src={`./assets/levels-of-fouling/${formData.biofouling}.png`}
                   alt="biofouling"
-                  className="w-1/2"
+                  className="w-1/2 max-w-[600px]"
                 />
               </div>
             </div>
           </div>
 
           <div className="flex flex-row items-start justify-center">
-            <div className="h-[420px] w-[1px] bg-orange-400/20 mr-6 md:mr-12 self-center "></div>
             <div>
               {/*__________________ Email_____________________________ */}
               <div className="form-group">
@@ -536,7 +528,7 @@ function ReportForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
               </div>
 
@@ -549,7 +541,7 @@ function ReportForm() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
                 <p className="text-gray-600 text-sm py-2 w-full">
                   Please include area code (e.g. 808-555-5555)
@@ -597,33 +589,35 @@ function ReportForm() {
               <div className="form-group">
                 <img src="./assets/seal.png" alt="seal" className="w-1/4" />
                 <label htmlFor="email">Sealy's Recommendation:</label>
-                <p className="text-gray-600 text-sm py-2 w-full">
+                <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                   Sealy's Recommendation is a tool that provides a
-                  recommendation for classifying a provided image using Artificial Intelligence. Just upload a photo of the
-                  debris to get a recommendation! </p>
-                <p>Recommended Biofouling Level:
+                  recommendation for classifying a provided image using
+                  Artificial Intelligence. Just upload a photo of the debris to
+                  get a recommendation!{" "}
+                </p>
+                <p>
+                  Recommended Biofouling Level:
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
+                disabled
                   id="sealy-text"
-                  className="w-full h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
+                  className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                   style={{
-                    "resize": "none",
-                    "overflow": "hidden",
-                    "minHeight": "200px",
-                    "maxHeight": "300px",
+                    resize: "none",
+                    overflow: "hidden",
+                    minHeight: "200px",
+                    maxHeight: "300px",
                   }}
                   rows={50}
-                  
-                  >
-                </textarea>
+                ></textarea>
               </div>
             </div>
           </div>
         </div>
 
         {/* _______________________________DESCRIPTION__________________ */}
-        <div className="form-group w-full text-black">
+        <div className="form-group max-w-[600px] w-full text-black">
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"

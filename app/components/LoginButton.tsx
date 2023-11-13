@@ -1,21 +1,28 @@
-import React from "react";
+// LoginButton.tsx
+import React, { useState, useEffect } from "react";
 
 const LoginButton: React.FC = () => {
-  return (
-    <div
-      className="flex flex-row items-center justify-center hover:scale-[104%]
-    gap-2 border border-green-400/60 p-2 px-6 rounded-full shadow-lg cursor-pointer 
-    transition-all ease-in-out bg-white"
-    >
-      <img src="/assets/login.png" alt="Login" className="h-6 xl:h-8 " />
+  const [userRole, setUserRole] = useState<string | null>(null);
 
-      <p
-        className="text-green-700 text-sm md:text-md font-semibold uppercase
-        transition-all ease-in-out"
-      >
-        LOGIN
-      </p>
-    </div>
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("userRole");
+    window.location.reload(); // or navigate to the login page
+  };
+
+  const handleClick = userRole ? handleLogout : () => {};
+
+  return (
+    <button
+      onClick={handleClick}
+      className="text-white hover:bg-gray-700 py-2 px-4 rounded"
+    >
+      {userRole ? "Logout" : "Login"}
+    </button>
   );
 };
 

@@ -1,14 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import LoginButton from "./LoginButton";
 import DonateButton from "./DonateButton";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Check local storage for the user role
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner-container">
+          <div className="spinner"></div>
+          <img src="/assets/seal.png" alt="Loading" className="spinner-image" />
+        </div>
+      </div>
+    );
+  }
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
+
   const gradient = {
     background: "linear-gradient(black 0%, rgba(0, 0, 0, 0) 100%)",
   };
@@ -101,26 +122,35 @@ const Navbar: React.FC = () => {
           </li>
           <li className="relative group">
             <a
-              href="https://www.hpu.edu/cncs/cmdr/research/overview.html"
-              target="_blank"
+              href="/report"
               className="text-white hover:shadow-lg pb-2
             hover:font-bold transition-all ease-in text-sm
          "
             >
-              Research
+              Report
             </a>
           </li>
-          <li>
-            <a
-              href="https://www.hpu.edu/cncs/cmdr/products-and-services.html"
-              target="_blank"
-              className="text-white hover:shadow-lg pb-2 
-            hover:font-bold transition-all ease-in text-sm
-         "
-            >
-              Products & Services
-            </a>
-          </li>
+          {/* Conditional Login Links */}
+          {userRole === "removal" && (
+            <li>
+              <a
+                href="/removaljobs"
+                className="text-white hover:shadow-lg pb-2 hover:font-bold transition-all ease-in text-sm"
+              >
+                Removal
+              </a>
+            </li>
+          )}
+          {(userRole === "admin" || userRole === "removal") && (
+            <li>
+              <a
+                href="/results"
+                className="text-white hover:shadow-lg pb-2 hover:font-bold transition-all ease-in text-sm"
+              >
+                Dashboard
+              </a>
+            </li>
+          )}
           {isMenuOpen && (
             <div>
               <li>
