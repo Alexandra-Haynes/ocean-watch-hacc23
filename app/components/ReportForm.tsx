@@ -97,7 +97,6 @@ function ReportForm() {
       ) {
         if (index < message.length) {
           const e = document.querySelector(target) as any;
-          console.log(e);
           e.textContent += message[index++];
           setTimeout(function () {
             showText(target, message, index, interval);

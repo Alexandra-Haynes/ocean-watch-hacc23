@@ -8,13 +8,11 @@ interface FormData {
   debrisApproxSize: string;
   environmentalDamage: string;
 }
-interface ModalProps {
-  onSubmit: (formData: FormData) => void;
-}
 
 interface RemovalJobModalProps {
-  onSubmit: (formData: FormData) => void;
+  onSubmit: () => void;
   onClose: () => void;
+  job: string;
 }
 
 interface RemovalFormData {
@@ -23,20 +21,21 @@ interface RemovalFormData {
   debrisApproxSize: string;
 }
 
-function RemovalJobModal({ onSubmit, onClose }: RemovalJobModalProps) {
+function RemovalJobModal({ onSubmit, onClose, job }: RemovalJobModalProps) {
   const [formData, setFormData] = useState<RemovalFormData>({
     id: "",
     environmentalDamage: "",
     debrisApproxSize: "",
   });
-
   const handleSubmit = async (e: React.FormEvent) => {
+    onSubmit();
     e.preventDefault();
 
     const form = new FormData();
-    form.append("id", formData.id);
+    form.append("id", job.split("-")[1]);
     form.append("environmentalDamage", formData.environmentalDamage);
     form.append("debrisApproxSize", formData.debrisApproxSize);
+    form.append("status", "removed");
 
     // Example: send formData to the server
     try {

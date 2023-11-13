@@ -101,8 +101,6 @@ export default function RemovalJobsPage() {
   const unclaimedJobs = jobs.filter((j) => j.status !== "claimed");
   const claimedJobs = jobs.filter((j) => j.status === "claimed");
 
-  console.log("All claimed combined:", claimedJobs);
-
   return (
     <>
       <section
