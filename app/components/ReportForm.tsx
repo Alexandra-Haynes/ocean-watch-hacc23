@@ -4,6 +4,7 @@ import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
+import Image from "next/image";
 
 interface FormData {
   address: string;
@@ -122,7 +123,6 @@ function ReportForm() {
     setFormData({ ...formData, biofouling: value });
   };
 
-  // Set the default date to be today's date
   useEffect(() => {
     const getCurrentDate = () => {
       const now = new Date();
@@ -586,9 +586,11 @@ function ReportForm() {
               {/* __________________________DESCRIPTION_____________________ */}
               <div className="form-group">
                 <img src="./assets/seal.png" alt="seal" className="w-1/4" />
+
                 <label htmlFor="email">Sealy&apos;s Recommendation:</label>
                 <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                   Sealy&apos;s Recommendation is a tool that provides a
+
                   recommendation for classifying a provided image using
                   Artificial Intelligence. Just upload a photo of the debris to
                   get a recommendation!{" "}

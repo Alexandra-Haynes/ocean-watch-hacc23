@@ -3,6 +3,7 @@ import Link from "next/link";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "../components/Navbar";
+
 import { useEffect } from "react";
 
 const sendSms = async (event: any) => {
@@ -21,6 +22,7 @@ const sendSms = async (event: any) => {
     });
 }
 let alreadySubmitted = false;
+
 
 export default function ReportSubmitted() {
   useEffect(() => {

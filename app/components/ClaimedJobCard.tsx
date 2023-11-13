@@ -1,5 +1,5 @@
-// JobCard.tsx
 import React from "react";
+import Image from "next/image";
 
 import { BsBookmark } from "react-icons/bs";
 import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";

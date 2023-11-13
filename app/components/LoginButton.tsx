@@ -1,5 +1,6 @@
-// LoginButton.tsx
+
 import React, { useState, useEffect } from "react";
+
 
 const LoginButton: React.FC = () => {
   const [userRole, setUserRole] = useState<string | null>(null);
