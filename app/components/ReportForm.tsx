@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
+import ReCAPTCHA from "react-google-recaptcha";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -108,7 +109,7 @@ function ReportForm() {
       };
 
       showSealyText("#sealy-text", message[0][1], 0, 25);
-      const e = document.querySelector('#sealy-level') as any;
+      const e = document.querySelector("#sealy-level") as any;
       e.textContent = message[0][0];
 
       setFormData({
@@ -192,6 +193,13 @@ function ReportForm() {
       xhr.send();
     });
   }
+
+  const [captchaValue, setCaptchaValue] = useState(null);
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+    setFormData({ ...formData, captcha: value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -592,7 +600,6 @@ function ReportForm() {
                 <label htmlFor="email">Sealy&apos;s Recommendation:</label>
                 <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                   Sealy&apos;s Recommendation is a tool that provides a
-
                   recommendation for classifying a provided image using
                   Artificial Intelligence. Just upload a photo of the debris to
                   get a recommendation!{" "}
@@ -655,6 +662,13 @@ function ReportForm() {
           {/* here we add the reCAPTCHA api stuff from https://www.google.com/recaptcha
           and we use  npm install react-google-recaptcha library */}
         {/* </div> */}
+        <div className="form-group">
+          <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string}
+            onChange={handleCaptchaChange}
+          />
+        </div>
+
         <button
           className="bg-green-700 text-white px-5 py-2 rounded-full ml-1
         shadow-lg hover:bg-green-600 transition-all duration-200 ease-in-out scale-110
@@ -664,6 +678,7 @@ function ReportForm() {
               "linear-gradient(220deg, rgba(156,252,142,1) 0%, rgba(46,152,70,1) 28%, rgba(2,10,20,1) 100%)",
           }}
           type="submit"
+          disabled={!captchaValue}
         >
           Submit
           <RiMailSendLine className="text-white text-xl" />
