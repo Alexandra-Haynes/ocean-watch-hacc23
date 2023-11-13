@@ -221,8 +221,10 @@ export default function ResultsPage() {
       </center>
 
       <div className="flex justify-around">
-        <div className="flex flex-col w-1/3">
-          <h2 className="text-white justify-center m-auto">% Debris Type</h2>
+        <div className="flex flex-col w-1/3 mb-12">
+          <h2 className="text-white text-2xl justify-center m-auto">
+            % Debris Type
+          </h2>
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Tooltip />
@@ -247,8 +249,8 @@ export default function ResultsPage() {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex flex-col w-1/3">
-          <h2 className="text-white justify-center m-auto">
+        <div className="flex flex-col w-1/3 mb-12">
+          <h2 className="text-white text-2xl justify-center m-auto">
             % Fishing Gear vs Other
           </h2>
           <ResponsiveContainer width="100%" height={400}>
@@ -275,8 +277,10 @@ export default function ResultsPage() {
             </PieChart>
           </ResponsiveContainer>
         </div>
+      </div>
+      <div className="flex flex-col items-center justify-center">
         <div className="flex flex-col w-1/3 mr-2 mb-12">
-          <h2 className="text-white justify-center m-auto">
+          <h2 className="text-white text-2xl justify-center m-auto">
             Marine Debris by Type
           </h2>
           <ResponsiveContainer
@@ -289,9 +293,14 @@ export default function ResultsPage() {
               <Tooltip
                 contentStyle={{ backgroundColor: "white", color: "black" }}
               />
-                <XAxis dataKey="name" width={20} tick={{fontSize: 10}} interval={0}/>
+              <XAxis
+                dataKey="name"
+                width={20}
+                tick={{ fontSize: 10 }}
+                interval={0}
+              />
               <YAxis />
-                <Bar fill="#006D77" dataKey="value" barSize={80} />
+              <Bar fill="#006D77" dataKey="value" barSize={80} />
             </BarChart>
           </ResponsiveContainer>
         </div>
