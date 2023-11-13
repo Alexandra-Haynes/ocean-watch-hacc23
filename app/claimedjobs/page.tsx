@@ -70,6 +70,12 @@ export default function ClaimedJobsPage() {
   };
 
   useEffect(() => {
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "admin" && userRole !== "removal") {
+      window.location.href = "/login";
+    } else {
+      getRemovalJobs();
+    }
     getClaimedJobs();
   }, [isModalOpen]);
 
@@ -168,4 +174,7 @@ export default function ClaimedJobsPage() {
       )}
     </>
   );
+}
+function getRemovalJobs() {
+  throw new Error("Function not implemented.");
 }
