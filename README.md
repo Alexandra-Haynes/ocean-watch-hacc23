@@ -49,6 +49,8 @@ Ocean Watch is built to make a tangible impact in marine conservation. We have i
 
 For example, we have integrated the OpenAI Vision Preview API to analyze images of marine debris and classify them according to the Level of Fouling Scale. This allows us to automate the process of classifying debris, and it also provides us with valuable data that can be used to inform future conservation efforts.
 
+In the future, we plan on integrating more specific machine learning models. [Here is an example](https://www.nature.com/articles/s41598-021-81011-2) of a machine learning model that can be used to classify marine debris.
+
 ## Built With
 
 Our project is built using cutting-edge technologies for a responsive, efficient, and secure experience.
@@ -83,6 +85,7 @@ DATABASE_URL="file:./dev.db"
 NEXT_PUBLIC_CAPTCHA_SITE_KEY=<your-captcha-site-key>
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
 TWILIO_AUTH_TOKEN=<your-twilio-auth-token>
+OPEN_AI_API_KEY=<your open ai key>
 ```
 
 ### 4. Configure Database
