@@ -13,15 +13,16 @@ export default function LoginPage() {
     setLoginError("");
 
     try {
-      const logins: {[key: string]: string} = {
-        'admin': 'password',
-        'removal': 'password',
+      const logins: { [key: string]: string } = {
+        admin: "password",
+        removal: "password",
       };
 
       if (logins[username] !== password) {
         setLoginError("Invalid username or password.");
         return;
       } else {
+        localStorage.setItem("userRole", username);
         window.location.href = "/results";
       }
     } catch (error) {
