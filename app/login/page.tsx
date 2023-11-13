@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import Navbar from "../components/Navbar";
 
 export default function LoginPage() {
@@ -13,18 +13,16 @@ export default function LoginPage() {
     setLoginError("");
 
     try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        username,
-        password,
-      });
+      const logins: {[key: string]: string} = {
+        'admin': 'password',
+        'removal': 'password',
+      };
 
-      if (result && result.error) {
+      if (logins[username] !== password) {
         setLoginError("Invalid username or password.");
-      } else if (result) {
-        window.location.href = "/";
+        return;
       } else {
-        setLoginError("An unknown error occurred.");
+        window.location.href = "/results";
       }
     } catch (error) {
       setLoginError("An error occurred while logging in.");
