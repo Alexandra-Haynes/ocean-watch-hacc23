@@ -9,7 +9,6 @@ import {
   MdOutlineDateRange,
 } from "react-icons/md";
 
-
 interface RemovalJobs {
   id: string;
   address: string;
@@ -41,7 +40,6 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
   claimingCompany,
   status,
   lastUpdateDate,
-
 }) => {
   return (
     <div
@@ -118,7 +116,7 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
         >
           {claimedJob.description}
         </p>
-        <p className="font-semibold">Observer's contact info</p>
+        <p className="font-semibold">Observer&apos;s contact info</p>
         <p className="text-slate-600  flex flex-row items-center justify-center gap-1">
           <AiOutlineMail /> {claimedJob.email}
         </p>

@@ -110,7 +110,7 @@ function ReportForm() {
 
       setFormData({
         ...formData,
-        images: imageBase64s,
+        images: imageBase64s as any,
       });
     }
   };
@@ -268,76 +268,74 @@ function ReportForm() {
         <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
 
         <div className="flex flex-col items-start text-black justify-between md:gap-12 ">
-      
-         
-            {/* ____________________Location & address_________________ */}
-            <div className="form-group">
-              <label htmlFor="location">Location:</label>
+          {/* ____________________Location & address_________________ */}
+          <div className="form-group">
+            <label htmlFor="location">Location:</label>
 
-              {!showCoordinates && (
-                <div>
-                  <button
-                    type="button"
-                    onClick={getUserLocation}
-                    className="bg-green-400/50 rounded-md shadow-md p-2 px-4
+            {!showCoordinates && (
+              <div>
+                <button
+                  type="button"
+                  onClick={getUserLocation}
+                  className="bg-green-400/50 rounded-md shadow-md p-2 px-4
             flex flex-row items-center justify-center gap-2 mb-2"
-                  >
-                    <MdGpsFixed /> Get My Current Location
-                  </button>
+                >
+                  <MdGpsFixed /> Get My Current Location
+                </button>
 
-                  <p>or describe the location manually</p>
+                <p>or describe the location manually</p>
 
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
-                  />
-                </div>
-              )}
-              {showCoordinates && formData.latitude && formData.longitude && (
-                // <div className="form-group mb-2">
-                //   <p className="text-gray-600 ">
-                //     Latitude:{" "}
-                //     <span className="text-green-600 font-semibold">
-                //       {" "}
-                //       {formData.latitude}
-                //     </span>{" "}
-                //     | Longitude:{" "}
-                //     <span className="text-green-600 font-semibold">
-                //       {" "}
-                //       {formData.longitude}{" "}
-                //     </span>
-                //   </p>
-                // </div>
-                <div style={{ height: "300px", width: "300px" }}>
-                  <GoogleMapReact
-                    bootstrapURLKeys={{
-                      key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
-                    }}
-                    defaultCenter={{
-                      lat: Number(formData.latitude),
-                      lng: Number(formData.longitude),
-                    }}
-                    defaultZoom={15}
-                    // Disable controls
-                    options={{ disableDefaultUI: false, zoomControl: false }}
-                    yesIWantToUseGoogleMapApiInternals={true}
-                    onGoogleApiLoaded={({ map, maps }) =>
-                      renderMarkers(
-                        map,
-                        maps,
-                        Number(formData.latitude),
-                        Number(formData.longitude),
-                      )
-                    }
-                  ></GoogleMapReact>
-                </div>
-              )}
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+                />
+              </div>
+            )}
+            {showCoordinates && formData.latitude && formData.longitude && (
+              // <div className="form-group mb-2">
+              //   <p className="text-gray-600 ">
+              //     Latitude:{" "}
+              //     <span className="text-green-600 font-semibold">
+              //       {" "}
+              //       {formData.latitude}
+              //     </span>{" "}
+              //     | Longitude:{" "}
+              //     <span className="text-green-600 font-semibold">
+              //       {" "}
+              //       {formData.longitude}{" "}
+              //     </span>
+              //   </p>
+              // </div>
+              <div style={{ height: "300px", width: "300px" }}>
+                <GoogleMapReact
+                  bootstrapURLKeys={{
+                    key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+                  }}
+                  defaultCenter={{
+                    lat: Number(formData.latitude),
+                    lng: Number(formData.longitude),
+                  }}
+                  defaultZoom={15}
+                  // Disable controls
+                  options={{ disableDefaultUI: false, zoomControl: false }}
+                  yesIWantToUseGoogleMapApiInternals={true}
+                  onGoogleApiLoaded={({ map, maps }) =>
+                    renderMarkers(
+                      map,
+                      maps,
+                      Number(formData.latitude),
+                      Number(formData.longitude),
+                    )
+                  }
+                ></GoogleMapReact>
+              </div>
+            )}
 
-              {/* <label htmlFor="address">Address:</label>
+            {/* <label htmlFor="address">Address:</label>
               <p className="text-gray-600 text-sm">
                 Please provide specific details that help us pinpoint the debris
                 location.
@@ -588,9 +586,9 @@ function ReportForm() {
               {/* __________________________DESCRIPTION_____________________ */}
               <div className="form-group">
                 <img src="./assets/seal.png" alt="seal" className="w-1/4" />
-                <label htmlFor="email">Sealy's Recommendation:</label>
+                <label htmlFor="email">Sealy&apos;s Recommendation:</label>
                 <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
-                  Sealy's Recommendation is a tool that provides a
+                  Sealy&apos;s Recommendation is a tool that provides a
                   recommendation for classifying a provided image using
                   Artificial Intelligence. Just upload a photo of the debris to
                   get a recommendation!{" "}
@@ -600,7 +598,7 @@ function ReportForm() {
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
-                disabled
+                  disabled
                   id="sealy-text"
                   className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                   style={{
