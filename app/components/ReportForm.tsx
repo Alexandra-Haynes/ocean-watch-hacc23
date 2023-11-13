@@ -214,7 +214,7 @@ function ReportForm() {
 
   const [captchaValue, setCaptchaValue] = useState(null);
 
-  const handleCaptchaChange = (value) => {
+  const handleCaptchaChange = (value: any) => {
     setCaptchaValue(value);
     setFormData({ ...formData, captcha: value });
   };
