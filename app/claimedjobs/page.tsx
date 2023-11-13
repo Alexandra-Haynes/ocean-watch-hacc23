@@ -24,8 +24,8 @@ interface ClaimedJobs {
 
 interface FormData {
   id: string;
-  status: string;
-  removalCompany: string;
+  debrisApproxSize: string;
+  environmentalDamage: string;
 }
 
 export default function ClaimedJobsPage() {
@@ -34,9 +34,9 @@ export default function ClaimedJobsPage() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [removedJob, setRemovedJob] = useState<string>("");
   const [selectedIsland, setSelectedIsland] = useState<string>("");
-  const [claimedTasks, setClaimedTasks] = useState<ClaimedJobs[]>([]); // Separate state for claimed tasks
+  const [removalCompleteTasks, setRemovalCompleteTasks] = useState<ClaimedJobs[]>([]); // Separate state for claimed tasks
   const [claimingCompany, setClaimingCompany] = useState<string>("");
-  const [claimDate, setClaimDate] = useState<string>("");
+  const [removalDate, setRemovalDate] = useState<string>("");
 
 
   const getClaimedJobs = async () => {
@@ -75,10 +75,12 @@ export default function ClaimedJobsPage() {
     const form = new FormData();
     form.append("id", jobSelected.split("-")[1]);
     form.append("status", "removalcomplete");
-    form.append("removalCompany", formData.removalCompany);
+    form.append("debrisApproxSize", formData.debrisApproxSize);
+    form.append("environmentalDamage", formData.environmentalDamage);
 
     setIsModalOpen(false);
     setRemovedJob("");
+    
 
     try {
       const response = await fetch("/api/report", {
@@ -87,35 +89,35 @@ export default function ClaimedJobsPage() {
       });
 
       if (response.ok) {
-        const claimedJobData = await response.json();
-        const claimedCompany = formData.removalCompany;
-        const claimDateTime = new Date().toLocaleString();
+        const removalcompleteJobData = await response.json();
+        // const claimedCompany = formData.removalCompany;
+        const removalDateTime = new Date().toLocaleString();
 
-        const claimedJob: ClaimedJobs = {
-          id: claimedJobData.id,
-          address: claimedJobData.address,
-          latitude: claimedJobData.latitude,
-          longitude: claimedJobData.longitude,
-          date: claimedJobData.date,
-          debrisType: claimedJobData.debrisType,
-          containerStatus: claimedJobData.containerStatus,
-          biofouling: claimedJobData.biofouling,
-          description: claimedJobData.description,
-          island: claimedJobData.island,
-          email: claimedJobData.email,
-          phone: claimedJobData.phone,
-          captcha: claimedJobData.captcha,
-          status: claimedJobData.status,
+        const removalCompleteJob: ClaimedJobs = {
+          id: removalcompleteJobData.id,
+          address: removalcompleteJobData.address,
+          latitude: removalcompleteJobData.latitude,
+          longitude: removalcompleteJobData.longitude,
+          date: removalcompleteJobData.date,
+          debrisType: removalcompleteJobData.debrisType,
+          containerStatus: removalcompleteJobData.containerStatus,
+          biofouling: removalcompleteJobData.biofouling,
+          description: removalcompleteJobData.description,
+          island: removalcompleteJobData.island,
+          email: removalcompleteJobData.email,
+          phone: removalcompleteJobData.phone,
+          captcha: removalcompleteJobData.captcha,
+          status: removalcompleteJobData.status,
         };
 
-        setClaimedTasks((prevClaimedTasks) => [
-          ...prevClaimedTasks,
-          claimedJob,
+        setRemovalCompleteTasks((prevremovalCompleteTasks) => [
+          ...prevremovalCompleteTasks,
+          removalCompleteJob,
         ]);
-        setClaimingCompany(claimedCompany);
-        setClaimDate(claimDateTime);
+        // setClaimingCompany(claimedCompany);
+        setRemovalDate(removalDateTime);
 
-        console.log("JOB CLAIMED SUCCESS");
+        console.log("JOB Removed SUCCESS");
       } else {
         // Handle errors, display an error message
       }
@@ -196,14 +198,14 @@ export default function ClaimedJobsPage() {
             </h2>
 
             <div className="grid grid-cols-2 gap-8">
-              {claimedTasks.map((claimedJob, index) => (
+              {removalCompleteTasks.map((claimedJob, index) => (
                 <ClaimedJobCard
                   key={index}
                   claimedJob={claimedJob}
                   onClick={handleOnClick}
                   claimingCompany={claimingCompany}
                   status={"Pending"}
-                  lastUpdateDate={claimDate}
+                  lastUpdateDate={removalDate}
           
                 
                 />
