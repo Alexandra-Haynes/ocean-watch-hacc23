@@ -255,8 +255,7 @@ function ReportForm() {
   return (
     <section
       className="flex flex-col items-center justify-center 
-      gap-8 md:py-24 py-12 custom-background
-    "
+      gap-8 md:py-24 py-12    "
     >
       <form
         onSubmit={handleSubmit}
