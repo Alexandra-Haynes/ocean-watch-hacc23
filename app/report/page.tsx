@@ -5,7 +5,7 @@ export default function ReportPage() {
   return (
     <>
 
-      <section className="h-fit">
+      <section className="h-fit custom-background">
 
         <Navbar />
         <div className="absolute h-full top-0 left-0 bottom-0 -z-10">

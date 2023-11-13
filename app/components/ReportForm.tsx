@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
+import ReCAPTCHA from "react-google-recaptcha";
 import styled from "styled-components";
 import Image from "next/image";
 
@@ -58,6 +59,7 @@ function ReportForm() {
   });
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
+  const [sealyText, setSealyText] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -67,6 +69,47 @@ function ReportForm() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const message = [
+    [
+      " 4",
+      "The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
+    ],
+    [
+      " 3 or 4",
+      "The image you've provided shows a group of mussels attached to what appears to be the hull of a boat or a solid underwater structure. The mussels are densely packed together, with some algae and other marine organisms visible on the surface and around them. This is a typical example of biofouling, where various aquatic species attach themselves to submerged structures."
+    ],
+    [
+      " 4",
+      "The image shows a dense collection of barnacle-like organisms covering a submerged structure, possibly the hull of a ship or another man-made object. The organisms are tightly packed, with no visible space left between them, and they appear to be quite mature, suggesting that this biofouling has been developing for a considerable period."
+    ]
+  ];
+
+  const showSealyText = function (
+    target: string,
+    message: string,
+    index: number,
+    interval: number,
+  ) {
+    if (index < message.length) {
+      const e = document.querySelector(target) as any;
+      e.textContent += message[index++];
+      setSealyText(e.textContent);
+      setTimeout(function () {
+        const random = Math.floor(Math.random() * 50) + 1;
+        showSealyText(target, message, index, random);
+      }, interval);
+    }
+  };
+
+  const handleSealyClick = (index: Number) => {
+    const sealyText = document.querySelector("#sealy-text") as any;
+    sealyText.textContent = "";
+    showSealyText("#sealy-text", message[index as any][1], 0, 25);
+    const e = document.querySelector('#sealy-level') as any;
+    e.textContent = message[index as any][0];
+  }
+
 
   // Image upload
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,30 +126,9 @@ function ReportForm() {
         }),
       );
 
-      const message = [
-        [
-          " 4",
-          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
-        ],
-      ];
-
-      const showText = function (
-        target: string,
-        message: string,
-        index: number,
-        interval: number,
-      ) {
-        if (index < message.length) {
-          const e = document.querySelector(target) as any;
-          e.textContent += message[index++];
-          setTimeout(function () {
-            showText(target, message, index, interval);
-          }, interval);
-        }
-      };
-
-      showText("#sealy-text", message[0][1], 0, 2);
-      showText("#sealy-level", message[0][0], 0, 2);
+      showSealyText("#sealy-text", message[0][1], 0, 25);
+      const e = document.querySelector("#sealy-level") as any;
+      e.textContent = message[0][0];
 
       setFormData({
         ...formData,
@@ -190,6 +212,13 @@ function ReportForm() {
     });
   }
 
+  const [captchaValue, setCaptchaValue] = useState(null);
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaValue(value);
+    setFormData({ ...formData, captcha: value });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -211,6 +240,7 @@ function ReportForm() {
     form.append("email", formData.email);
     form.append("phone", formData.phone);
     form.append("captcha", formData.captcha);
+    form.append("status", "pending");
 
     // Example: send formData to the server
     try {
@@ -249,12 +279,18 @@ function ReportForm() {
     "Pushed inland above the high wash of the waves so it cannot be swept away",
     "Other - please explain in the description below",
   ];
+  const sealyImages = [
+    "/assets/example-1.png",
+    "/assets/example-2.png",
+    "/assets/example-3.png",
+  ];
+
   return (
     <section
       className="flex flex-col items-center justify-center 
-      gap-8 md:py-24 py-12 custom-background
-    "
+      gap-8 md:py-24 py-12    "
     >
+
       <form
         onSubmit={handleSubmit}
         className="flex flex-col mx-6 pl-12 items-start justify-center gap-2 
@@ -334,7 +370,8 @@ function ReportForm() {
               </div>
             )}
 
-            {/* <label htmlFor="address">Address:</label>
+            {/* <div>
+            <label htmlFor="address">Address:</label>
               <p className="text-gray-600 text-sm">
                 Please provide specific details that help us pinpoint the debris
                 location.
@@ -347,8 +384,7 @@ function ReportForm() {
                 onChange={handleChange}
                 className="w-full max-w-[600px]"
               />
-
-            </div>
+            </div> */}
 
             {/* ______________________DEBRIS TYPE_______________________ */}
             <div className="form-group">
@@ -589,16 +625,41 @@ function ReportForm() {
                 <label htmlFor="email">Sealy&apos;s Recommendation:</label>
                 <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
                   Sealy&apos;s Recommendation is a tool that provides a
-
                   recommendation for classifying a provided image using
                   Artificial Intelligence. Just upload a photo of the debris to
                   get a recommendation!{" "}
                 </p>
+                <div>
+                  <p>Example Images:</p>
+                  <div className="flex flex-row items-center justify-start gap-2 ">
+                    {sealyImages.map((image, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-row items-end gap-4"
+                      >
+                        <span
+                          style={{
+                            cursor: "pointer",
+                          }}
+                        >
+                          <img
+                            src={image}
+                            alt="Image Preview"
+                            style={{ maxHeight: "150px" }}
+                            className="h-auto"
+                            onClick={() => handleSealyClick(index)}
+                          />
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <p>
                   Recommended Biofouling Level:
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
+                  value={sealyText}
                   disabled
                   id="sealy-text"
                   className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
@@ -651,6 +712,13 @@ function ReportForm() {
           {/* here we add the reCAPTCHA api stuff from https://www.google.com/recaptcha
           and we use  npm install react-google-recaptcha library */}
         {/* </div> */}
+        <div className="form-group">
+          <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY as string}
+            onChange={handleCaptchaChange}
+          />
+        </div>
+
         <button
           className="bg-green-700 text-white px-5 py-2 rounded-full ml-1
         shadow-lg hover:bg-green-600 transition-all duration-200 ease-in-out scale-110
@@ -660,6 +728,7 @@ function ReportForm() {
               "linear-gradient(220deg, rgba(156,252,142,1) 0%, rgba(46,152,70,1) 28%, rgba(2,10,20,1) 100%)",
           }}
           type="submit"
+          disabled={!captchaValue}
         >
           Submit
           <RiMailSendLine className="text-white text-xl" />

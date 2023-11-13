@@ -27,10 +27,10 @@ function RemovalJobModal({ onSubmit, onClose, job }: RemovalJobModalProps) {
     environmentalDamage: "",
     debrisApproxSize: "",
   });
-  const handleSubmit = async (e: React.FormEvent) => {
-    onSubmit();
-    e.preventDefault();
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
     const form = new FormData();
     form.append("id", job.split("-")[1]);
     form.append("environmentalDamage", formData.environmentalDamage);
@@ -53,6 +53,8 @@ function RemovalJobModal({ onSubmit, onClose, job }: RemovalJobModalProps) {
       // Handle network/server errors
       console.log("ERROR", error);
     }
+    onSubmit();
+
   };
 
  const handleChange = (
