@@ -191,15 +191,15 @@ export default function ResultsPage() {
   }, [map, maps, jobs]);
 
   return (
-    <div className="">
+    <div className="h-fit custom-background">
       <Navbar />
       <div className="flex justify-center items-center text-center w-full">
-        <h1 className="text-2xl xl:text-4xl font-extrabold text-white p-4">
+        <h1 className="text-2xl xl:text-4xl font-extrabold text-white">
           Results Page
         </h1>
       </div>
       <center>
-        <div style={{ height: "600px", width: "80%" }}>
+        <div className="p-6" style={{ height: "600px", width: "80%" }}>
           <GoogleMapReact
             bootstrapURLKeys={{
               key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
@@ -275,7 +275,7 @@ export default function ResultsPage() {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="flex flex-col w-1/3 mr-2">
+        <div className="flex flex-col w-1/3 mr-2 mb-12">
           <h2 className="text-white justify-center m-auto">
             Marine Debris by Type
           </h2>
