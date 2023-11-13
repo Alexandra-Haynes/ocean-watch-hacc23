@@ -1,13 +1,14 @@
 import React from "react";
 import ReportFormCardLink from "./components/ReportFormCardLink";
 import HeroText from "./components/HeroText";
+import Navbar from "./components/Navbar";
 
 const Home: React.FC = () => {
   return (
-    <section className="h-fit max-h-screen">
-
+    <section>
+      <Navbar />
       <main
-        className="bg-cover bg-no-repeat flex h-screen 
+        className="bg-cover bg-no-repeat flex 
       flex-col items-center justify-between px-4"
       >
         {/* ___________BACKGROUND___________ */}

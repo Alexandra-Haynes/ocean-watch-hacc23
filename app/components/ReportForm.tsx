@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface FormData {
   address: string;
@@ -23,14 +23,19 @@ interface FormData {
   captcha: string;
 }
 
-const renderMarkers = (map: any, maps: any, latitude: Number, longitude: Number) => {
+const renderMarkers = (
+  map: any,
+  maps: any,
+  latitude: Number,
+  longitude: Number,
+) => {
   let marker = new maps.Marker({
     position: { lat: latitude, lng: longitude },
     map,
-    title: 'Hello World!'
-    });
+    title: "Hello World!",
+  });
   return marker;
- };
+};
 
 function ReportForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -80,20 +85,25 @@ function ReportForm() {
       const message = [
         [
           " 4",
-          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it."
+          " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
         ],
       ];
 
-      const showText = function(target: string, message: string, index: number, interval: number) {
+      const showText = function (
+        target: string,
+        message: string,
+        index: number,
+        interval: number,
+      ) {
         if (index < message.length) {
           const e = document.querySelector(target) as any;
           console.log(e);
-          (e).textContent += message[index++];
-          setTimeout(function() {
+          e.textContent += message[index++];
+          setTimeout(function () {
             showText(target, message, index, interval);
           }, interval);
         }
-      }
+      };
 
       showText("#sealy-text", message[0][1], 0, 2);
       showText("#sealy-level", message[0][0], 0, 2);
@@ -334,7 +344,9 @@ function ReportForm() {
                 // </div>
                 <div style={{ height: "1000px", width: "1000px" }}>
                   <GoogleMapReact
-                    bootstrapURLKeys={{ key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c" }}
+                    bootstrapURLKeys={{
+                      key: "AIzaSyDZGTIy1M5PDaKpInl-jIkflfSdZ4RPm-c",
+                    }}
                     defaultCenter={{
                       lat: Number(formData.latitude),
                       lng: Number(formData.longitude),
@@ -343,9 +355,15 @@ function ReportForm() {
                     // Disable controls
                     options={{ disableDefaultUI: false, zoomControl: false }}
                     yesIWantToUseGoogleMapApiInternals={true}
-                    onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps, Number(formData.latitude), Number(formData.longitude))}
-                  >
-                  </GoogleMapReact>
+                    onGoogleApiLoaded={({ map, maps }) =>
+                      renderMarkers(
+                        map,
+                        maps,
+                        Number(formData.latitude),
+                        Number(formData.longitude),
+                      )
+                    }
+                  ></GoogleMapReact>
                 </div>
               )}
 
@@ -599,24 +617,25 @@ function ReportForm() {
                 <label htmlFor="email">Sealy's Recommendation:</label>
                 <p className="text-gray-600 text-sm py-2 w-full">
                   Sealy's Recommendation is a tool that provides a
-                  recommendation for classifying a provided image using Artificial Intelligence. Just upload a photo of the
-                  debris to get a recommendation! </p>
-                <p>Recommended Biofouling Level:
+                  recommendation for classifying a provided image using
+                  Artificial Intelligence. Just upload a photo of the debris to
+                  get a recommendation!{" "}
+                </p>
+                <p>
+                  Recommended Biofouling Level:
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
                   id="sealy-text"
                   className="w-full h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                   style={{
-                    "resize": "none",
-                    "overflow": "hidden",
-                    "minHeight": "200px",
-                    "maxHeight": "300px",
+                    resize: "none",
+                    overflow: "hidden",
+                    minHeight: "200px",
+                    maxHeight: "300px",
                   }}
                   rows={50}
-                  
-                  >
-                </textarea>
+                ></textarea>
               </div>
             </div>
           </div>
