@@ -16,6 +16,19 @@
   }
 }
 
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensures that any additional elements inside body also fill the entire viewport */
+body > div {
+  height: 100%;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -65,10 +78,12 @@ body {
 }
 .custom-background2 {
   background: rgb(174, 238, 233);
-  background: linear-gradient(220deg,
-      rgb(238, 233, 174) 0%,
-      rgb(46, 152, 125) 28%,
-      rgba(2, 10, 20, 1) 100%);
+  background: linear-gradient(
+    220deg,
+    rgb(238, 233, 174) 0%,
+    rgb(46, 152, 125) 28%,
+    rgba(2, 10, 20, 1) 100%
+  );
 }
 
 .custom-clip-path {
