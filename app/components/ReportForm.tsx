@@ -16,6 +16,7 @@ interface FormData {
   debrisType: string;
   containerStatus: "Full";
   biofouling: number;
+  sealyText: string,
   debrisLocation: string;
   description: string;
   images: string[];
@@ -49,6 +50,7 @@ function ReportForm() {
     debrisType: "",
     containerStatus: "Full",
     biofouling: 0,
+    sealyText: "",
     debrisLocation: "",
     description: "",
     images: [],
@@ -230,6 +232,7 @@ function ReportForm() {
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
     form.append("biofouling", String(formData.biofouling));
+    form.append("sealyText", formData.sealyText);
     form.append("description", formData.description);
     for (let i = 0; i < formData.images.length; i++) {
       const imageKey = `image${i}`;
@@ -688,7 +691,7 @@ function ReportForm() {
                   <span className="font-semibold" id="sealy-level"></span>
                 </p>
                 <textarea
-                  value={sealyText}
+                  value={formData.sealyText}
                   disabled
                   id="sealy-text"
                   className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
