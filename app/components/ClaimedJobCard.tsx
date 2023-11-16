@@ -18,6 +18,7 @@ interface RemovalJobs {
   debrisType: string;
   containerStatus: string;
   biofouling: string;
+  sealyText: string;
   description: string;
   island: string;
   email: string;
@@ -133,13 +134,21 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
         ))}
       </div>
       <br />
-
-        <p
+      <p>{`User's Description:`}</p>
+      <p
           className={` h-[30px]
                       text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
         >
           {claimedJob.description}
         </p>
+      <p>{`Sealy's Description:`}</p>
+      <p
+          className={` h-[30px]
+                      text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
+        >
+          {claimedJob.sealyText}
+        </p>
+
         <p className="font-semibold">Observer&apos;s contact info</p>
         <p className="text-slate-600  flex flex-row items-center justify-center gap-1">
           <AiOutlineMail /> {claimedJob.email}
