@@ -96,7 +96,11 @@ function ReportForm() {
     if (index < message.length) {
       const e = document.querySelector(target) as any;
       e.textContent += message[index++];
-      setSealyText(e.textContent);
+      // setSealyText(e.textContent);
+            setFormData({
+        ...formData,
+        sealyText: e.textContent as any,
+      })
       setTimeout(function () {
         const random = Math.floor(Math.random() * 50) + 1;
         showSealyText(target, message, index, random);
@@ -105,9 +109,9 @@ function ReportForm() {
   };
 
   const handleSealyClick = (index: Number) => {
-    const sealyText = document.querySelector("#sealy-text") as any;
+    const sealyText = document.querySelector("#sealyText") as any;
     sealyText.textContent = "";
-    showSealyText("#sealy-text", message[index as any][1], 0, 25);
+    showSealyText("#sealyText", message[index as any][1], 0, 25);
     const e = document.querySelector('#sealy-level') as any;
     e.textContent = message[index as any][0];
   }
@@ -128,7 +132,7 @@ function ReportForm() {
         }),
       );
 
-      showSealyText("#sealy-text", message[0][1], 0, 25);
+      showSealyText("#sealyText", message[0][1], 0, 25);
       const e = document.querySelector("#sealy-level") as any;
       e.textContent = message[0][0];
 
@@ -693,7 +697,8 @@ function ReportForm() {
                 <textarea
                   value={formData.sealyText}
                   disabled
-                  id="sealy-text"
+                  id="sealyText"
+                  name="sealyText"
                   className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                   style={{
                     resize: "none",
