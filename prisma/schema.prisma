@@ -19,7 +19,6 @@ model ReportDebris {
   debrisType      String?
   containerStatus String?
   biofouling String?
-  sealyText String?
   description String?
   island String?
   email String?
@@ -30,6 +29,8 @@ model ReportDebris {
   images String?
   debrisApproxSize String?
   environmentalDamage String?
+  removalDate String?
+  claimDate String?
 }
 
 model EventDetection {
