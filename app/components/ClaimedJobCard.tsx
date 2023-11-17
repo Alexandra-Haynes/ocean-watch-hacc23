@@ -18,7 +18,6 @@ interface RemovalJobs {
   debrisType: string;
   containerStatus: string;
   biofouling: string;
-  sealyText: string;
   description: string;
   island: string;
   email: string;
@@ -48,11 +47,11 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
       id={`job-${claimedJob.id}`}
       onClick={onClick}
       className="w-fit border rounded-md cursor-pointer shadow-lg bg-gray-50 
-      flex flex-col items-start justify-between gap-1 w-250 "
+      flex flex-col items-start justify-between gap-1 w-250 pt-4"
     >
-      <div className="w-full flex flex-row items-between justify-between px-4 py-4">
-        <div className="flex flex-row items-center gap-2">
-          <p className="self-end bg-yellow-200 px-2 py-1 rounded-full text-[.6rem]">
+      <div className="w-full flex flex-row items-between justify-between px-4 py-2">
+        <div className="flex flex-row items-center justify-center gap-2">
+          <p className=" bg-yellow-200 px-2 py-1 rounded-full text-sm">
             {" "}
             Report ID: {claimedJob.id}
           </p>
@@ -61,29 +60,38 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
           </h1>
         </div>
         <div className="flex flex-row items-center justify-start gap-1">
-          <img src="/assets/pending.png" alt="pending status" className="h-6" />
-          <p>{status}</p>
+          {status === "Pending" ? (
+            <img
+              src="/assets/pending.png"
+              alt="pending status"
+              className="h-8"
+            />
+          ) : (
+            <img src="/assets/done.png" alt="done status" className="h-6" />
+          )}
+
+          <p className="font-bold">{status}</p>
         </div>
       </div>
 
       <div className="flex flex-col items-start justify-start px-4 gap-1">
-        <div className="h-[1px] w-full bg-slate-200"> </div>
+        <div className="h-[1px] w-full bg-slate-200 mb-4"> </div>
 
         <p className="text-slate-600  flex flex-row items-center justify-center gap-1">
           {" "}
           <MdOutlineDateRange />
           <span className="font-semibold ">{claimedJob.date}</span>{" "}
         </p>
-        <p className="text-black flex flex-row items-center justify-start gap-1">
+        {/* <p className="text-black flex flex-row items-center justify-start gap-1">
           <MdOutlineLocationOn className=" text-slate-500" />
           <span className="font-semibold">Address</span> {claimedJob.address}
-        </p>
+        </p> */}
         <div className="flex flex-row items-start justify-start gap-1">
           <p className="text-black flex flex-row items-center justify-start gap-1">
-            <MdGpsFixed className=" text-slate-500 " />
+            <MdOutlineLocationOn className=" text-slate-500 " />
             <span className="font-semibold">Coords</span>
           </p>
-          <div className="flex flex-col xl:flex-row items-start justify-start gap-1">
+          <div className="flex flex-row items-start justify-start gap-1">
             <p>
               {" "}
               latitude{" "}
@@ -113,11 +121,9 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
         </p>
 
         <div className="flex flex-row items-center justify-start gap-2 ">
-        {claimedJob.images.split('-----').map((image, index) => (
-              <div
-                key={index}
-                className="flex flex-row items-end gap-4"
-              >
+          {claimedJob.images ? (
+            claimedJob.images.split("-----").map((image, index) => (
+              <div key={index} className="flex flex-row items-end gap-4">
                 <span
                   style={{
                     cursor: "pointer",
@@ -127,28 +133,24 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
                     src={image}
                     alt="Image Preview"
                     style={{ maxHeight: "100px" }}
-                    className="h-auto"
+                    className="h-auto rounded-sm shadow-md mt-6"
                   />
                 </span>
               </div>
-        ))}
-      </div>
-      <br />
-      <p>{`User's Description:`}</p>
-      <p
+            ))
+          ) : (
+            <p className="text-slate-600 italic text-sm pt-2">
+              No images provided
+            </p>
+          )}
+        </div>
+
+        <p
           className={` h-[30px]
                       text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
         >
           {claimedJob.description}
         </p>
-      <p>{`Sealy's Description:`}</p>
-      <p
-          className={` h-[30px] h-fit
-                      text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
-        >
-          {claimedJob.sealyText}
-        </p>
-
         <p className="font-semibold">Observer&apos;s contact info</p>
         <p className="text-slate-600  flex flex-row items-center justify-center gap-1">
           <AiOutlineMail /> {claimedJob.email}
@@ -161,7 +163,16 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
       <div className="bg-slate-200 w-full p-4">
         <div className="flex flex-row items-center justify-start gap-1">
           <p className="text-black font-semibold">Status: </p>
-          <img src="/assets/pending.png" alt="pending status" className="h-6" />
+          {status === "Pending" ? (
+            <img
+              src="/assets/pending.png"
+              alt="pending status"
+              className="h-6"
+            />
+          ) : (
+            <img src="/assets/done.png" alt="done status" className="h-6" />
+          )}
+
           <p>{status}</p>
         </div>
         <p className="text-black font-semibold">

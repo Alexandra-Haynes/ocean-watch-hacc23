@@ -19,7 +19,6 @@ model ReportDebris {
   debrisType      String?
   containerStatus String?
   biofouling String?
-  sealyText String?
   description String?
   island String?
   email String?

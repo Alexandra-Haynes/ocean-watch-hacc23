@@ -16,7 +16,7 @@ interface FormData {
   debrisType: string;
   containerStatus: "Full";
   biofouling: number;
-  sealyText: string,
+  sealyText: string;
   debrisLocation: string;
   description: string;
   images: string[];
@@ -61,7 +61,7 @@ function ReportForm() {
   });
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
-  const [sealyText, setSealyText] = useState("");
+  // const [sealyText, setSealyText] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -236,7 +236,6 @@ function ReportForm() {
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
     form.append("biofouling", String(formData.biofouling));
-    form.append("sealyText", formData.sealyText);
     form.append("description", formData.description);
     for (let i = 0; i < formData.images.length; i++) {
       const imageKey = `image${i}`;
@@ -297,7 +296,6 @@ function ReportForm() {
       className="flex flex-col items-center justify-center 
       gap-8 md:py-24 py-12    "
     >
-
       <form
         onSubmit={handleSubmit}
         className="flex flex-col mx-6 pl-12 items-start justify-center gap-2 
@@ -309,10 +307,40 @@ function ReportForm() {
         </h2>
         <div className="h-[1px] w-full bg-slate-200 my-4 k"></div>
 
-        <div className="flex flex-col items-start text-black justify-between md:gap-12 ">
+        <div className="flex flex-col items-start text-black justify-between ">
           {/* ____________________Location & address_________________ */}
+          <div className="form-group flex flex-row items-center gap-4 mt-5">
+            <label htmlFor="island">Select Island</label>
+            <select
+              id="island"
+              name="island"
+              value={formData.island}
+              onChange={handleChange}
+              className="w-[200px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
+            >
+              <option value="" className="font-semibold">
+                Select an Island
+              </option>
+              <option value="Big Island" className="font-semibold">
+                Big Island
+              </option>
+              <option value="Oahu" className="font-semibold">
+                Oahu
+              </option>
+              <option value="Maui" className="font-semibold">
+                Maui
+              </option>
+              <option value="Kauai" className="font-semibold">
+                Kauai
+              </option>
+              <option value="Molokai" className="font-semibold">
+                Molokai
+              </option>
+            </select>
+          </div>
+
           <div className="form-group">
-            <label htmlFor="location">Location:</label>
+            <label htmlFor="location">Debris Location:</label>
 
             {!showCoordinates && (
               <div>
@@ -325,7 +353,7 @@ function ReportForm() {
                   <MdGpsFixed /> Get My Current Location
                 </button>
 
-                <p>or describe the location manually</p>
+                {/* <p>or describe the location manually</p>
 
                 <input
                   type="text"
@@ -334,7 +362,7 @@ function ReportForm() {
                   value={formData.address}
                   onChange={handleChange}
                   className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
-                />
+                /> */}
               </div>
             )}
             {showCoordinates && formData.latitude && formData.longitude && (
@@ -392,34 +420,91 @@ function ReportForm() {
                 className="w-full max-w-[600px]"
               />
             </div> */}
-            <div className="form-group flex flex-row items-center gap-4 mt-5">
-              <label htmlFor="island">Select Island</label>
-              <select
-                id="island"
-                name="island"
-                value={formData.island}
-                onChange={handleChange}
-                className="w-[200px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2"
-              >
-                <option value="" className="font-semibold">
-                  Select an Island
-                </option>
-                <option value="Big Island" className="font-semibold">
-                  Big Island
-                </option>
-                <option value="Oahu" className="font-semibold">
-                  Oahu
-                </option>
-                <option value="Maui" className="font-semibold">
-                  Maui
-                </option>
-                <option value="Kauai" className="font-semibold">
-                  Kauai
-                </option>
-                <option value="Molokai" className="font-semibold">
-                  Molokai
-                </option>
-              </select>
+
+            {/* __________________________IMAGE_____________________ */}
+            <div className="form-group max-w-[600px] mt-12">
+              <label htmlFor="image">Upload Image:</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                multiple // Allow multiple file selection
+                className="w-[300px]"
+              />
+              <p className="text-gray-600 text-sm py-2 w-full">
+                A photo can provide crucial information about the debris,
+                helping us better understand its nature and assisting in the
+                removal process.
+                Maximum 30 MB per image.
+              </p>
+              {formData.images.length > 0 && (
+                <div className="flex flex-row  items-center justify-start gap-2 ">
+                  {formData.images.map((image, index) => (
+                    <div key={index} className="flex flex-row items-end gap-4">
+                      <img
+                        src={image}
+                        alt="Image Preview"
+                        style={{ maxHeight: "100px" }}
+                        className="h-auto shadow-md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* __________________________ SEALY's DESCRIPTION_____________________ */}
+            <div className="form-group">
+              <img src="./assets/seal.png" alt="seal" className="w-[100px]" />
+
+              <label htmlFor="email">Sealy&apos;s AI Image Analysis:</label>
+              <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
+                Sealy&apos;s Recommendation is a tool that provides a
+                recommendation for classifying a provided image using Artificial
+                Intelligence. Just upload a photo of the debris to get a
+                recommendation!{" "}
+              </p>
+              {/* <div>
+                <p>Example Images:</p>
+                <div className="flex flex-row items-center justify-start gap-2 ">
+                  {sealyImages.map((image, index) => (
+                    <div key={index} className="flex flex-row items-end gap-4">
+                      <span
+                        style={{
+                          cursor: "pointer",
+                        }}
+                      >
+                        <img
+                          src={image}
+                          alt="Image Preview"
+                          style={{ maxHeight: "50px" }}
+                          className="h-auto"
+                          onClick={() => handleSealyClick(index)}
+                        />
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div> */}
+              <p>
+                Biofouling Level Detected:
+                <span className="font-semibold" id="sealy-level"></span>
+              </p>
+              <textarea
+                value={sealyText}
+                disabled
+                id="sealy-text"
+                className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
+                style={{
+                  resize: "none",
+                  overflow: "hidden",
+                  minHeight: "200px",
+                  maxHeight: "300px",
+                }}
+                rows={50}
+              ></textarea>
             </div>
 
             {/* ______________________DEBRIS TYPE_______________________ */}
@@ -597,7 +682,7 @@ function ReportForm() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2"
+                  className="w-[600px] h-12 border-slate-300 border-2 rounded-md p-2"
                 />
               </div>
 
@@ -715,7 +800,9 @@ function ReportForm() {
 
         {/* _______________________________DESCRIPTION__________________ */}
         <div className="form-group max-w-[600px] w-full text-black">
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="description">
+            Other details you would like to add:
+          </label>
           <textarea
             id="description"
             name="description"

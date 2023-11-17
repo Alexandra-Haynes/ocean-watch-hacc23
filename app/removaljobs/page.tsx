@@ -22,6 +22,9 @@ interface RemovalJobs {
   captcha: string;
   status: string;
   images: string;
+  removalCompany?: string;
+  removalDate?: string;
+  claimDate?: string;
 }
 
 export default function RemovalJobsPage() {
@@ -29,8 +32,6 @@ export default function RemovalJobsPage() {
   const [jobSelected, setJobSelected] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedIsland, setSelectedIsland] = useState<string>("");
-  const [claimingCompany, setClaimingCompany] = useState<string>("");
-  const [claimDate, setClaimDate] = useState<string>("");
 
   const getRemovalJobs = async () => {
     try {
@@ -83,9 +84,8 @@ export default function RemovalJobsPage() {
   return (
     <>
       <section
-        className="flex flex-col items-center 
-
-      justify-center gap-8 custom-background pb-24"
+        className="flex flex-col items-center min-h-screen h-fit justify-center 
+        gap-8 custom-background pb-24"
 
       >
         <Navbar />
@@ -105,7 +105,8 @@ export default function RemovalJobsPage() {
           <select
             value={selectedIsland}
             onChange={(e) => setSelectedIsland(e.target.value)}
-            className="w-[160px] h-12 border-slate-300 border-2 rounded-md focus:rounded-none p-2 text-black"
+            className="w-[160px] h-12 border-slate-300 border-2 rounded-md 
+            focus:rounded-none p-2 text-black"
           >
             <option value="">All Islands</option>
             <option value="Oahu">Oahu</option>
@@ -135,7 +136,7 @@ export default function RemovalJobsPage() {
         {unclaimedJobs.filter(
           (j) => j.status === "pending" && filterByIsland(j),
         ).length === 0 && (
-          <div className="h-[400px] text-sm text-center text-white flex flex-col-reverse gap-8 items-center justify-center">
+          <div className="h-[800px] text-sm text-center text-white flex flex-col-reverse gap-8 items-center justify-center">
             No reports available for the selected island.
             <img src="/assets/map.png" alt="Hawaii map" className="h-24" />
           </div>
@@ -157,9 +158,9 @@ export default function RemovalJobsPage() {
                   key={index}
                   claimedJob={claimedJob}
                   onClick={handleOnClick}
-                  claimingCompany={claimingCompany}
                   status={"Pending"}
-                  lastUpdateDate={claimDate}
+                  lastUpdateDate={claimedJob.claimDate ?? ""}
+                  claimingCompany={claimedJob.removalCompany ?? ""}
                 />
               ))}
             </div>

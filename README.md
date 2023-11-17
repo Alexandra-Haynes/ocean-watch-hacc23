@@ -1,9 +1,7 @@
-
-
 <br />
 <div align="center">
   <a href="https://github.com/your_username/Ocean-Watch">
-   <img src="https://github.com/Alexandra-Haynes/ocean-watch-hacc23/assets/113944962/b8064bb7-3475-4ab3-98c8-7acb09003063" alt="CWA-logo" height="80px">
+ <img src="https://github.com/HACC2023/CodeWithAloha/assets/113944962/a0dd5064-93d4-4e30-9a1d-1c933c77a1c7" alt="CWA-logo" height="80px">
   </a>
   <h3 align="center">Ocean Watch</h3>
   <p align="center">
@@ -14,10 +12,7 @@
   </p>
 </div>
 
-
-
-![sh1](https://github.com/Alexandra-Haynes/ocean-watch-hacc23/assets/113944962/0092d0c8-9d8a-4d44-ab4a-7793a9067d99)
-
+![sh1](https://github.com/HACC2023/CodeWithAloha/assets/113944962/e60a9c71-fd3d-4548-9488-bedc2959348e)
 
 Ocean Watch is a comprehensive solution to the marine debris problem in Hawaii. Motivated by the urgent need for cleaner oceans, we have developed a platform that empowers everyone to contribute to environmental conservation.
 
@@ -56,6 +51,7 @@ In the future, we plan on integrating more specific machine learning models. [He
 Our project is built using cutting-edge technologies for a responsive, efficient, and secure experience.
 
 Tools & Resources Used
+
 - Frontend: Next.js for a robust and scalable frontend.
 - Backend: PostgreSQL for database management.
 - Mapping: Google Maps API for accurate location tracking and mapping.
@@ -64,21 +60,30 @@ Tools & Resources Used
 - Deployment: Vercel for reliable and efficient hosting.
 - Research & Development: Resources from the Hawaii Pacific University Center for Marine Debris Research and various environmental studies to ensure our solution aligns with real-world needs and scientific data.
 
- ## 🔧 Setup & Installation
- Follow these steps to get your development environment set up:
+## 🔧 Setup & Installation
+
+Follow these steps to get your development environment set up:
 
 ### 1. Clone the repository
-   Start by cloning the project repository to your local machine
+
+Start by cloning the project repository to your local machine
 
 ### 2. Install the dependencies:
+
 Navigate to the project directory and install the necessary dependencies
 
-`
-npm install
-`
+`npm install`
+
+<<<<<<< HEAD
 
 ### 3.Configure Environment Variables
-Create a `.env` file in the root directory of your project. This file will contain the environment variables necessary for the project to run.
+
+=======
+
+### 3. Configure Environment Variables
+
+> > > > > > > 3d7b6401c40110c866d4f476c654e1a33cf136f8
+> > > > > > > Create a `.env` file in the root directory of your project. This file will contain the environment variables necessary for the project to run.
 
 ```
 DATABASE_URL="file:./dev.db"
@@ -89,29 +94,29 @@ OPEN_AI_API_KEY=<your open ai key>
 ```
 
 ### 4. Configure Database
-   Update the `schema.prisma` file to use SQLite as the database provider. This will allow you to run the project locally without having to set up a separate database server.
+
+Update the `schema.prisma` file to use SQLite as the database provider. This will allow you to run the project locally without having to set up a separate database server.
 
 ```
 ...
 datasource db {
-  provider = "sqlite"  
-  url = env("DATABASE_URL")  
+  provider = "sqlite"
+  url = env("DATABASE_URL")
 }
 ...
 ```
 
-### 5. Initialize the Database   
-Run the following command to push the schema state to your database  
+### 5. Initialize the Database
 
-`
-npx prisma db push
-`
-### 6. Run the development server  
-Launch the development server with  
+Run the following command to push the schema state to your database
 
-`
-npm run dev
-`
+`npx prisma db push`
+
+### 6. Run the development server
+
+Launch the development server with
+
+`npm run dev`
 
 The project will be accessible at `http://localhost:3000`.
 
@@ -119,13 +124,30 @@ The project will be accessible at `http://localhost:3000`.
 
 Ocean Watch can be explored from different user perspectives. Here's a step-by-step guide for each type of user:
 
+<<<<<<< HEAD
+
 1. As a Regular User
+
 - Report Marine Debris
 - From the landing page, click on the Report Debris button.
 - Fill in the form to simulate reporting found debris. Be sure to include details like location, type of debris, and any additional notes.
 - Once you submit the form, your report will be automatically sent to the disposal companies' network.
+
 2. As a Disposal Company Member
-- Claim and Manage Tasks
+
+- # Claim and Manage Tasks
+
+1. As a Regular User  
+   Report Marine Debris:
+
+- From the landing page, click on the Report Debris button.
+- Fill in the form to simulate reporting found debris. Be sure to include details like location, type of debris, and any additional notes.
+- Once you submit the form, your report will be automatically sent to the disposal companies' network.
+
+2. As a Disposal Company Member  
+    Claim and Manage Tasks:
+   > > > > > > > 3d7b6401c40110c866d4f476c654e1a33cf136f8
+
 - On the landing page, click the Login button.
 - Enter the following demo account credentials:
 - Username: `removal`
@@ -134,15 +156,26 @@ Ocean Watch can be explored from different user perspectives. Here's a step-by-s
 - Find your report and click Claim Task to assign this task to your organization.
 - The task will now be listed in the Claimed Tasks section with a status of "Pending".
 
+<<<<<<< HEAD
 [...more steps to come later here]
 
 3. As a CMDR Member
-- Administrative Overview
+
+- # Administrative Overview
+
+3. As a CMDR Member  
+    Administrative Overview:
+   > > > > > > > 3d7b6401c40110c866d4f476c654e1a33cf136f8
+
 - On the landing page, click the Login button.
 - Enter the following demo account credentials for an administrative view:
 - Username: `admin`
 - Password: `password`
 - After logging in, you will have access to an administrative dashboard which provides a comprehensive overview of all reports, tasks, and statistics.
 
+<<<<<<< HEAD
 [...more to come]
+=======
+[...more coming soon]
 
+> > > > > > > 3d7b6401c40110c866d4f476c654e1a33cf136f8
