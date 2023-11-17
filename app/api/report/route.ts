@@ -45,6 +45,7 @@ export async function POST(req: Request) {
   const debrisType = formData.get('debrisType')?.toString()
   const containerStatus = formData.get('containerStatus')?.toString()
   const biofouling = formData.get('biofouling')?.toString()
+  const sealyText = formData.get('sealyText')?.toString()
   const description = formData.get('description')?.toString()
   const island = formData.get('island')?.toString()
   const email = formData.get('email')?.toString()
@@ -71,6 +72,7 @@ export async function POST(req: Request) {
       debrisType: debrisType,
       containerStatus: containerStatus,
       biofouling: biofouling,
+      sealyText: sealyText,
       description: description,
       island: island,
       email: email,

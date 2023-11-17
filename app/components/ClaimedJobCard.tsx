@@ -143,7 +143,7 @@ const ClaimedJobCard: React.FC<ClaimedJobCardProps> = ({
         </p>
       <p>{`Sealy's Description:`}</p>
       <p
-          className={` h-[30px]
+          className={` h-[30px] h-fit
                       text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
         >
           {claimedJob.sealyText}

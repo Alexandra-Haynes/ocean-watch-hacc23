@@ -257,7 +257,7 @@ function ReportForm() {
       });
       if (response.ok) {
         // Success - display success message, next steps, etc.
-        console.log("SUCCESS");
+        console.log("SUCCESS", form);
         window.location.href = "/report-submitted";
       } else {
         // Handle errors, display an error message
