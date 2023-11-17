@@ -75,15 +75,15 @@ function ReportForm() {
   const message = [
     [
       " 4",
-      "The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
+      " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
     ],
     [
       " 3 or 4",
-      "The image you've provided shows a group of mussels attached to what appears to be the hull of a boat or a solid underwater structure. The mussels are densely packed together, with some algae and other marine organisms visible on the surface and around them. This is a typical example of biofouling, where various aquatic species attach themselves to submerged structures."
+      " The image you've provided shows a group of mussels attached to what appears to be the hull of a boat or a solid underwater structure. The mussels are densely packed together, with some algae and other marine organisms visible on the surface and around them. This is a typical example of biofouling, where various aquatic species attach themselves to submerged structures."
     ],
     [
       " 4",
-      "The image shows a dense collection of barnacle-like organisms covering a submerged structure, possibly the hull of a ship or another man-made object. The organisms are tightly packed, with no visible space left between them, and they appear to be quite mature, suggesting that this biofouling has been developing for a considerable period."
+      " The image shows a dense collection of barnacle-like organisms covering a submerged structure, possibly the hull of a ship or another man-made object. The organisms are tightly packed, with no visible space left between them, and they appear to be quite mature, suggesting that this biofouling has been developing for a considerable period."
     ]
   ];
 
@@ -236,6 +236,7 @@ function ReportForm() {
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
     form.append("biofouling", String(formData.biofouling));
+    form.append("sealyText", formData.sealyText);
     form.append("description", formData.description);
     for (let i = 0; i < formData.images.length; i++) {
       const imageKey = `image${i}`;
@@ -493,9 +494,9 @@ function ReportForm() {
                 <span className="font-semibold" id="sealy-level"></span>
               </p>
               <textarea
-                value={sealyText}
+                value={formData.sealyText}
                 disabled
-                id="sealy-text"
+                id="sealyText"
                 className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                 style={{
                   resize: "none",
@@ -700,104 +701,11 @@ function ReportForm() {
                 <p className="text-gray-600 text-sm py-2 w-full">
                   Please include area code (e.g. 808-555-5555)
                 </p>
-              </div>
-              {/* __________________________IMAGE_____________________ */}
-              <div className="form-group max-w-[340px]">
-                <label htmlFor="image">Upload Images (up to 6):</label>
-                <input
-                  type="file"
-                  id="image"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  multiple // Allow multiple file selection
-                  className="w-[300px]"
-                />
-                <p className="text-gray-600 text-sm py-2 w-full">
-                  A photo can provide crucial information about the debris,
-                  helping us better understand its nature and assisting in the
-                  removal process.
-                  <br />
-                  Maximum 30 MB per image.
-                </p>
-                {formData.images.length > 0 && (
-                  <div className="flex flex-row  items-center justify-start gap-2 ">
-                    {formData.images.map((image, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-row items-end gap-4"
-                      >
-                        <img
-                          src={image}
-                          alt="Image Preview"
-                          style={{ maxHeight: "50px" }}
-                          className="h-auto"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* __________________________DESCRIPTION_____________________ */}
-              <div className="form-group">
-                <img src="./assets/seal.png" alt="seal" className="w-1/4" />
-
-                <label htmlFor="email">Sealy&apos;s Recommendation:</label>
-                <p className="text-gray-600 text-sm py-2 w-full max-w-[600px]">
-                  Sealy&apos;s Recommendation is a tool that provides a
-                  recommendation for classifying a provided image using
-                  Artificial Intelligence. Just upload a photo of the debris to
-                  get a recommendation!{" "}
-                </p>
-                <div>
-                  <p>Example Images:</p>
-                  <div className="flex flex-row items-center justify-start gap-2 ">
-                    {sealyImages.map((image, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-row items-end gap-4"
-                      >
-                        <span
-                          style={{
-                            cursor: "pointer",
-                          }}
-                        >
-                          <img
-                            src={image}
-                            alt="Image Preview"
-                            style={{ maxHeight: "150px" }}
-                            className="h-auto"
-                            onClick={() => handleSealyClick(index)}
-                          />
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <p>
-                  Recommended Biofouling Level:
-                  <span className="font-semibold" id="sealy-level"></span>
-                </p>
-                <textarea
-                  value={formData.sealyText}
-                  disabled
-                  id="sealyText"
-                  name="sealyText"
-                  className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
-                  style={{
-                    resize: "none",
-                    overflow: "hidden",
-                    minHeight: "200px",
-                    maxHeight: "300px",
-                  }}
-                  rows={50}
-                ></textarea>
-              </div>
+              </div> 
+            </div> 
             </div>
-          </div>
-        </div>
-
+            </div>          
+ 
         {/* _______________________________DESCRIPTION__________________ */}
         <div className="form-group max-w-[600px] w-full text-black">
           <label htmlFor="description">
