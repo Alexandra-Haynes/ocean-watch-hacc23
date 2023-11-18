@@ -61,7 +61,7 @@ function ReportForm() {
   });
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
-  // const [sealyText, setSealyText] = useState("");
+  const [sealyText, setSealyText] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -96,11 +96,11 @@ function ReportForm() {
     if (index < message.length) {
       const e = document.querySelector(target) as any;
       e.textContent += message[index++];
-      // setSealyText(e.textContent);
-            setFormData({
-        ...formData,
-        sealyText: e.textContent as any,
-      })
+      setSealyText(e.textContent);
+      // setFormData({
+      //   ...formData,
+      //   sealyText: e.textContent as any,
+      // })
       setTimeout(function () {
         const random = Math.floor(Math.random() * 50) + 1;
         showSealyText(target, message, index, random);
@@ -236,7 +236,7 @@ function ReportForm() {
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
     form.append("biofouling", String(formData.biofouling));
-    form.append("sealyText", formData.sealyText);
+    form.append("sealyText", sealyText);
     form.append("description", formData.description);
     for (let i = 0; i < formData.images.length; i++) {
       const imageKey = `image${i}`;
@@ -494,7 +494,7 @@ function ReportForm() {
                 <span className="font-semibold" id="sealy-level"></span>
               </p>
               <textarea
-                value={formData.sealyText}
+                value={sealyText}
                 disabled
                 id="sealyText"
                 className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
