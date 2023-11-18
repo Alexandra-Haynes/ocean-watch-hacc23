@@ -1,6 +1,3 @@
-
-
-
 <br />
 <div align="center">
   <a href="https://github.com/your_username/Ocean-Watch">
@@ -54,6 +51,7 @@ In the future, we plan on integrating more specific machine learning models. [He
 Our project is built using cutting-edge technologies for a responsive, efficient, and secure experience.
 
 Tools & Resources Used
+
 - Frontend: Next.js for a robust and scalable frontend.
 - Backend: PostgreSQL for database management.
 - Mapping: Google Maps API for accurate location tracking and mapping.
@@ -62,20 +60,22 @@ Tools & Resources Used
 - Deployment: Vercel for reliable and efficient hosting.
 - Research & Development: Resources from the Hawaii Pacific University Center for Marine Debris Research and various environmental studies to ensure our solution aligns with real-world needs and scientific data.
 
- ## 🔧 Setup & Installation
- Follow these steps to get your development environment set up:
+## 🔧 Setup & Installation
+
+Follow these steps to get your development environment set up:
 
 ### 1. Clone the repository
-   Start by cloning the project repository to your local machine
+
+Start by cloning the project repository to your local machine
 
 ### 2. Install the dependencies:
+
 Navigate to the project directory and install the necessary dependencies
 
-`
-npm install
-`
+`npm install`
 
 ### 3. Configure Environment Variables
+
 Create a `.env` file in the root directory of your project. This file will contain the environment variables necessary for the project to run.
 
 ```
@@ -87,29 +87,29 @@ OPEN_AI_API_KEY=<your open ai key>
 ```
 
 ### 4. Configure Database
-   Update the `schema.prisma` file to use SQLite as the database provider. This will allow you to run the project locally without having to set up a separate database server.
+
+Update the `schema.prisma` file to use SQLite as the database provider. This will allow you to run the project locally without having to set up a separate database server.
 
 ```
 ...
 datasource db {
-  provider = "sqlite"  
-  url = env("DATABASE_URL")  
+  provider = "sqlite"
+  url = env("DATABASE_URL")
 }
 ...
 ```
 
-### 5. Initialize the Database   
-Run the following command to push the schema state to your database  
+### 5. Initialize the Database
 
-`
-npx prisma db push
-`
-### 6. Run the development server  
-Launch the development server with  
+Run the following command to push the schema state to your database
 
-`
-npm run dev
-`
+`npx prisma db push`
+
+### 6. Run the development server
+
+Launch the development server with
+
+`npm run dev`
 
 The project will be accessible at `http://localhost:3000`.
 
@@ -118,13 +118,15 @@ The project will be accessible at `http://localhost:3000`.
 Ocean Watch can be explored from different user perspectives. Here's a step-by-step guide for each type of user:
 
 1. As a Regular User  
- Report Marine Debris:
+   Report Marine Debris:
+
 - From the landing page, click on the Report Debris button.
 - Fill in the form to simulate reporting found debris. Be sure to include details like location, type of debris, and any additional notes.
 - Once you submit the form, your report will be automatically sent to the disposal companies' network.
-  
+
 2. As a Disposal Company Member  
-  Claim and Manage Tasks:  
+   Claim and Manage Tasks:
+
 - On the landing page, click the Login button.
 - Enter the following demo account credentials:
 - Username: `removal`
@@ -134,7 +136,8 @@ Ocean Watch can be explored from different user perspectives. Here's a step-by-s
 - The task will now be listed in the Claimed Tasks section with a status of "Pending".
 
 3. As a CMDR Member  
- Administrative Overview:  
+   Administrative Overview:
+
 - On the landing page, click the Login button.
 - Enter the following demo account credentials for an administrative view:
 - Username: `admin`
@@ -142,3 +145,5 @@ Ocean Watch can be explored from different user perspectives. Here's a step-by-s
 - After logging in, you will have access to an administrative dashboard which provides a comprehensive overview of all reports, tasks, and statistics.
 
 [...more coming soon]
+
+reupoload
