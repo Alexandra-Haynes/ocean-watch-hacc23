@@ -200,10 +200,10 @@ function JobCard({
       {btnMessage !== "Removal Complete" && (
         <div>
           <p className="text-slate-600 text-[.8rem] flex flex-row items-center justify-center gap-1">
-            <AiOutlineMail /> {data.email}
+            <AiOutlineMail /> {data.email || "report@honolulupd.org"}
           </p>
           <p className="text-slate-600 text-[.8rem] flex flex-row items-center justify-start gap-1">
-            <AiOutlinePhone /> {data.phone}
+            <AiOutlinePhone /> {data.phone || "808-555-5555"}
           </p>
         </div>
       )}
