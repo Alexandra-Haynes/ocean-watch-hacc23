@@ -4,8 +4,6 @@ import { MdGpsFixed } from "react-icons/md";
 import { RiMailSendLine } from "react-icons/ri";
 import GoogleMapReact from "google-map-react";
 import ReCAPTCHA from "react-google-recaptcha";
-import styled from "styled-components";
-import Image from "next/image";
 
 interface FormData {
   address: string;
@@ -663,6 +661,12 @@ function ReportForm() {
                 </p>
               </div>
               <div>
+                <link rel="prefetch" href="./assets/levels-of-fouling/0.png" />
+                <link rel="prefetch" href="./assets/levels-of-fouling/1.png" />
+                <link rel="prefetch" href="./assets/levels-of-fouling/2.png" />
+                <link rel="prefetch" href="./assets/levels-of-fouling/3.png" />
+                <link rel="prefetch" href="./assets/levels-of-fouling/4.png" />
+                <link rel="prefetch" href="./assets/levels-of-fouling/5.png" />
                 <img
                   src={`./assets/levels-of-fouling/${formData.biofouling}.png`}
                   alt="biofouling"
