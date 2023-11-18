@@ -16,6 +16,7 @@ interface FormData {
   debrisType: string;
   containerStatus: "Full";
   biofouling: number;
+  sealyText: string;
   debrisLocation: string;
   description: string;
   images: string[];
@@ -49,6 +50,7 @@ function ReportForm() {
     debrisType: "",
     containerStatus: "Full",
     biofouling: 0,
+    sealyText: "",
     debrisLocation: "",
     description: "",
     images: [],
@@ -59,7 +61,7 @@ function ReportForm() {
   });
   const [showCoordinates, setShowCoordinates] = useState(false);
   const [containerStatus, setContainerStatus] = useState<string | null>(null);
-  const [sealyText, setSealyText] = useState("");
+  // const [sealyText, setSealyText] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -73,15 +75,15 @@ function ReportForm() {
   const message = [
     [
       " 4",
-      "The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
+      " The image depicts a submerged structure with a significant amount of biofouling, which is the accumulation of microorganisms, plants, algae, or animals on wetted surfaces. Based on the visible marine growth, including what looks like mature barnacles and other encrusting organisms, this image would likely be classified as having heavy fouling. The original surface of the structure is almost completely obscured by the marine life that has settled on it.",
     ],
     [
       " 3 or 4",
-      "The image you've provided shows a group of mussels attached to what appears to be the hull of a boat or a solid underwater structure. The mussels are densely packed together, with some algae and other marine organisms visible on the surface and around them. This is a typical example of biofouling, where various aquatic species attach themselves to submerged structures."
+      " The image you've provided shows a group of mussels attached to what appears to be the hull of a boat or a solid underwater structure. The mussels are densely packed together, with some algae and other marine organisms visible on the surface and around them. This is a typical example of biofouling, where various aquatic species attach themselves to submerged structures."
     ],
     [
       " 4",
-      "The image shows a dense collection of barnacle-like organisms covering a submerged structure, possibly the hull of a ship or another man-made object. The organisms are tightly packed, with no visible space left between them, and they appear to be quite mature, suggesting that this biofouling has been developing for a considerable period."
+      " The image shows a dense collection of barnacle-like organisms covering a submerged structure, possibly the hull of a ship or another man-made object. The organisms are tightly packed, with no visible space left between them, and they appear to be quite mature, suggesting that this biofouling has been developing for a considerable period."
     ]
   ];
 
@@ -94,7 +96,11 @@ function ReportForm() {
     if (index < message.length) {
       const e = document.querySelector(target) as any;
       e.textContent += message[index++];
-      setSealyText(e.textContent);
+      // setSealyText(e.textContent);
+            setFormData({
+        ...formData,
+        sealyText: e.textContent as any,
+      })
       setTimeout(function () {
         const random = Math.floor(Math.random() * 50) + 1;
         showSealyText(target, message, index, random);
@@ -103,9 +109,9 @@ function ReportForm() {
   };
 
   const handleSealyClick = (index: Number) => {
-    const sealyText = document.querySelector("#sealy-text") as any;
+    const sealyText = document.querySelector("#sealyText") as any;
     sealyText.textContent = "";
-    showSealyText("#sealy-text", message[index as any][1], 0, 25);
+    showSealyText("#sealyText", message[index as any][1], 0, 25);
     const e = document.querySelector('#sealy-level') as any;
     e.textContent = message[index as any][0];
   }
@@ -126,7 +132,7 @@ function ReportForm() {
         }),
       );
 
-      showSealyText("#sealy-text", message[0][1], 0, 25);
+      showSealyText("#sealyText", message[0][1], 0, 25);
       const e = document.querySelector("#sealy-level") as any;
       e.textContent = message[0][0];
 
@@ -230,6 +236,7 @@ function ReportForm() {
     form.append("debrisType", formData.debrisType);
     form.append("containerStatus", formData.containerStatus);
     form.append("biofouling", String(formData.biofouling));
+    form.append("sealyText", formData.sealyText);
     form.append("description", formData.description);
     for (let i = 0; i < formData.images.length; i++) {
       const imageKey = `image${i}`;
@@ -250,7 +257,7 @@ function ReportForm() {
       });
       if (response.ok) {
         // Success - display success message, next steps, etc.
-        console.log("SUCCESS");
+        console.log("SUCCESS", form);
         window.location.href = "/report-submitted";
       } else {
         // Handle errors, display an error message
@@ -487,9 +494,9 @@ function ReportForm() {
                 <span className="font-semibold" id="sealy-level"></span>
               </p>
               <textarea
-                value={sealyText}
+                value={formData.sealyText}
                 disabled
-                id="sealy-text"
+                id="sealyText"
                 className="w-full  max-w-[600px] h-12 border-slate-300 border-2 rounded-md p-2 min-h-[500px] max-h-[500px]"
                 style={{
                   resize: "none",
@@ -694,11 +701,11 @@ function ReportForm() {
                 <p className="text-gray-600 text-sm py-2 w-full">
                   Please include area code (e.g. 808-555-5555)
                 </p>
-              </div>
+              </div> 
+            </div> 
             </div>
-          </div>
-        </div>
-
+            </div>          
+ 
         {/* _______________________________DESCRIPTION__________________ */}
         <div className="form-group max-w-[600px] w-full text-black">
           <label htmlFor="description">

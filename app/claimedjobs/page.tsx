@@ -15,6 +15,7 @@ interface ClaimedJobs {
   debrisType: string;
   containerStatus: string;
   biofouling: string;
+  sealyText: string;
   description: string;
   island: string;
   email: string;

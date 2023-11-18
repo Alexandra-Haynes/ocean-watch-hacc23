@@ -19,6 +19,7 @@ interface RemovalJobs {
   debrisType: string;
   containerStatus: string;
   biofouling: string;
+  sealyText: string;
   description: string;
   island: string;
   email: string;
@@ -154,13 +155,45 @@ function JobCard({
           <p className="text-slate-600 italic text-sm py-2">No images provided</p>
         )}
       </div>
-     
-           <p
+      <br />
+{data.description ? (
+  <>
+<p>{`User's Description:`}</p>
+      <p
+        className={`border bg-white shadow-sm h-fit 
+        min-h-[100px] p-2 text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
+        >
+        {data.description}
+      </p>
+        </>
+      ) : (<>
+      <p>{`User's Description:`}</p>
+      <p
         className={`border bg-white shadow-sm h-fit 
                     min-h-[100px] p-2 text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
       >
-        {data.description}
+        {`N/A`}
       </p>
+      </>)}
+
+      {data.sealyText ? (<>
+        <p>{`Sealy's Description:`}</p>
+      <p
+        className={`border bg-white shadow-sm h-fit 
+                    min-h-[100px] p-2 text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
+      >
+        {data.sealyText}
+      </p>
+      </>) : (<>
+        <p>{`Sealy's Description:`}</p>
+      <p
+        className={`border bg-white shadow-sm h-fit 
+                    min-h-[100px] p-2 text-slate-500 min-w-[260px] w-80 md:w-[600px]`}
+      >
+        {`N/A`}
+      </p>
+      </>)}
+      
 
       <div className="h-[1px] w-full bg-slate-200 my-2"> </div>
 
