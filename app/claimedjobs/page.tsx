@@ -75,7 +75,10 @@ export default function ClaimedJobsPage() {
     getClaimedJobs();
   }, [isModalOpen]);
 
+  const claimedJobs = jobs.filter((j) => j.status === "claimed" && filterByIsland(j))
   const removalCompleteJobs = jobs.filter((j) => j.status === "removed");
+  removalCompleteJobs.reverse();
+  claimedJobs.reverse();
 
   return (
     <>
@@ -112,9 +115,7 @@ export default function ClaimedJobsPage() {
           </select>
         </div>
         <div className="grid xl:grid-cols-2 gap-8 text-black">
-          {jobs
-            .filter((j) => j.status === "claimed" && filterByIsland(j))
-            .map((job, index) => (
+          {claimedJobs.map((job, index) => (
               <JobCard
                 key={index}
                 job={job}
