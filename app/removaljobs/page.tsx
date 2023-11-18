@@ -80,6 +80,9 @@ export default function RemovalJobsPage() {
 
   const unclaimedJobs = jobs.filter((j) => j.status === "pending");
   const claimedJobs = jobs.filter((j) => j.status === "claimed");
+  unclaimedJobs.reverse();
+  claimedJobs.reverse();
+
 
   return (
     <>
