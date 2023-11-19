@@ -144,6 +144,3 @@ Ocean Watch can be explored from different user perspectives. Here's a step-by-s
 - Password: `password`
 - After logging in, you will have access to an administrative dashboard which provides a comprehensive overview of all reports, tasks, and statistics.
 
-[...more coming soon]
-
-reupoload
